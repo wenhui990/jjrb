@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>热点详情</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+		<style type="text/css">
+			.hotspot_img {
+				width: 100%;
+				height: 300px;
+			}
+			
+			.hotspots {
+				position: relative;
+				padding: 25px 30px;
+				background: #fff;
+				margin-bottom: 60px;
+			}
+			.hotspots_data{
+				background: #fff;
+			}
+			
+			.hotspots_tit a {
+				color: #000000;
+			}
+			
+			.hotspots .hotspots_title {
+				text-align: center;
+			}
+			
+			.ht_div {
+				display: inline-block;
+				border-bottom: 2px solid #999;
+			}
+			
+			.hotspots_title a {
+				color: #000000;
+			}
+			
+			.hotspots_title a:hover {
+				text-decoration: none;
+			}
+			
+			.hotspots .hotspot_txt {
+				margin-top: 10px;
+				line-height: 2;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部导航 -->
+		<header></header>
+		<!--<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+					<a class="navbar-brand" href="index.html"><img src="Web/切图（第五周交付）/splash-ic.png" width="55" height="55" alt="logo" id="logo_img" /></a>
+				</div>
+				<div class="collapse navbar-collapse" id="navs">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="active">
+							<a href="index.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-news-f.png"/></span>热点</a>
+						</li>
+						<li>
+							<a href="viewpoint.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-paper-n.png"/></span>观点</a>
+						</li>
+						<li>
+							<a href="data.html?country=CN,US,JP&indicator=NY.GDP.MKTP.CD" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-numbers-n.png"/></span>数据</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="Web/切图（第五周交付）/n.png"/></span>我的 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li class="dropdown-header">登录</li>
+								<li class="dl_style">
+									<a href="javascript:void(0);" class="login_wechat">微信扫码</a>
+								</li>
+								<li class="dl_style">
+									<a href="javascript:void(0);" class="login_phone">手机号</a>
+								</li>
+								<li>
+									<a href="add_viewpoint.html" target="_blank">发布观点</a>
+								</li>
+								<li>
+									<a href="my_viewpoint.html" target="_blank">历史观点</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>-->
+		<!-- 头部导航结束  -->
+
+		<div id="wx_phone">
+			<!-- 手机号登陆  -->
+			<div id="phone">
+				<div class="modal-dialog modal_style">
+					<div class="modal-content">
+						<div class="modal-body">
+							<p class="modal_style_title">手机登录</p>
+							<form role="form">
+								<div class="form-group fg">
+									<a class="btn btn-info btn-sm btn-block none" id="phone_error">手机格式不正确！重新输入</a>
+									<input type="text" class="form-control" id="input_Phone" placeholder="请输入手机号">
+									<!--<input type="password" class="form-control" id="input_password" placeholder="请输入密码">-->
+									
+									<input type="text" class="form-control form-group-sm " id="input_Phone_code" placeholder="请输入验证码">
+									<a class="btn btn-info btn-sm btn-block none" id="code_btn1"><span id="code_num"><i>60</i>后可重新</span>获取验证码</a>
+									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn"  data-placement="bottom" value="获取验证码" />
+								</div>
+								<!--<input type="button" class="btn modal_style_btn btn_next fg" value="下一步">-->
+								<input type="button" class="btn btn-success btn-block modal_style_btn btn_login phone_code_login" value="登录">
+								<p id="wechat_tag">
+									<!--<a href="javascript:void(0)" data-toggle="modal" data-target="#PhoneCode" class="phone_code">手机验证码登录<span class="glyphicon glyphicon-play"></span></a>-->
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#Phone" class="phone_no fg_hide">手机号登录<span class="glyphicon glyphicon-play"></span></a>
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="">微信登录<span class="glyphicon glyphicon-play"></span></a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 微信登陆  -->
+			<div id="WeChat">
+				<div class="modal-dialog modal_style">
+					<div class="modal-content">
+						<div class="modal-body">
+							<p class="modal_style_title">扫码登录</p>
+							<form role="form">
+								<div class="form-group" id="wx">
+									<img src="images/erweima.png" alt="微信扫码" />
+								</div>
+								<p id="wechat_tag">
+									<a href="javascript:void(0)" data-target="#Phone" class="">手机登录<span class="glyphicon glyphicon-play"></span></a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 热点内容 -->
+
+		<!-- 热点详情 -->
+		<div class="container" id="hotspot_desc">
+			<img src="" alt="热点图" class="hotspot_img" />
+			<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
+				<h2 class="hotspot_money"></h2>
+				<h2 class="hotspots_tit"><a href="#"></a></h2>
+				<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  2015年7月1日</span></small>
+				<div class="hotspot_txt">
+					<!--<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器...
+					</p>
+					<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。
+					</p>
+					<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器...
+					</p>-->
+					<p style="margin-top: 30px;">
+						*经济日报
+					</p>
+				</div>
+			</div>
+			<!--<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
+				<h2 class="hotspots_title">
+					<div class="ht_div">
+						<a href="#">经济定义</a>
+					</div>
+				</h2>
+				<div class="hotspot_txt">
+					<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器...
+					</p>
+				</div>
+			</div>-->
+		</div>
+		<!--<div class="container" id="about_data">
+				<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
+					<h2 class="hotspots_title">
+					<div class="ht_div">
+						<a href="#">相关数据</a>
+					</div>
+				</div>
+		</h2>
+			<div style="background: #fff;">
+				<div id="hotspot_data" style="min-height: 600px;padding: 0 20px;"></div>
+			</div>
+			
+		</div>-->
+		<footer></footer>
+		<script src="js/jquery1.9.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script src="js/echarts.js"></script>
+		<script type="text/javascript">
+			$("header").load("header.html");
+			$("footer").load("footer.html");
+			$(function() {
+				// 基于准备好的dom，初始化echarts图表
+				//var myChart = echarts.init(document.getElementById('hotspot_data'));
+				//接口
+				var _href = "http://api.jjrb.grsx.cc",
+					interfacelist = {
+						select_indicator: "/data/indicator/k/GDP", //查询indicator
+						select_data: "/data", //查询数据
+						host_indicator: "/data/indicator/hot", //热门
+						select_country: "/data/country/k/" ,//查询国家
+						feed: "/feed/" //feed/{id}热点详情
+					};
+				var u = getUrlParams(),
+					id = u.id;
+//				country = u.country,
+//			    indicator = u.indicator,
+//			    start = u.start,
+//			    end = u.end;
+//			    var _url = 'data.json';//_href + interfacelist.select_data+"?";
+//				urlLoad("hotspot_data",_url,country,indicator,start,end);
+				$.ajax({
+					type:"get",
+					url: _href + interfacelist.feed + id,
+					async:true,
+					success: function(data){
+						console.log(data);
+						$(".hotspot_img").prop("src",data.cover);
+						$(".hotspot_money").text(data.sub_title);
+						$(".hotspots_tit>a").text(data.title);
+						$(".source_time").text("&nbsp;"+timeF(data.created));
+						
+						var a = $("<div></div>");
+						data.resources.forEach(function(res,inx){
+							console.log(res);
+							if (res.type==2) {
+								console.log("图片");
+								a.append('<p><img src="' + res.uri + '" /></p>');
+							} else{
+								a.append(res.descp);
+							}
+						});
+						console.log(a[0].outerHTML);
+						$(".hotspot_txt").html(a[0].outerHTML);
+					},
+					error: function(data,err){
+						console.log(err);
+					}
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

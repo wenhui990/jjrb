@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试</title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			li{list-style: none;float: left;margin: 17px;}
+			ul.v_content_list{height: 200px;overflow: hidden;position: absolute;}
+			.v_show{width: 500px;height:260px;margin: 100px auto;border: 1px solid red;padding: 20px;}
+			.v_show .v_caption p,.highlight_tip,.change_btn,i{float: left;}
+			.current{background: #00B9E8;}
+			.highlight_tip span{display: inline-block;width: 20px;height: 20px;border: 1px solid #000000;border-radius: 50%;text-align: center;}
+			.change_btn{margin: 0 20px;}
+			.v_content{position: relative;width: 100%;height: 100%;overflow: hidden;}
+			
+			.change_btn span{background: #0000FF;color: #fff;padding: 5px 10px;}
+			.v_show .v_caption::after,.v_content_list::after,.v_content::after{content: "";display: block;clear: both;width: 0;height: 0;}
+			.centern{float: left;}
+			.centern span{background: #666666;color: #fff;padding: 2px 5px;}
+			.centern::after{content: "";display: block;clear: both;}
+		</style>
+	</head>
+	<body>
+		<div class="v_show">
+			<div class="v_caption">
+				<p>卡通动漫</p>
+				<div class="highlight_tip">
+					<span class="d current">1</span>
+					<span class="d">2</span>
+					<span class="d">3</span>
+				</div>
+				<div class="change_btn">
+					<span class="prev">上一页</span>
+					<span class="next">下一页</span>
+				</div>
+				<i><a href="#">更多&gt;&gt;</a></i>
+			</div>
+			<div class="v_content">
+				<ul class="v_content_list">
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记1</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记2</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记3</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记4</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记5</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记6</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记7</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记8</h4><span>播放</span><i>45,7657</i></li>
+					<li><a href="#"><img src="images/erweima.png" /></a><h4>西游记9</h4><span>播放</span><i>45,7657</i></li>
+				</ul>
+			</div>
+			<div class="centern">
+				<select name="" multiple="multiple" style="width: 100px;height: 160px;" id="select1">
+					<option value="1">选项1</option>
+					<option value="2">选项2</option>
+					<option value="3">选项3</option>
+					<option value="4">选项4</option>
+					<option value="5">选项5</option>
+					<option value="6">选项6</option>
+					<option value="7">选项7</option>
+					<option value="8">选项8</option>
+				</select>
+				<div>
+					<span id="add">&gt;&gt;</span>
+					<span id="add_all">&gt;&gt;All</span>
+				</div>
+			</div>
+			<div class="centern">
+				<select name="" multiple="multiple" style="width: 100px;height: 160px;" id="select2">
+					
+				</select>
+				<div>
+					<span id="remove">&lt;&lt;</span>
+					<span id="remove_all">&lt;&lt;All</span>
+				</div>
+			</div>
+		</div>
+		<div id="wrapper" style="background: #00B9E8;border: 1px solid salmon;">
+			<p id="messagewindow" style="height: 50px;border: 1px solid #000000;overflow: auto;"><span id="loading">加载中...</span></p>
+			<form id="chatform">
+				姓名：<input type="text" id="author" size="50" /><br />
+				内容：<input type="text" id="msg" size="50" /><br />
+				<input type="submit" name="" id="" value="发送" />
+				<input type="button" name="" id="f1" value="发送f1" />
+				<input type="button" name="" id="f2" value="发送f2" />
+			</form>
+		</div>
+		<script src="js/jquery1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+				var f1 = function(){
+						for (var j=0;j<1000;j++) {
+							console.log("F1"+j)
+						}
+				}
+				function f2(){
+						for (var j=0;j<1000;j++) {
+							console.log("F2"+j)
+						}
+				}
+				document.getElementById("f1").onclick = f1;
+				document.getElementById("f2").onclick = f2;
+				
+			$(function(){
+				var timestamp = 0;
+//				updateMsg();
+				$("#chatform").submit(function(){
+					$.post("data.json",{
+						message: $("#msg").val(),
+						name: $("#author").val(),
+						action: "postmsg",
+						time: timestamp
+					},function(){
+						$("#msg").val("");
+						addMessages("test.xml");
+					})
+					return false;
+				})
+//				function updateMsg(){
+//					$.post('data.json',{time:timestamp},function(){
+//						$("#loading").remove();
+//						addMessages("test.xml");
+//					});
+//					setTimeout('updateMsg()',4000);
+//				}
+addMessages("test.xml");
+				function addMessages(xml){
+					if ($("status",xml).text()=="2")return;			
+					timestamp = $("time",xml).text();
+					$("mesage",xml).each(function(){
+						var author = $("author",this).text();
+						var content = $("text",this).text();
+						var html = "<strong>"+author+"</strong>;"+content+"<br/>";
+						$("#messagewindow").prepend(html);
+					console.log(HTMLAllCollection)
+						
+					});
+
+				}
+				
+				
+				
+				$("#add").click(function(){
+					var $option = $("#select1 option:selected");
+					$option.appendTo("#select2");
+				});
+				$("#add_all").click(function(){
+					var $option = $("#select1 option");
+					$option.appendTo("#select2");
+				});
+				$("#select1").dblclick(function(){
+					var $option = $('option:selected',this);
+					$option.appendTo("#select2");
+				});
+				$("#remove").click(function(){
+					var $option = $("#select2 option:selected");
+					$option.appendTo("#select1");
+				});
+				$("#remove_all").click(function(){
+					var $option = $("#select2 option");
+					$option.appendTo("#select1");
+				});
+				$("#select2").dblclick(function(){
+					var $option = $('option:selected',this);
+//					console.log($option);
+					$option.appendTo("#select1");
+				});
+				var $width = $(".v_content").width();
+				var $ul = $(".v_content_list");
+				var $num = $(".highlight_tip");
+				var page =1;
+				var page_count = 3;
+				var len = $ul.find("li").length;
+				var a = Math.ceil(len/page_count),b=0;
+				$(".next").click(function(){
+					
+					if (page==a) {
+						$ul.animate({left:0},100);
+						page=1;
+					} else{
+						$ul.animate({left:"-="+$width},300);
+						page++;
+					}
+					$(".d").eq(page-1).addClass("current").siblings().removeClass("current");
+				})
+				$(".prev").stop(true,true).click(function(){
+					var $width = $(".v_content").width();
+				var $ul = $(".v_content_list");
+				var $num = $(".highlight_tip");
+				var len = $ul.find("li").length;
+				var a = Math.ceil(len/page_count);
+					b = b+=$width; 
+					console.log(b);
+					if (page=1) {
+						$ul.animate({left:"-="+$width*(a-1)},300);
+						page=page_count;
+					} else{
+						$ul.animate({left: "+="+$width},300);
+						page--;
+					}
+					$(".d").eq(page-1).addClass("current").siblings().removeClass("current");
+				})
+				
+			})
+			var name = "a";
+			if (true) {
+				var name = "b";
+				console.log(name);
+			}
+			console.log(name);
+		</script>
+		
+		
+		
+		
+	</body>
+</html>

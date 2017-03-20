@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>发布观点</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
+		<!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+		<style type="text/css">
+			.add_toole {
+				margin-right: 0;
+				padding: 30px;
+				background-color: #fff;
+				margin-left: 0;
+			}
+			
+			.add_toole a.toole_nav {
+				margin-left: 20px;
+				font-weight: bold;
+			}
+			
+			.add_toole a.toole_nav_bottom {
+				font-weight: bold;
+				margin: 1% 5%;
+				border: 2px dotted #adabab;
+				display: inline-block;
+				padding: 3% 7%;
+			}
+			
+			.add_viewpoint_title {
+				margin: 20px 0;
+			}
+			
+			.add_viewpoint_title input {
+				border: none;
+				width: 100%;
+				font-size: 30px;
+				outline: none;
+			}
+			
+			.add_time_source label {
+				margin-right: 10px;
+				color: #999999;
+			}
+			
+			.add_time_source .ats_form1 {
+				width: 60%;
+			}
+			
+			.add_time_source .ats_form2 {
+				width: 80%;
+			}
+			
+			.add_time_source .ats_form3 {
+				width: 70%;
+			}
+			
+			.add_time_source .form-control {
+				border-radius: 0;
+			}
+			
+			#viewpoint_content {
+				margin: 30px 0 0 0;
+			}
+			
+			#add_tan .modal_style {
+				width: 60%;
+				min-height: 500px;
+				margin-top: 100px;
+			}
+			
+			#add_p_txt {
+				width: 100%;
+				height: 100%;
+				padding: 10px;
+			}
+			
+			#modal_footer {
+				margin-bottom: 50px;
+			}
+			
+			#contont .add_row {
+				text-indent: 2em;
+				margin: 20px 0;
+			}
+			
+			#contont .add_row p {
+				line-height: 2;
+			}
+			
+			.imgs img {
+				width: 100%;
+			}
+			
+			.symbol.required:before {
+				content: "*";
+				display: inline;
+				color: #E6674A;
+			}
+			/*添加数据字典样式*/
+			
+			.countrys_style {
+				background: #0833A0;
+				sursor: pointer;
+				margin: 2px;
+				color: #fff;
+			}
+			
+			.datas_desc {
+				overflow: auto;
+				height: 500px;
+			}
+			
+			.datas_desc .form-group {
+				position: relative;
+			}
+			
+			.countrys_list,
+			.zb_list {
+				position: absolute;
+				top: 33px;
+				right: 0;
+				width: 196px;
+				z-index: 10;
+				background: #FFFFFF;
+				word-wrap: break-word;
+				word-break: break-all;
+			}
+			.new_txt,.new_img,#show_data{position: relative;}
+			.new_close{position: absolute;top: 0;right: 0;}
+			#countrys_vals,#indicators_vals{position: relative;margin: 5px;}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部导航 -->
+		<header></header>
+		<!--<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+					<a class="navbar-brand" href="index.html" target="_blank"><img src="Web/切图（第五周交付）/splash-ic.png" width="55" height="55" alt="logo" id="logo_img" /></a>
+				</div>
+				<div class="collapse navbar-collapse" id="navs">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="index.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-news-f.png"/></span>热点</a>
+						</li>
+						<li class="active">
+							<a href="viewpoint.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-paper-n.png"/></span>观点</a>
+						</li>
+						<li>
+							<a href="data.html?country=CN,US,JP&indicator=NY.GDP.MKTP.CD" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-numbers-n.png"/></span>数据</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="Web/切图（第五周交付）/n.png"/></span>我的 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li class="dropdown-header">登录</li>
+								<li class="dl_style">
+									<a href="javascript:void(0);" class="login_wechat">微信扫码</a>
+								</li>
+								<li class="dl_style">
+									<a href="javascript:void(0);" class="login_phone">手机号</a>
+								</li>
+								<li>
+									<a href="add_viewpoint.html" target="_blank">发布观点</a>
+								</li>
+								<li>
+									<a href="my_viewpoint.html" target="_blank">历史观点</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>-->
+		<!-- 头部导航结束  -->
+
+		<div id="wx_phone">
+			<!-- 手机号登陆  -->
+			<div id="phone">
+				<div class="modal-dialog modal_style">
+					<div class="modal-content">
+						<div class="modal-body">
+							<p class="modal_style_title">手机登录</p>
+							<form role="form">
+								<div class="form-group fg">
+									<a class="btn btn-info btn-sm btn-block none" id="phone_error">手机格式不正确！重新输入</a>
+									<input type="text" class="form-control" id="input_Phone" placeholder="请输入手机号">
+									<!--<input type="password" class="form-control" id="input_password" placeholder="请输入密码">-->
+									
+									<input type="text" class="form-control form-group-sm " id="input_Phone_code" placeholder="请输入验证码">
+									<a class="btn btn-info btn-sm btn-block none" id="code_btn1"><span id="code_num"><i>60</i>后可重新</span>获取验证码</a>
+									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn"  data-placement="bottom" value="获取验证码" />
+								</div>
+								<!--<input type="button" class="btn modal_style_btn btn_next fg" value="下一步">-->
+								<input type="button" class="btn btn-success btn-block modal_style_btn btn_login phone_code_login" value="登录">
+								<p id="wechat_tag">
+									<!--<a href="javascript:void(0)" data-toggle="modal" data-target="#PhoneCode" class="phone_code">手机验证码登录<span class="glyphicon glyphicon-play"></span></a>-->
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#Phone" class="phone_no fg_hide">手机号登录<span class="glyphicon glyphicon-play"></span></a>
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="">微信登录<span class="glyphicon glyphicon-play"></span></a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 微信登陆  -->
+			<div id="WeChat">
+				<div class="modal-dialog modal_style">
+					<div class="modal-content">
+						<div class="modal-body">
+							<p class="modal_style_title">扫码登录</p>
+							<form role="form">
+								<div class="form-group" id="wx">
+									<img src="images/erweima.png" alt="微信扫码" />
+								</div>
+								<p id="wechat_tag">
+									<a href="javascript:void(0)" data-target="#Phone" class="">手机登录<span class="glyphicon glyphicon-play"></span></a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 内容 -->
+		<div class="container" id="contont">
+			<div class="row text-right add_toole">
+				<a href="javascript:;" class="toole_nav add_p" id="">
+					<span class="glyphicon glyphicon-text-width">
+				</span> 插入段落
+				</a>
+				<a href="javascript:;" class="toole_nav add_data" id="">
+					<span class="glyphicon glyphicon-text-width">
+				</span> 数据字典
+				</a>
+				<a href="javascript:;" class="toole_nav add_img" id="">
+					<span class="glyphicon glyphicon-picture">
+				</span> 插入图片
+				</a>
+			</div>
+			<div class="row add_toole add_viewpoint_title">
+				<input type="text" name="" id="new_title" value="" placeholder="输入标题" />
+			</div>
+			<!--<div class="row add_toole add_time_source">
+				<form role="form" class="form-inline">
+					<div class="form-group col-sm-3">
+						<label for="exampleInputEmail1">来源</label>
+						<select class="form-control ats_form1">
+							<option>选择</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+					</div>
+					<div class="form-group col-sm-5">
+						<label for="add_viewpoint_time">时间</label>
+						<input type="text" class="form-control ats_form2" id="add_viewpoint_time" />
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="author">作者</label>
+						<input type="text" id="author" class="form-control ats_form3" placeholder="请填写" />
+					</div>
+				</form>
+			</div>-->
+			<div class="row add_toole" id="viewpoint_content">
+				
+				
+			</div>
+			<div class="row text-right add_toole">
+				<a href="javascript:;" class="toole_nav_bottom add_p" id="">
+					<span class="glyphicon glyphicon-text-width">
+				</span> 插入段落
+				</a>
+				<a href="javascript:;" class="toole_nav_bottom add_data" id="">
+					<span class="glyphicon glyphicon-text-width">
+				</span> 数据字典
+				</a>
+				<a href="javascript:;" class="toole_nav_bottom add_img" id="">
+					<span class="glyphicon glyphicon-picture">
+				</span> 插入图片
+				</a>
+			</div>
+			<button class="btn btn-primary btn-lg btn-block" id="release_wiewpoint">发布</button>
+		</div>
+		<!--弹出层-->
+		<div id="add_tan">
+			<div class="modal-dialog modal_style">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p class="modal_style_title">插入段落</p>
+						<form role="form" class="form-inline">
+							<div class="form-group" style="width: 100%;">
+								<div class="txt_desc">
+									<textarea name="" id="add_p_txt">请输入文字...</textarea>
+								</div>
+								<div class="datas_desc">
+									<div class="form-group">
+										<label for="country">国家<span class="symbol required"></span></label>
+										<input type="text" class="form-control desc_position country" id="country" placeholder="输入国家">
+										<div class="countrys_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
+											<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
+								    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
+								    	<div class="countrys_ls" data-id="19554">3CE</div>
+								    	<div class="countrys_ls" data-id="19557">3TEMPO</div>-->
+										</div>
+										
+									</div>
+									<div class="form-group">
+										<label for="indicator">经济指标<span class="symbol required"></span></label>
+										<input type="text" class="form-control desc_position indicator" id="indicator" placeholder="经济指标">
+										<div class="zb_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
+											<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
+									    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
+									    	<div class="countrys_ls" data-id="19554">3CE</div>
+									    	<div class="countrys_ls" data-id="19557">3TEMPO</div>-->
+										</div>
+										
+									</div>
+									<div class="form-group">
+										<label for="startInputTime">开始时间</label>
+										<input type="text" class="form-control desc_position start_time" id="startInputTime" placeholder="开始时间">
+									</div>
+									<div class="form-group">
+										<label for="endInputTime">截止时间</label>
+										<input type="text" class="form-control desc_position end_time" id="endInputTime" placeholder="截止时间">
+									</div>
+									<div class="form-group">
+										<input type="submit" class="btn btn-default" id="select_data" value="查询" />
+									</div>
+									<div id="">
+										已选国家：<p id="countrys_vals"></p>
+										已选指标：<p id="indicators_vals"></p>
+									</div>
+									<div id="show_data" style="min-height: 300px;">
+
+									</div>
+
+								</div>
+
+								<div id="modal_footer">
+									<button type="button" class="btn btn-info btn_ok" style="margin-right: 30px;padding: 6px 20px;">确定</button>
+									<button type="button" class="btn btn-danger btn_clean" style="padding: 6px 20px;">取消</button>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<footer></footer>
+		<script src="js/jquery1.9.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<!--图表插件引入-->
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<!--日期控件引入-->
+		<script type="text/javascript" src="js/jedate/jquery.jedate.min.js"></script>
+		<!--//图片插入插件-->
+		<script src="js/ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			jQuery.fn.extend({
+				uploadPreview: function(opts) {
+					var _self = this,
+						_this = $(this);
+					opts = jQuery.extend({
+						Img: "ImgPr",
+						Width: 100,
+						Height: 100,
+						ImgType: ["gif", "jpeg", "jpg", "bmp", "png"],
+						Callback: function() {}
+					}, opts || {});
+					_self.getObjectURL = function(file) {
+						var url = null;
+						if(window.createObjectURL != undefined) {
+							url = window.createObjectURL(file);
+						} else if(window.URL != undefined) {
+							url = window.URL.createObjectURL(file);
+						} else if(window.webkitURL != undefined) {
+							url = window.webkitURL.createObjectURL(file);
+						}
+						return url;
+					}
+					_this.change(function() {
+						if(this.value) {
+							if(!RegExp("\.(" + opts.ImgType.join("|") + ")$", "i").test(this.value.toLowerCase())) {
+								alert("选择文件错误,图片类型必须是" + opts.ImgType.join("，") + "中的一种");
+								this.value = "";
+								return false;
+							}
+							if(navigator.userAgent.indexOf("MSIE") > -1) {
+								try {
+									$("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0]));
+								} catch(e) {
+									var src = "";
+									var obj = $("#" + opts.Img);
+									var div = obj.parent("div")[0];
+									_self.select();
+									if(top != self) {
+										window.parent.document.body.focus();
+									} else {
+										_self.blur();
+									}
+									src = document.selection.createRange().text;
+									document.selection.empty();
+									obj.hide();
+									obj.parent("div").css({
+										'filter': 'progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)',
+										'width': opts.Width + 'px',
+										'height': opts.Height + 'px'
+									});
+									div.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = src;
+								}
+							} else {
+								$("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0]));
+							}
+							opts.Callback();
+						}
+					});
+				}
+			});
+		</script>
+		<script type="text/javascript">
+			$("header").load("header.html");
+			$("footer").load("footer.html");
+			
+			$(function() {
+//				if (!localStorage.token) {
+//					alert("请登录后进行操作！");
+//					$("#phone").show();
+//					return false;
+//				}
+				$("#author").val(localStorage.userName);
+				//接口
+				var _href = "http://api.jjrb.grsx.cc",
+					interfacelist = {
+						select_indicator: "/data/indicator/k/",
+						select_data: "/data",
+						host_indicator: "/data/indicaotr/hot",
+						select_country: "/data/country/k/",//data/country/k/{val}
+						feed: "/feed",  //观点详情页feed/{id}
+						img:'/upload'
+					};
+				var countrys=[],indicators=[],id_val,_url,start,end;
+				//初始化时间
+				var now = new Date();
+				var year = now.getFullYear();
+				var month = now.getMonth() + 1;
+				var day = now.getDate();
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				function getTime(a) {
+					if(a < 10) {
+						a = "0" + a;
+					} else {
+						a = a;
+					}
+					return a;
+				}
+				var nowDate = year + "-" + getTime(month) + "-" + getTime(day) + " " + getTime(hour) + ":" + getTime(minute);
+				console.log(nowDate);
+				//  		$("#add_viewpoint_time").val(nowDate);
+
+				//插入添加数据开始
+				var modal_height = ($(window).height() * 80 / 100);
+				var num = 0;
+				$("#add_tan .modal-content").css("height", modal_height);
+				$(".datas_desc").height(modal_height * 75 / 100);
+
+				//点击插入段落事件
+				$(".add_p").on("click", function(e) {
+					e.stopPropagation();
+					$("#add_tan").show();
+					$("#add_p_txt").css("height", modal_height - 110);
+					$("#add_p_txt").focus(function() {
+						$(this).val("");
+					});
+					$(".txt_desc").show();
+					$(".datas_desc").hide();
+				});
+
+				//点击确定事件
+				$(".btn_ok").on("click", function(e) {
+					e.stopPropagation();
+					//  			var 
+					var html = "<p class='row add_row new_txt pointHtmls' data-type='13'>" + $('#add_p_txt').val() + "<span class='glyphicon glyphicon-remove new_close none'></span></p>";
+					 var fl = $(".txt_desc").css("display");
+					 if(fl=="none"){
+					 	id_val = "show_data"+now.getTime();
+					 	console.log(id_val);
+					 	$("#viewpoint_content").append('<div id="'+id_val+'" style="min-height:500px" class="pointHtmls" data-type="15"></div>');
+					 	start = $("#startInputTime").val();
+						end = $("#endInputTime").val();
+						_url = _href + interfacelist.select_data+"?";
+						urlLoad(id_val,_url,countrys,indicators,start,end);
+						$("#"+id_val).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
+					 }else{
+					 	$("#viewpoint_content").append(html);
+					 }
+					$("#add_tan").hide();
+				});
+
+				//点击取消事件
+				$(".btn_clean").on("click", function(e) {
+					e.stopPropagation();
+					$("#add_tan").hide();
+				});
+
+				//点击插入图片
+				$(".add_img").on("click", function(e) {
+					num++;
+					var html = "<div class='row new_img pointHtmls' data-type='12'><div class='imgs' id='imgs" + num + "'></div></div>";
+					$("#viewpoint_content").append(html);
+					$("#imgs" + num).append('<input type="file" id="up' + num + '" style="display:none" />');
+					$("#up" + num).click();
+
+					var imgwidth = $("#imgs" + num).width();
+					$("#imgs" + num).append("<img id='ImgPr" + num + "' style='display: inherit;' /><span class='glyphicon glyphicon-remove new_close none'></span>");
+					
+					upImg("ImgPr" + num);
+					var uploadForm = "#imgs" + num,fileId = "#up" + num,imgId = "#ImgPr" + num
+					uploadImg(fileId,imgId);
+					console.log(uploadForm+"”"+fileId);
+					console.log("ImgPr" + num);
+				});
+				
+				//上传图片
+				function uploadImg(fileId,imgId){
+					$(document).on("change",fileId,function(){
+						var formData = new FormData();
+						formData.append('file', $(fileId)[0].files[0]);
+						console.log(formData);
+						$.ajax({
+						    url: 'http://api.jjrb.grsx.cc/upload',
+						    type: 'POST',
+						    cache: false,
+						    data: formData,
+						    processData: false,
+						    contentType: false,
+						    success: function(data){
+						    	console.log(data);
+						    	console.log(fileId);
+						    	console.log(imgId);
+						    	$(imgId).attr("src",data);
+						    }
+						}).done(function(res) {
+						}).fail(function(res) {});
+					});
+				}
+
+				//调用插入图片
+				function upImg(id, width, height) {
+					$("#up" + num).uploadPreview({
+						Img: id,
+						Width: width,
+						Height: height
+					});
+				}
+				
+				$(document).on("mouseenter",".countrys_txt,.indicators_txt",function(){
+					$(this).find(".country_txt_close").show().css({"position":"absolute","right":0,"top":0});
+				});
+				$(document).on("mouseleave",".countrys_txt,.indicators_txt",function(){
+					$(".country_txt_close").hide();
+				});
+				$(document).on("click",".country_txt_close",function(){
+					$(this).parent().parent().remove();
+				});
+				
+				//点击插入数据
+				$(".add_data").on("click", function(e) {
+					e.stopPropagation();
+					$("#add_tan").show();
+					$(".txt_desc").hide();
+					$(".datas_desc").show();
+					$(".modal_style_title").html("插入数据");
+				});
+				//国家输入内容键盘弹起事件
+				$(".country,.indicator").on("keyup", function() {
+					var country_val = $(".country").val();
+					var indicator_val = $(".indicator").val();
+					var _src = "";//'data.json'; //
+					console.log(_src);
+					var _classname = $(this).attr("class");
+					if(_classname.indexOf("country") >= 0) {
+						console.log("cc");
+						_src = _href + interfacelist.select_country + country_val;
+						ci(".countrys_list", 'countrys_ls', _src);
+					} else if(_classname.indexOf("indicator") >= 0) {
+						console.log("dd");
+						_src = _href + interfacelist.select_indicator + indicator_val;
+						ci(".zb_list", 'zb_ls', _src);
+					}
+				});
+				//国家，经济指标通用方法
+				function ci(classname, classname1, src) {
+					$(classname).show();
+					$(classname).html("");
+					$.ajax({
+						type: "get",
+						url: src,
+						success: function(data) {
+							var d = data;
+							console.log(d);
+							$(d).each(function(i, e) {
+//								console.log(e);
+								var _name,_id;
+								if (classname.indexOf("country")>=0) {
+									_id = e.iso2_code;
+									_name = e.name;
+									$(classname).append('<div class="' + classname1 + ' cou_list_id" data-id="'+_id+'" title="'+_name+'">' + _name + '</div>');
+								} else if(classname.indexOf("zb")>=0){
+									_id = e.id;
+									_name = e.name_cn;
+									if(_name==null)_name=_id
+									$(classname).append('<div class="' + classname1 + ' zb_list_id" data-id="'+_id+'" title="'+_id+'">' + _name + '</div>');
+								}
+								
+							});
+						},
+						error: function(data) {
+							console.log(data.error().status);
+						}
+					});
+				}
+
+				//点击弹出层国家列表隐藏
+				$("#add_tan").on("click", function(e) {
+					$(".countrys_list,.zb_list").hide();
+				});
+				//阻止输入框点击默认事件
+				$(".desc_position").on("click", function(e) {
+					e.stopPropagation();
+				});
+				//鼠标移到列表上样式
+				$('.countrys_list,.zb_list').on('mouseenter', 'div.countrys_ls,div.zb_ls', function() {
+					$(this).addClass("countrys_style").siblings().removeClass("countrys_style");
+				});
+				//列表点击事件
+				$('.countrys_list,.zb_list').on('click', 'div.countrys_ls,div.zb_ls', function(e) {
+					e.stopPropagation();
+					var _classname = $(this).attr("class"),_id=$(this).attr("data-id");
+					var txt = $(this).html();
+					console.log(_classname)
+					if(_classname.indexOf("countrys_ls") >= 0) {
+						console.log("country_ls");
+						$(".country").val(txt);
+						$('.countrys_list').hide();
+						var c_html = "<div style='display:inline-block;'><p data-id='"+_id+"' class='countrys_txt' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+$(".country").val()+"<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
+						$("#countrys_vals").append(c_html);
+					} else if(_classname.indexOf("zb_ls") >= 0) {
+						console.log("zb_ls");
+						$(".indicator").val(txt);
+						$('.zb_list').hide();
+						var i_html = "<div style='display:inline-block;'><p data-id='"+_id+"' class='indicators_txt' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+$(".indicator").val()+"<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
+						$("#indicators_vals").append(i_html);
+					}
+				});
+				
+				
+				
+				//点击查询
+				$(document).on("click","#select_data",function(e){
+					if(countrys.length>0||indicators.length>0){
+						countrys=[];
+						indicators=[];
+					}
+					for(var i=0;i<$(".countrys_txt").length;i++){
+						countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+					}
+					for(var i=0;i<$(".indicators_txt").length;i++){
+						indicators.push($(".indicators_txt").eq(i).attr("data-id"));
+					}
+					var country = countrys.toString(),
+					    indicator = indicators.toString(),
+					    start = $("#startInputTime").val(),
+					    end = $("#endInputTime").val();
+					_url = _href + interfacelist.select_data+"?";//'data.json';//"http://api.jjrb.grsx.cc/data?&country=CN,US&indicator=NY.GDP.MKTP.CD&start=2010"//
+//					console.log(country+" "+indicator+" "+ start +" " + end);
+					
+					urlLoad("show_data",_url,country,indicator,start,end);
+//					urlLoad("show_data",_url);
+					return false;
+				});
+				
+				
+				$(document).on("click",".new_close",function(){
+					$(".new_txt,.new_img,#show_data").css("border","0");
+					$(this).parent().remove();
+				});
+				$(document).on("mouseenter",".new_txt,.new_img,#show_data",function(){
+					$(".new_close").show();
+//					console.log($(this).prop("class"))
+					if ($(this).prop("class").valueOf("new_txt")) {
+						$(".new_txt").css("border","1px solid red");
+					}
+					if ($(this).prop("class").valueOf("new_img")) {
+						$(".new_img").css("border","1px solid red");
+					}
+					if ($(this).prop("id").valueOf("show_data")) {
+						$("#show_data").css("border","1px solid red");
+					}
+				});
+				$(document).on("mouseleave",".new_txt,.new_img,#show_data",function(){
+					$(".new_close").hide();
+					$(this).css("border","0");
+				});
+				
+				//发布观点
+				$(document).on('click','#release_wiewpoint',function(){
+					var $pointHtmls = $(".pointHtmls"),resources=[],pointHtm;
+//					console.log($pointHtmls);
+					$.each($pointHtmls,function(i,e){
+//						console.log($(e));
+						console.log(e);
+						var type = e.getAttribute("data-type");
+						console.log(type);
+						if (type === "12") {
+							var data = {
+								'type': type,
+								'descp': e.outerHTML
+							}
+							resources.push(data);
+						}else if (type === "13") {
+							var data = {
+								'type': type,
+								'descp': e.outerHTML
+							}
+							resources.push(data);
+						} else if(type === "15"){
+							var data = {
+								'type': type,
+								'descp': e.outerHTML
+							}
+							resources.push(data);
+						}
+					});
+					console.log(resources);
+					
+					return;
+					var _title = $("#new_title").val(),
+						datas = {
+						    	'id_val':id_val,//图表ID
+						    	'country':countrys,//国家
+						    	'indicator':indicators,//指标
+						    	'start':start || 'null',//开始时间
+						    	'end':end || 'null',//时间
+						   },
+						   data = {
+							'token' : localStorage.token,
+							'type': 3,
+							'id': localStorage.userId,
+//							'owner':{
+//								'id':localStorage.userId,
+//								'name':localStorage.userName,
+//								'phone':localStorage.phone
+//							},
+						    'resources': [
+						    	{
+						            'type': 14, 
+						            'descp': id_val?$("#viewpoint_content").html()+'??'+JSON.stringify(datas):$("#viewpoint_content").html()
+						        }
+						    ],
+						    'title': _title,
+						}
+					console.log(data);
+					$.ajax({
+						type:"post",
+						url: _href + interfacelist.feed,
+						async:true,
+						token : localStorage.token,
+						data: {
+							'token':localStorage.token,
+							'data':JSON.stringify(data)
+						},
+						success: function(e){
+							alert("发布成功！");
+							window.location.href = 'http://m.jjrb.grsx.cc/my_viewpoint.html';
+							console.log(e);
+						},
+						error: function(){
+							alert("发布失败！");
+						}
+					});
+				});
+				
+				$("#imglist").click(function(){
+					$.ajax({
+						type:"post",
+						url: _href + interfacelist.img,
+						async:true,
+						data:{
+							'file':'file:///C:/Users/Administrator/Pictures/c2fdfc039245d688acbcd54ba0c27d1ed31b24a6.jpg'
+						},
+						success:function(data){
+							console.log(data);
+						}
+					});
+				})
+				
+			});
+
+			//时间插件调用
+			$("#add_viewpoint_time").jeDate({
+				isinitVal: true,
+				festival: true,
+				ishmsVal: false,
+				format: "YYYY-MM-DD",
+				zIndex: 3000,
+			})
+			$("#startInputTime,#endInputTime").jeDate({
+				isinitVal: true,
+				festival: true,
+				ishmsVal: false,
+				format: "YYYY",
+				zIndex: 3000,
+			})
+		</script>
+		
+		
+		<!--<div id="uploadForm">
+		    <input id="file" type="file"/>
+		    <button id="upload" type="button" style="margin-bottom: 100px;">upload</button>
+		</div>
+		<script type="text/javascript">
+			$(document).on("change","#up1",function(){
+				var formData = new FormData();
+				formData.append('file', $('#up1')[0].files[0]);
+				console.log(formData);
+				$.ajax({
+				    url: 'http://api.jjrb.grsx.cc/upload',
+				    type: 'POST',
+				    cache: false,
+				    data: formData,
+				    processData: false,
+				    contentType: false,
+				    success: function(data){
+				    	console.log(data);
+				    	$("#ImgPr1").attr("src",data);
+				    }
+				}).done(function(res) {
+				}).fail(function(res) {});
+			});
+		</script>-->
+		
+		
+	</body>
+
+</html>

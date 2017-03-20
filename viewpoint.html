@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>观点</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部导航 -->
+		<header></header>
+		<!--<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+					<a class="navbar-brand" href="#"><img src="Web/切图（第五周交付）/splash-ic.png" width="55" height="55" alt="logo" id="logo_img" /></a>
+				</div>
+				<div class="collapse navbar-collapse" id="navs">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="index.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-news-f.png"/></span>热点</a>
+						</li>
+						<li class="active">
+							<a href="viewpoint.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-paper-n.png"/></span>观点</a>
+						</li>
+						<li>
+							<a href="data.html?country=CN,US,JP&indicator=NY.GDP.MKTP.CD" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-numbers-n.png"/></span>数据</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="Web/切图（第五周交付）/n.png"/></span>我的 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li class="dropdown-header">登录</li>
+								<li class="dl_style">
+									<a href="javascript:void(0);" class="login_wechat">微信扫码</a>
+								</li>
+								<li class="dl_style">
+									<a href="javascript:void(0);" class="login_phone">手机号</a>
+								</li>
+								<li>
+									<a href="add_viewpoint.html" target="_blank">发布观点</a>
+								</li>
+								<li>
+									<a href="my_viewpoint.html" target="_blank">历史观点</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>-->
+		<!-- 头部导航结束  -->
+
+		<div id="wx_phone">
+			<!-- 手机号登陆  -->
+			<div id="phone">
+				<div class="modal-dialog modal_style">
+					<div class="modal-content">
+						<div class="modal-body">
+							<p class="modal_style_title">手机登录</p>
+							<form role="form">
+								<div class="form-group fg">
+									<a class="btn btn-info btn-sm btn-block none" id="phone_error">手机格式不正确！重新输入</a>
+									<input type="text" class="form-control" id="input_Phone" placeholder="请输入手机号">
+									<!--<input type="password" class="form-control" id="input_password" placeholder="请输入密码">-->
+									
+									<input type="text" class="form-control form-group-sm " id="input_Phone_code" placeholder="请输入验证码">
+									<a class="btn btn-info btn-sm btn-block none" id="code_btn1"><span id="code_num"><i>60</i>后可重新</span>获取验证码</a>
+									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn"  data-placement="bottom" value="获取验证码" />
+								</div>
+								<!--<input type="button" class="btn modal_style_btn btn_next fg" value="下一步">-->
+								<input type="button" class="btn btn-success btn-block modal_style_btn btn_login phone_code_login" value="登录">
+								<p id="wechat_tag">
+									<!--<a href="javascript:void(0)" data-toggle="modal" data-target="#PhoneCode" class="phone_code">手机验证码登录<span class="glyphicon glyphicon-play"></span></a>-->
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#Phone" class="phone_no fg_hide">手机号登录<span class="glyphicon glyphicon-play"></span></a>
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="">微信登录<span class="glyphicon glyphicon-play"></span></a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 微信登陆  -->
+			<div id="WeChat">
+				<div class="modal-dialog modal_style">
+					<div class="modal-content">
+						<div class="modal-body">
+							<p class="modal_style_title">扫码登录</p>
+							<form role="form">
+								<div class="form-group" id="wx">
+									<img src="images/erweima.png" alt="微信扫码" />
+								</div>
+								<p id="wechat_tag">
+									<a href="javascript:void(0)" data-target="#Phone" class="">手机登录<span class="glyphicon glyphicon-play"></span></a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 观点内容 -->
+		<!--观点内容背景颜色#f5efe4-->
+		<div class="container" id="viewpoint">
+			
+		</div>
+		<footer></footer>
+		<script src="js/jquery1.9.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/viewpoint.js"></script>
+
+	</body>
+
+</html>

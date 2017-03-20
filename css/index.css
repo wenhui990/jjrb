@@ -1,0 +1,74 @@
+body{background-color:#ebeff3;}
+.dl_style{text-indent: 1em;}
+.none{display: none;}	
+#navs li span{margin-right: 10px;padding: 0px 2px 4px 2px;}
+#navs ul>li>a.nav_a{padding: 25px 40px;font-weight: bold;font-size: 18px;line-height: 2;}
+.navbar-nav>.active>a{color: #3b5998 !important;}
+#navs ul li ul li a{padding-top: 10px;padding-bottom: 10px;}
+.li_active{}
+.sidebar img{width: 100%;height: 400px;margin: 10px 0;}
+.sidebar div{position: absolute;bottom: 10px;padding: 10px;color: #fff;}
+.sidebar h1{width: 420px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.sidebar h1 a{color: #fff;}
+.modal_style{margin-top: 300px;width: 300px;font-size: 12px;text-align: center;}
+.modal_style .modal-body{padding: 30px;}
+.modal_style .modal_style_title{font-weight: bold;}
+.modal_style form .form-group{margin-bottom: 35px;}
+.modal_style form #wechat_tag{margin-top: 20px;color: #000;font-size: 12px;}
+.modal_style form #wechat_tag a{color: #000;font-size: 12px;}
+.modal_style form .modal_style_btn{border-radius: 0;/*background-color: #999;height: 25px;width: 100%;text-shadow: none;padding: 0;line-height: 25px;color: #fff;border-radius: 0;font-size: 12px;*/}
+.modal_style .modal-content{border-radius: 0;}
+.modal_style .modal-content input#input_Phone{border-radius: 0;border: 1px solid #000;}
+.fg input{margin-bottom: 15px;border-radius: 0;border: 1px solid #000;}
+.fg #code_btn{border-radius: 0;}
+.fg_hide{display: none;}
+#hot_content,#data_desc,#contont,#about_data,#viewpoint,#viewpoint_desc{margin-bottom: 60px;}
+
+
+/*观点样式*/
+.viewpoint{position:relative;padding: 25px 30px;background: #fff;margin: 25px 0;}
+.viewpoint img.header_img{width: 50px;height: 50px;position: absolute;left: 15px;top: -25px;border-radius: 50%;}
+.viewpoint small{color: #999;}
+.viewpoint h2 a{color: #000;}
+.viewpoint .viewpoint_txt{margin-top: 10px;line-height: 2;}
+#phone,#WeChat,#add_tan{position: fixed;top:0;background: rgba(0,0,0,0.6);width: 100%;min-height: 1100px;width:100%;z-index: 998;display: none;}
+
+#viewpoint_desc .media{background-color: #fff;padding: 20px 30px;}
+#viewpoint_desc .media img{width: 45px;height: 45px;border-radius: 50%;}
+
+/*观点评论样式*/
+#comment_title,.comments{padding: 0 30px;}
+#comment_title .comment_img{width: 30px;height: 24px;display: inline-block;margin-right: 20px;vertical-align: middle;}
+#comment_title .c_img1{background: url(../images/comment@3x.png) no-repeat;background-size: cover;}
+#comment_title .c_img2{background: url(../images/thumb@3x.png) no-repeat left top;background-size: cover;}
+#comment_title .num{position: relative;top: -7px;left: 10px;}
+
+#comment .comment_add_icon{margin-right: 5px;}
+#comment .comment_add{color: #979797;}
+#comment .comment_add:hover{color: #666;}
+.comments .row{margin: 20px 0;}
+.comments .row .col-md-1{padding-left: 0;width: 4%;}
+.comments .row .col-md-11{padding-left: 0;}
+.comments .row .col-md-1 img{border-radius: 50%;}
+.comments .comments_name{line-height: 30px;font-size: 10px;}
+.comments .comments_name .comments_author{font-weight: bold;}
+.comments .comments_desc{font-size: 18px;font-weight: bold;margin-left: 4%;}
+
+.comment_footer{text-align: center;background-color: #fff;padding: 20px 0;margin-bottom: 50px;}
+.comment_footer img{border-radius: 50%;}
+.comment_footer .c_f_style{margin: 15px 0;font-size: 18px;font-weight: bold;}
+.comment_footer .next_comment{display: inline-block;color: #000000;}
+.comment_footer .next_comment:hover{text-decoration: none;border-bottom: 2px solid #E6E6E6;}
+
+/*数据部分样式*/
+#datas{background: #999999;padding: 15px 0 15px 15px;}
+#data_border{height: 10px;background-color: #fff;margin-top: 20px;margin-left: 0;margin-right: 15px;}
+#data_border .db{height: 10px;display: inline-block;width: 14%;float: left;margin-right: 35px;}
+#data_border .data_border{background: #3b5998;}
+
+#data_desc{margin: 50px auto;color: #000000;font-size: 16px;font-weight: bold;}
+#data_desc .form_style{background: #3b5998;color: #fff;padding: 10px;border-radius: 0;}
+
+footer{background: #f8f8f8;width:100%;height: 50px;line-height: 50px;position: fixed;bottom: 0;left: 0;margin-top: 60px;}
+#back_top{float: right;font-size: 30px;font-weight: bold;width: 30px;height: 50px;}
+#back_top:hover{cursor: pointer;}
