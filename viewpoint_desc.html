@@ -13,57 +13,16 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
 		<style type="text/css">
-
+			.imgs img{width: 100%;}
+			.viewpoint_txt img{width: 100%;}
+			.viewpoint_txt p{line-height: 2;}
+			.new_txt{display: none;}
 		</style>
 	</head>
 
 	<body>
 		<!-- 头部导航 -->
 		<header></header>
-		<!--<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-					<a class="navbar-brand" href="#"><img src="Web/切图（第五周交付）/splash-ic.png" width="55" height="55" alt="logo" id="logo_img" /></a>
-				</div>
-				<div class="collapse navbar-collapse" id="navs">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="index.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-news-f.png"/></span>热点</a>
-						</li>
-						<li class="active">
-							<a href="viewpoint.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-paper-n.png"/></span>观点</a>
-						</li>
-						<li>
-							<a href="data.html?country=CN,US,JP&indicator=NY.GDP.MKTP.CD" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-numbers-n.png"/></span>数据</a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="Web/切图（第五周交付）/n.png"/></span>我的 <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">登录</li>
-								<li class="dl_style">
-									<a href="javascript:void(0);" class="login_wechat">微信扫码</a>
-								</li>
-								<li class="dl_style">
-									<a href="javascript:void(0);" class="login_phone">手机号</a>
-								</li>
-								<li>
-									<a href="add_viewpoint.html" target="_blank">发布观点</a>
-								</li>
-								<li>
-									<a href="my_viewpoint.html" target="_blank">历史观点</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>-->
 		<!-- 头部导航结束  -->
 
 		<div id="wx_phone">
@@ -217,6 +176,7 @@
 		<footer></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.min.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 			$("header").load("header.html");
@@ -236,9 +196,11 @@
 				var _href = "http://api.jjrb.grsx.cc",
 					interfacelist = {
 						feed: "/feed",
+						select_data: "/data"
 					},
 					u = getUrlParams(),
-					urll = _href + interfacelist.feed + "/" + u.id;//"viewpoint.json";
+					urll = _href + interfacelist.feed + "/" + u.id,
+					_url = _href + interfacelist.select_data+"?";
 				$.ajax({
 					type: "get",
 					url: urll, //,_href+interfacelist.feed,//
@@ -258,32 +220,47 @@
 							otitle = data.resources[0].title;
 						}
 						
-						var a = $("<div></div>");
-						data.resources.forEach(function(res,inx){
-							console.log(res);
-							if (res.type==2) {
-								console.log("图片");
-								a.append('<p><img src="' + res.uri + '" /></p>');
-							} else{
-								a.append(res.descp);
+						var descp='',echarts,type,echarts_data;
+						$.each(data.resources,function(ind,e){
+							console.log(ind);
+							console.log(e);
+							
+							type = parseInt(e.type);
+							console.log(type);
+							if (type === 2) {//图片
+								descp += '<img src="' + e.uri + '">'
+							}else if (type === 13) {//文本
+								descp += '<p>'+e.descp+'</p>'
+							} else if(type === 15){//数据
+//											console.log(e.descp);
+								var _id ='';
+								if (e.descp) {
+									console.log(e.descp.length);
+									e.descp.length<0?echarts_data=e.descp:echarts_data=JSON.parse(e.descp);
+									_id = echarts_data.id_val;
+									console.log(echarts_data)
+								}
+								descp += '<div id="'+_id+'" style="min-height:500px;"></div>'
+							}else{
+								descp = e.descp
 							}
-						});
+						})
+						console.log(descp);
 						var htm = '<h2 class="viewpoint_title"><a href="#">' + otitle + '</a></h2>' +
 							'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
-							'<div class="viewpoint_txt">' + a[0].outerHTML + '<p>*经济日报</p></div> ';
+							'<div class="viewpoint_txt">' + descp + '<p>*经济日报</p></div> ';
 						/*var html = '<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">' +
 									'<a href="viewpoint_desc.html?id=' + e.owner.id + '" target="_blank"><img class="header_img" src="' + e.owner.head + '" /></a>' +
 									'<h2 class="viewpoint_title"><a href="viewpoint_desc.html?id=' + e.owner.id + '" target="_blank">' + otitle + '</a></h2>' +
 									'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(e.created) + '</span></small>' +
 									'      <div class="viewpoint_txt">'+ a[0].outerHTML +
 									'</div> </div>';*/
-						console.log(htm);
-						
-						
+//						console.log(htm);
 						
 						$(".viewpoint").append(htm);
-						$(".otitle").hide();
-						$("#aa").html("");
+						if (echarts_data) {
+							urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
+						}
 					}
 				});
 				$(document).on("click",".next_comment",function(){

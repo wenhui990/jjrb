@@ -313,7 +313,7 @@
 								<div class="datas_desc">
 									<div class="form-group">
 										<label for="country">国家<span class="symbol required"></span></label>
-										<input type="text" class="form-control desc_position country" id="country" placeholder="输入国家">
+										<input type="text" autocomplete="off" class="form-control desc_position country" id="country" placeholder="输入国家">
 										<div class="countrys_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
 											<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
 								    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
@@ -324,7 +324,7 @@
 									</div>
 									<div class="form-group">
 										<label for="indicator">经济指标<span class="symbol required"></span></label>
-										<input type="text" class="form-control desc_position indicator" id="indicator" placeholder="经济指标">
+										<input type="text" autocomplete="off" class="form-control desc_position indicator" id="indicator" placeholder="经济指标">
 										<div class="zb_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
 											<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
 									    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
@@ -444,11 +444,11 @@
 			$("footer").load("footer.html");
 			
 			$(function() {
-//				if (!localStorage.token) {
-//					alert("请登录后进行操作！");
-//					$("#phone").show();
-//					return false;
-//				}
+				if (!localStorage.token) {
+					alert("请登录后进行操作！");
+					$("#phone").show();
+					return false;
+				}
 				$("#author").val(localStorage.userName);
 				//接口
 				var _href = "http://api.jjrb.grsx.cc",
@@ -734,37 +734,37 @@
 						console.log(e);
 						var type = e.getAttribute("data-type");
 						console.log(type);
-						if (type === "12") {
+						if (type === "12") {//图片
 							var data = {
 								'type': type,
-								'descp': e.outerHTML
+								'uri': $(e).find("img").attr("src")
 							}
 							resources.push(data);
-						}else if (type === "13") {
+						}else if (type === "13") {//文本
 							var data = {
 								'type': type,
-								'descp': e.outerHTML
+								'descp': e.innerText
 							}
 							resources.push(data);
-						} else if(type === "15"){
+						} else if(type === "15"){//数据
+							var data_descp = {
+								'id_val':id_val,//图表ID
+						    	'country':countrys,//国家
+						    	'indicator':indicators,//指标
+						    	'start':start,//开始时间
+						    	'end':end //时间
+							}
 							var data = {
 								'type': type,
-								'descp': e.outerHTML
+								'descp': JSON.stringify(data_descp)
 							}
 							resources.push(data);
 						}
 					});
 					console.log(resources);
 					
-					return;
+//					return;
 					var _title = $("#new_title").val(),
-						datas = {
-						    	'id_val':id_val,//图表ID
-						    	'country':countrys,//国家
-						    	'indicator':indicators,//指标
-						    	'start':start || 'null',//开始时间
-						    	'end':end || 'null',//时间
-						   },
 						   data = {
 							'token' : localStorage.token,
 							'type': 3,
@@ -774,12 +774,7 @@
 //								'name':localStorage.userName,
 //								'phone':localStorage.phone
 //							},
-						    'resources': [
-						    	{
-						            'type': 14, 
-						            'descp': id_val?$("#viewpoint_content").html()+'??'+JSON.stringify(datas):$("#viewpoint_content").html()
-						        }
-						    ],
+						    'resources': resources,
 						    'title': _title,
 						}
 					console.log(data);
@@ -787,7 +782,6 @@
 						type:"post",
 						url: _href + interfacelist.feed,
 						async:true,
-						token : localStorage.token,
 						data: {
 							'token':localStorage.token,
 							'data':JSON.stringify(data)
@@ -803,19 +797,19 @@
 					});
 				});
 				
-				$("#imglist").click(function(){
-					$.ajax({
-						type:"post",
-						url: _href + interfacelist.img,
-						async:true,
-						data:{
-							'file':'file:///C:/Users/Administrator/Pictures/c2fdfc039245d688acbcd54ba0c27d1ed31b24a6.jpg'
-						},
-						success:function(data){
-							console.log(data);
-						}
-					});
-				})
+//				$("#imglist").click(function(){
+//					$.ajax({
+//						type:"post",
+//						url: _href + interfacelist.img,
+//						async:true,
+//						data:{
+//							'file':'file:///C:/Users/Administrator/Pictures/c2fdfc039245d688acbcd54ba0c27d1ed31b24a6.jpg'
+//						},
+//						success:function(data){
+//							console.log(data);
+//						}
+//					});
+//				})
 				
 			});
 
