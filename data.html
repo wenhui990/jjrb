@@ -88,8 +88,33 @@
 			::-moz-placeholder { color: #fff !important; }
 			::-webkit-input-placeholder { color:#fff !important;; }
 			:-ms-input-placeholder { color:#fff !important;; }
-			input.form_style{padding: 8.6px 10px !important;;}
+			input.form_style{padding: 8.6px 10px !important;}
 			
+			.container{padding-right: 0;padding-left: 0;}
+			.nav_txt{color: #3b5998;}
+			.nav_txt a{color: #3b5998;}
+			.nav_txt span{margin-right: 10px;}
+			
+			.searchs{background: #fff; padding-top: 20px;}
+			#inputSearch{border-radius: 0;border: 1px solid #000;}
+			#data_nav_lists{margin-top: 20px;background: #fff;padding: 20px 0;margin-bottom: 100px;}
+			#data_nav_lists dl{padding: 10px 40px;max-width: 33%;}
+			#data_nav_lists dl dt a{color: #000;}
+			#data_nav_lists dl dd{line-height: 2.5;color: #3b5998;}
+			#data_nav_lists dl dd a{color: #3b5998;}
+			
+			/* 收藏样式 */
+			#data_collect{position: fixed;right: 0;top: 100px;}
+			#collect{background: #fff;}
+			#collect a{text-decoration: none;}
+			#collects{position: absolute;top: 0;right: 0;background: #fff;width: 200px;padding: 20px;min-height: 500px;border: 1px solid #999;}
+			#collects .collects_title{display: inline-block;}
+			#collects .collects_title_left{float: left;}
+			#collects .collects_title_right{float: right;}
+			#collects .collects_titles{margin-bottom: 20px;}
+			#collects .collects_titles a{color: #000;}
+			#collects p a{color: #3b5998;}
+			#collects .collects_titles::after{display: block;content: "";clear: both;}
 			
 		</style>
 	</head>
@@ -148,138 +173,222 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- 数据内容 -->
-		<div class="container" id="datas">
-			<div class="row" style="margin-right: 0;">
-				<div class="col-md-2 data_img">
-					<!--<img src="images/touzi.png" alt="投资" />-->
-					<div class="d_i_div d_touzi">
-						<i class="data_img_i d_img_touzi" style=""></i>
-						<p>投资增速</p>
-					</div>
-				</div>
-				<div class="col-md-2 data_img">
-					<div class="d_i_div d_yuanyou">
-						<i class="data_img_i d_img_yuanyou" style=""></i>
-						<p>原油期货</p>
-					</div>
-				</div>
-				<div class="col-md-2 data_img">
-					<div class="d_i_div d_rongzi">
-						<i class="data_img_i d_img_rongzi" style=""></i>
-						<p>融资规模</p>
-					</div>
-				</div>
-				<div class="col-md-2 data_img">
-					<div class="d_i_div d_zong">
-						<i class="data_img_i d_img_zong" style=""></i>
-						<p>运输总量</p>
-					</div>
-				</div>
-				<div class="col-md-2 data_img">
-					<div class="d_i_div d_touzi">
-						<i class="data_img_i d_img_touzi" style=""></i>
-						<p>投资增速</p>
-					</div>
-				</div>
-				<div class="col-md-2 data_img">
-					<div class="d_i_div d_yuanyou">
-						<i class="data_img_i d_img_yuanyou" style=""></i>
-						<p>原油期货</p>
-					</div>
-				</div>
+		
+		<!-- 导航菜单 -->
+		<div id="data_nav">
+			<div class="container searchs">
+				<form class="form-horizontal">
+				  <div class="form-group" style="margin-left: 0;">
+				    <label for="inputSearch" class="col-sm-1 control-label">搜索</label>
+				    <div class="col-sm-10">
+				      <input type="search" class="form-control" id="inputSearch" placeholder="输入要搜索的内容">
+				    </div>
+				  </div>
+				  <div class="form-group" style="margin-left: 0;">
+				    <div class="col-sm-offset-1 col-sm-10">
+				      <div class="nav_txt">
+				        <span class="text-muted">最近过滤：</span>
+				        <span>
+				           <a href="#" class="data_nav_click">国名总值</a>
+				        </span>
+				        <span>
+				           <a href="#" class="data_nav_click">失业率</a>
+				        </span>
+				        <span>
+				           <a href="#" class="data_nav_click">价格</a>
+				        </span>
+				        <span>
+				           <a href="#" class="data_nav_click">货币</a>
+				        </span>
+				        <span>
+				           <a href="#" class="data_nav_click">股市</a>
+				        </span>
+				        <span>
+				           <a href="#" class="data_nav_click">商品</a>
+				        </span>
+				      </div>
+				    </div>
+				  </div>
+				</form>
 			</div>
-			<div class="row" id="data_border">
-				<div class="db data_border">
-					<div></div>
-				</div>
-				<div class="db ">
-					<div></div>
-				</div>
-				<div class="db ">
-					<div></div>
-				</div>
-				<div class="db ">
-					<div></div>
-				</div>
-				<div class="db ">
-					<div></div>
-				</div>
-				<div class="db " style="margin-right: 0;">
-					<div></div>
-				</div>
+			<div id="data_nav_lists" class="container">
+				<dl class="">
+					<dt>市场</dt>
+					<dd><a href="#" class="data_nav_click">国名总值</a></dd>
+					<dd><a href="#" class="data_nav_click">10年期政府债券</a></dd>
+					<dd><a href="#" class="data_nav_click">货币</a></dd>
+					<dd><a href="#" class="data_nav_click">股市</a></dd>
+	  			</dl>
+	  			<dl class="">
+					<dt>大家来分解速度将发生纠纷拉萨尽快立法生产总值</dt>
+					<dd><a href="#" class="data_nav_click">国名总值</a></dd>
+					<dd><a href="#" class="data_nav_click">10国内看来飞机数量扩大解放了可是大家来分解速度将发生纠纷拉萨尽快立法生产总值年期政府债券</a></dd>
+					<dd><a href="#" class="data_nav_click">货币</a></dd>
+					<dd><a href="#" class="data_nav_click">股市</a></dd>
+					<dd><a href="#" class="data_nav_click">国国内看来飞机数量扩大解放了可是大家来分解速度将发生纠纷拉萨尽快立法生产总值名总值</a></dd>
+					<dd><a href="#" class="data_nav_click">10年期政府债券</a></dd>
+					<dd><a href="#" class="data_nav_click">货币</a></dd>
+					<dd><a href="#" class="data_nav_click">股市</a></dd>
+					<dd><a href="#" class="data_nav_click">国名总值</a></dd>
+					<dd><a href="#" class="data_nav_click">10年期政府债券</a></dd>
+					<dd><a href="#" class="data_nav_click">货币</a></dd>
+					<dd><a href="#" class="data_nav_click">股市</a></dd>
+	  			</dl>
+	  			
 			</div>
 		</div>
 
-		<div class="container" id="data_desc">
-			<div class="row">
-				<p>数据显示设置:</p>
-				<!--<select class="form_indicator form_style col-md-3" id="indicator">
-					<option>GDP</option>
-				</select>
-				<input type="text" id="year" hidden="hidden">
-				<select class="form_country form_style col-md-3" id="countrys">
-					<option>国家</option>
-				</select>-->
-				<div class="lists col-md-3">
-					<input class="form_style" id="indicator" placeholder="经济指标">
-					<div class="zb_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
-						<!--<div class="zb_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
-				    	<div class="zb_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
-				    	<div class="zb_ls" data-id="19554">3CE</div>
-				    	<div class="zb_ls" data-id="19557">3TEMPO</div>-->
-					</div>
-				</div>
-				<div class="lists col-md-3">
-					<input class="form_style" id="countrys" placeholder="国家">
-					<div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
-						<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
-				    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
-				    	<div class="countrys_ls" data-id="19554">3CE</div>
-				    	<div class="countrys_ls" data-id="19557">3TEMPO</div>-->
-					</div>
-				</div>
-				<div class="lists col-md-2">
-					<select class="form_style" id="start_year">
-						<option>开始年份</option>
-						
-					</select>
-				</div>
-				<div class="lists col-md-2">
-					<select class="form_style" id="end_year">
-						<option>结束年份</option>
-						
-					</select>
-				</div>
-				<i style="background: url(images/more-info@2x.png);display: inline-block;width: 40px;height: 40px;float: right;background-size: cover;"></i>
-				<div class="clearfix"></div>
+		<!-- 收藏 -->
+		<div id="data_collect" style="background: #000000;">
+			<div id="collect">
+				<a href="javascript:void(0)">收<br />藏</a>
 			</div>
-			<div id="">
-				已选国家：<p id="countrys_vals"></p>
-				已选指标：<p id="indicators_vals"></p>
-			</div>
-			<div id="echarts_main" style="min-height: 500px;margin: 50px 0;"></div>
-			<small style="color: #999999;">来源： <span class="source"> 经济日报  </span></small>
+			<div id="collects" class="none">
+				<div class="collects_titles">
+					<a href="#" class="collects_title_left collects_title">收藏</a>
+					<a href="#" class="collects_title_right collects_title">管理</a>
+				</div>
+				<div>
+					<p><a href="#">美国-通货膨胀</a></p>
+					<p><a href="#">日本-居民消费指数</a></p>
+					<p><a href="#">中国-出口价格</a></p>
+				</div>
+			</div>	
 		</div>
+			
+		<!-- 显示数据内容 -->
+		<div class="none">
+			<div class="container" id="datas">
+				<div class="row" style="margin-right: 0;">
+					<div class="col-md-2 data_img">
+						<!--<img src="images/touzi.png" alt="投资" />-->
+						<div class="d_i_div d_touzi">
+							<i class="data_img_i d_img_touzi" style=""></i>
+							<p>投资增速</p>
+						</div>
+					</div>
+					<div class="col-md-2 data_img">
+						<div class="d_i_div d_yuanyou">
+							<i class="data_img_i d_img_yuanyou" style=""></i>
+							<p>原油期货</p>
+						</div>
+					</div>
+					<div class="col-md-2 data_img">
+						<div class="d_i_div d_rongzi">
+							<i class="data_img_i d_img_rongzi" style=""></i>
+							<p>融资规模</p>
+						</div>
+					</div>
+					<div class="col-md-2 data_img">
+						<div class="d_i_div d_zong">
+							<i class="data_img_i d_img_zong" style=""></i>
+							<p>运输总量</p>
+						</div>
+					</div>
+					<div class="col-md-2 data_img">
+						<div class="d_i_div d_touzi">
+							<i class="data_img_i d_img_touzi" style=""></i>
+							<p>投资增速</p>
+						</div>
+					</div>
+					<div class="col-md-2 data_img">
+						<div class="d_i_div d_yuanyou">
+							<i class="data_img_i d_img_yuanyou" style=""></i>
+							<p>原油期货</p>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="data_border">
+					<div class="db data_border">
+						<div></div>
+					</div>
+					<div class="db ">
+						<div></div>
+					</div>
+					<div class="db ">
+						<div></div>
+					</div>
+					<div class="db ">
+						<div></div>
+					</div>
+					<div class="db ">
+						<div></div>
+					</div>
+					<div class="db " style="margin-right: 0;">
+						<div></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container" id="data_desc">
+				<div class="row">
+					<p>数据显示设置:</p>
+					
+					<div class="lists col-md-3">
+						<input class="form_style" id="indicator" placeholder="经济指标">
+						<div class="zb_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
+							<!--<div class="zb_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
+					    	<div class="zb_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
+					    	<div class="zb_ls" data-id="19554">3CE</div>
+					    	<div class="zb_ls" data-id="19557">3TEMPO</div>-->
+						</div>
+					</div>
+					<div class="lists col-md-3">
+						<input class="form_style" id="countrys" placeholder="国家">
+						<div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
+							<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
+					    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
+					    	<div class="countrys_ls" data-id="19554">3CE</div>
+					    	<div class="countrys_ls" data-id="19557">3TEMPO</div>-->
+						</div>
+					</div>
+					<div class="lists col-md-2">
+						<select class="form_style" id="start_year">
+							<option>开始年份</option>
+							
+						</select>
+					</div>
+					<div class="lists col-md-2">
+						<select class="form_style" id="end_year">
+							<option>结束年份</option>
+							
+						</select>
+					</div>
+					<i style="background: url(images/more-info@2x.png);display: inline-block;width: 40px;height: 40px;float: right;background-size: cover;"></i>
+					<div class="clearfix"></div>
+				</div>
+				<div id="">
+					已选国家：<p id="countrys_vals"></p>
+					已选指标：<p id="indicators_vals"></p>
+				</div>
+				<div id="echarts_main" style="min-height: 500px;margin: 50px 0;"></div>
+				<small style="color: #999999;">来源： <span class="source"> 经济日报  </span></small>
+			</div>
+		</div>
+		
 		<footer><div id="footer_" class="container">
-	版权©&nbsp;2017&nbsp;
-	<p id="back_top">∧</p>
-</div></footer>
+			版权©&nbsp;2017&nbsp;
+			<p id="back_top">∧</p>
+		</div></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/echarts.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<!--日期控件引入-->
 		<script type="text/javascript" src="js/jedate/jquery.jedate.min.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
+		<!-- 瀑布流插件 -->
+		<script src="js/lightbox.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.masonry.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
 			$(function() {
+				navList();
+				
 				setTimeout(function(){
 					console.log($("#navs li").length)
 					$("#navs li").eq(2).addClass("active").siblings().removeClass("active");
-				},500);
+				},100);
 				//接口
 				var _href = "http://api.jjrb.grsx.cc",
 					interfacelist = {
@@ -287,7 +396,9 @@
 						select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
 						host_indicator: "/data/indicator/hot", //热门
 						select_country: "/data/country/k/",//查询国家/data/country/k/{val}
-						wx: "/login/wx"//微信登录post expire_in=&open_id=&	token=&refresh_token=	
+						wx: "/login/wx",//微信登录
+						indicator_list: '/data/group?type=3&with_indicator=1',
+						indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD'
 					},countrys=[],indicators=[],_vals=[];
 				
 /*				//时间
@@ -487,7 +598,73 @@
 					}
 					
 				});
+				
+				//收藏
+				$(document).on("mousemove","#collect",function() {
+					$("#collects").show();
+					$("#collect").hide();
+				})
+				$(document).on("mouseleave","#collects",function() {
+					$("#collects").hide();
+					$("#collect").show();
+				})
+				
+				//数据导航列
+				function navList(){
+					$.ajax({
+						type:"get",
+						url: 'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1',
+						data:{
+							token:'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
+						},
+						async:true,
+						success: function(data){
+							var html = '';
+							/*$.each(data, function(i,e) {
+								console.log(e);
+								if (e.name==null) {
+									return true;
+								}else{
+									html = '<dl class=""><dt>'+data.name+'</dt>';
+								}
+								
+								$.each(e.indicators,function(i,ev){
+									console.log(ev);
+									if (ev.name==null) {
+										return true;
+									}else{
+										html += '<dd><a href="#" data-id="'+ev.name+'" class="data_nav_click">'+ev.name_cn+'</a></dd>';
+									}
+									
+								});
+								html += '</dl>'
+								console.log(html);
+							});*/
+							var html = '';
+							for (var i=0;i<20;i++) {
+								var a= data[i];
+								console.log(data[i]);
+								html += '<dl class=""><dt>'+data[i].name+'</dt>';
+								for (var j=0;j<10;j++) {
+									console.log(a.indicators[j]);
+									html += '<dd><a href="javascriptcn:void(0);" data-id="'+a.indicators[j].id+'" class="data_nav_click">'+a.indicators[j].name_cn+'</a></dd>';
+								}
+								html +='</dl>';
+							}
+							$("#data_nav_lists").html(html);
+							//瀑布流引用
+							console.time()
+							var $waterfall = $('#data_nav_lists');
+							pbl_width = $("#data_nav_lists").width();
+							$waterfall.masonry({
+								columnWidth: pbl_width/3
+							});
+							console.timeEnd()
+						}
+					});
+				}
 			});
+			
 			
 		</script>
 	</body>
