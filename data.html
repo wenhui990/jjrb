@@ -190,7 +190,7 @@
 				  <div class="form-group" style="margin-left: 0;">
 				    <label for="inputSearch" class="col-sm-1 control-label">搜索</label>
 				    <div class="col-sm-10">
-				      <input type="search" class="form-control" id="inputSearch" placeholder="输入要搜索的内容">
+				      <input type="search" class="form-control" id="inputSearch" placeholder="输入要搜索的内容" data-search>
 				    </div>
 				  </div>
 				  <div class="form-group" style="margin-left: 0;">
@@ -339,7 +339,7 @@
 				  			<th>最低</th>
 			  			</tr>
 			  		</thead>
-			  		<tbody>
+			  		<tbody class="dowebok">
 			  			
 			  		</tbody>
 				</table>
@@ -359,11 +359,14 @@
 		<!-- 瀑布流插件 -->
 		<script src="js/lightbox.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.masonry.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 搜索过滤插件 -->
+		<script src="js/jquery.filterizr.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
 			$(function() {
-//				navList();
+				navList();
 				
 				setTimeout(function(){
 					console.log($("#navs li").length)
@@ -627,7 +630,7 @@
 							
 							//原生态for循环
 							var html = '';
-							for (var i=0;i<2;i++) {
+							for (var i=0;i<5;i++) {
 								var a= data[i];
 //								console.log(data[i]);
 								html += '<dl class=""><dt>'+data[i].name+'</dt>';
@@ -638,8 +641,8 @@
 								html +='</dl>';
 							}
 							$("#data_nav_lists").append(html);
-							//瀑布流引用
 							
+							//瀑布流引用
 							var $waterfall = $('#data_nav_lists');
 							pbl_width = $("#data_nav_lists").width();
 							$waterfall.masonry({
@@ -649,6 +652,8 @@
 						}
 					});
 				}
+				
+				
 				
 				//点击导航列
 				$(document).on("click",".data_nav_click",function(){
@@ -663,37 +668,36 @@
 //					urlLoad("echarts_main",_url,country,indicator,start,end,_vals);
 				});
 				
+				
 				//搜索指标
 				$(document).on("keyup","#inputSearch",function(e){
-						var $dd = $("#data_nav_lists dd");
-						var val = $(this).val();
-						console.log(val);
-						var dTxt;
-						$.each($dd, function(i,ev) {
-							dTxt = ev.innerText;
-							console.log(dTxt.indexOf(val));
-							
-							if (dTxt.indexOf(val)&&dTxt!='') {
-								console.log(ev);
-								ev.style.display = "none";
-								ev.style.color = "#3b5998";
-							}else{
-								ev.style.display = "block";
-								ev.style.color = "red";
-							}
-							
-						});
-						
-						if (dTxt.length==0) {
-//							alert()
-							$dd.css("color","#3b5998");
-						}
+					$dd = $("#data_nav_lists dd");
+					var val = $(this).val();
+					console.log(val);
+					var dTxt;
+					$dd.not(":contains('"+val+"')").each(function(i,e){
+						console.log(e);
+						$(e).hide();
+					});
+					$dd.filter(":contains('"+val+"')").each(function(i,e){
+						console.log(e);
+						$(e).show();
+						$(e).css("color","red");
+						$(e).find("a").css("color","red");
+					});
+					if (val.length==0) {
+						$dd.show().css("color","#3b5998");
+						$dd.find("a").css("color","#3b5998");
+					}
+					var $waterfall = $('#data_nav_lists');
+					pbl_width = $("#data_nav_lists").width();
+					$waterfall.masonry({
+						columnWidth: pbl_width/3
+					});
+					
 				});
-				$(document).on("blur","#inputSearch",function(){
-					var $dd = $("#data_nav_lists dd");
-					$dd.show();
-					$dd.css("color","#3b5998");
-				});
+				
+				
 				
 				//加载数据
 				function loadDatas(){
