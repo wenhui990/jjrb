@@ -460,7 +460,8 @@
 						feed: "/feed",  //观点详情页feed/{id}
 						img:'/upload'
 					};
-				var countrys=[],indicators=[],id_val,_url,start,end;
+				//全局变量
+				var countrys=[],indicators=[],id_val,_url,start,end,echartType='line';
 				//初始化时间
 				var now = new Date();
 				var year = now.getFullYear();
@@ -511,7 +512,8 @@
 					 	start = $("#startInputTime").val();
 						end = $("#endInputTime").val();
 						_url = _href + interfacelist.select_data+"?";
-						urlLoad(id_val,_url,countrys,indicators,start,end);
+						console.log(echartType)
+						urlLoad(id_val,_url,countrys,indicators,start,end,echartType);
 						$("#"+id_val).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
 					 }else{
 					 	$("#viewpoint_content").append(html);
@@ -602,11 +604,11 @@
 					console.log(_src);
 					var _classname = $(this).attr("class");
 					if(_classname.indexOf("country") >= 0) {
-						console.log("cc");
+//						console.log("cc");
 						_src = _href + interfacelist.select_country + country_val;
 						ci(".countrys_list", 'countrys_ls', _src);
 					} else if(_classname.indexOf("indicator") >= 0) {
-						console.log("dd");
+//						console.log("dd");
 						_src = _href + interfacelist.select_indicator + indicator_val;
 						ci(".zb_list", 'zb_ls', _src);
 					}
@@ -694,11 +696,10 @@
 					    indicator = indicators.toString(),
 					    start = $("#startInputTime").val(),
 					    end = $("#endInputTime").val();
-					_url = _href + interfacelist.select_data+"?";//'data.json';//"http://api.jjrb.grsx.cc/data?&country=CN,US&indicator=NY.GDP.MKTP.CD&start=2010"//
+						_url = _href + interfacelist.select_data+"?";
 //					console.log(country+" "+indicator+" "+ start +" " + end);
-					
-					urlLoad("show_data",_url,country,indicator,start,end);
-//					urlLoad("show_data",_url);
+					console.log(echartType)
+					urlLoad("show_data",_url,country,indicator,start,end,'line');
 					return false;
 				});
 				

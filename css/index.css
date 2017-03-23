@@ -61,7 +61,9 @@ body{background-color:#ebeff3;}
 .comment_footer .next_comment:hover{text-decoration: none;border-bottom: 2px solid #E6E6E6;}
 
 /*数据部分样式*/
-#datas{background: #999999;padding: 15px 0 15px 15px;}
+#datas{background: #fff;padding: 15px 20px;}
+#datas .row{margin: 5px 0;}
+#datas .row>div{padding-left: 0;}
 #data_border{height: 10px;background-color: #fff;margin-top: 20px;margin-left: 0;margin-right: 15px;}
 #data_border .db{height: 10px;display: inline-block;width: 14%;float: left;margin-right: 35px;}
 #data_border .data_border{background: #3b5998;}

@@ -318,12 +318,17 @@ function code_time() {
 	}, 1000);
 }
 //根据毫秒数格式化时间
-function timeF(time) {
+function timeF(time,mm) {
 	var t = new Date(time);
 	var y = t.getFullYear();
 	var m = t.getMonth();
 	var d = t.getDate();
-	return y + "年" + (m + 1) + "月" + d + "日";
+	if(mm){
+		return y + "-" + (m + 1);
+	}else{
+		return y + "年" + (m + 1) + "月" + d + "日";
+	}
+	
 }
 //获取cookie
 function getCookie(name) {
@@ -365,7 +370,7 @@ Array.prototype.unique3 = function(){
 	 return res;
 }
 //图表数据获取
-function urlLoad(id,url,country,indicator,start,end,_val){
+function urlLoad(id,url,country,indicator,start,end,_val,echartType){
 	console.log(url);
 	if (country) {
 		url += "&country="+country;
@@ -385,9 +390,14 @@ function urlLoad(id,url,country,indicator,start,end,_val){
 	if (location.href.indexOf("add_viewpoint")) {
 		$("#"+id).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
 	}
+	echartType='line'
+	console.log(echartType);
+	echartType=='line'?echartType=false:echartType=true;
+	console.log(echartType);
 	myChart.showLoading();
 	//异步加载方法
 	$.get(url).done(function(data) {
+		myChart.hideLoading();
 		var d;
 //		console.log(data);
 		if(typeof(data) == "object" && 
@@ -417,23 +427,25 @@ function urlLoad(id,url,country,indicator,start,end,_val){
 //  		console.log(val);
     		var s = {
     			name: key,//'邮件营销',
-				type: 'line',
+				type: 'line',//'line'['line', 'bar', 'stack', 'tiled']
 //				stack: '总量',
+//				barWidth: '10%',
 				areaStyle: {
 					normal: {}
 				},
 				data: value
 			}
+    		
     		_series.push(s);
     		
 		});
-	
+		
 		myChart.setOption({
 			title: {
 				text: country+" "+ indicator
 			},
 			tooltip: {
-				trigger: 'axis'
+//				trigger: 'axis'
 			},
 			legend: {
 				data: country//["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
@@ -443,15 +455,15 @@ function urlLoad(id,url,country,indicator,start,end,_val){
 					saveAsImage: {}
 				}
 			},
-			grid: {
-				left: '3%',
-				right: '4%',
-				bottom: '3%',
-				containLabel: true
-			},
+//			grid: {
+//				left: '3%',
+//				right: '4%',
+//				bottom: '3%',
+//				containLabel: true
+//			},
 			xAxis: [{
 				type: 'category',
-				boundaryGap: false,
+				boundaryGap: echartType,
 				data: time.unique3()//["周一","周二","周三","周四","周五","周六","周日1312"]
 			}],
 			yAxis: [{
@@ -473,5 +485,5 @@ function urlLoad(id,url,country,indicator,start,end,_val){
 			series: _series
 		});
 	});
-	myChart.hideLoading();
+	
 }
