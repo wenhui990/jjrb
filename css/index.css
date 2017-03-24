@@ -61,7 +61,7 @@ body{background-color:#ebeff3;}
 .comment_footer .next_comment:hover{text-decoration: none;border-bottom: 2px solid #E6E6E6;}
 
 /*数据部分样式*/
-#datas{background: #fff;padding: 15px 20px;}
+#datas{background: #fff;padding: 15px 20px;font-size: 16px;}
 #datas .row{margin: 5px 0;}
 #datas .row>div{padding-left: 0;}
 #data_border{height: 10px;background-color: #fff;margin-top: 20px;margin-left: 0;margin-right: 15px;}
@@ -74,3 +74,14 @@ body{background-color:#ebeff3;}
 footer{background: #f8f8f8;width:100%;height: 50px;line-height: 50px;position: fixed;bottom: 0;left: 0;margin-top: 60px;}
 #back_top{float: right;font-size: 30px;font-weight: bold;width: 30px;height: 50px;}
 #back_top:hover{cursor: pointer;}
+.icon {
+   width: 2.5em; height: 2.5em;
+   vertical-align: -0.4em;
+   fill: currentColor;
+   overflow: hidden;
+}
+#oneLine .icon{
+	width: 2.3em;
+    height: 2.3em;
+    vertical-align: -0.25em;
+}

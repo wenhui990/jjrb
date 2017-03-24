@@ -142,50 +142,6 @@
 	<body>
 		<!-- 头部导航 -->
 		<header></header>
-		<!--<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-					<a class="navbar-brand" href="index.html" target="_blank"><img src="Web/切图（第五周交付）/splash-ic.png" width="55" height="55" alt="logo" id="logo_img" /></a>
-				</div>
-				<div class="collapse navbar-collapse" id="navs">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="index.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-news-f.png"/></span>热点</a>
-						</li>
-						<li class="active">
-							<a href="viewpoint.html" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-paper-n.png"/></span>观点</a>
-						</li>
-						<li>
-							<a href="data.html?country=CN,US,JP&indicator=NY.GDP.MKTP.CD" target="_blank" class="nav_a"><span class="glyphicon li_active"><img src="Web/切图（第五周交付）/tabbar-numbers-n.png"/></span>数据</a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="Web/切图（第五周交付）/n.png"/></span>我的 <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">登录</li>
-								<li class="dl_style">
-									<a href="javascript:void(0);" class="login_wechat">微信扫码</a>
-								</li>
-								<li class="dl_style">
-									<a href="javascript:void(0);" class="login_phone">手机号</a>
-								</li>
-								<li>
-									<a href="add_viewpoint.html" target="_blank">发布观点</a>
-								</li>
-								<li>
-									<a href="my_viewpoint.html" target="_blank">历史观点</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>-->
 		<!-- 头部导航结束  -->
 
 		<div id="wx_phone">
@@ -344,6 +300,26 @@
 									<div class="form-group">
 										<input type="submit" class="btn btn-default" id="select_data" value="查询" />
 									</div>
+									<div class="row">
+										<div class="col-md-8">
+											<span style="font-size: 16px;">切换数据样式:</span>
+											<span class="glyphicon glyphicon-stats echarts_style" style="font-size: 30px;margin: 0 10px;" title="柱状图" id="bar"></span>
+											<span title="曲线图" id="line" class="echarts_style">
+												<svg class="icon" aria-hidden="true">
+					    							<use xlink:href="#icon-zhexiantu-copy"></use>
+												</svg>
+											</span>
+											<!--<span title="折线图" id="oneLine" class="echarts_style">
+												<svg class="icon" aria-hidden="true">
+					    							<use xlink:href="#icon-zhexiantu"></use>
+												</svg>
+											</span>-->
+										</div>
+										<div class="col-md-4 none">
+											<span class="glyphicon glyphicon-star">收藏</span>
+											<span class="glyphicon glyphicon-download-alt">下载</span>
+										</div>
+									</div>
 									<div id="">
 										已选国家：<p id="countrys_vals"></p>
 										已选指标：<p id="indicators_vals"></p>
@@ -370,6 +346,8 @@
 		<footer></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<!-- 矢量图标 -->
+		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<!--图表插件引入-->
 		<script type="text/javascript" src="js/echarts.min.js"></script>
