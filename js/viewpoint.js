@@ -7,7 +7,7 @@ $(function() {
 		return false;
 	}
 	setTimeout(function(){
-		console.log($("#navs li").length)
+//		console.log($("#navs li").length)
 		$("#navs li").eq(1).addClass("active").siblings().removeClass("active");
 	},500);
 	//接口  resource type 11，12，13，14/视频、图片、文本、html片段
@@ -29,11 +29,11 @@ $(function() {
 			data:{
 				token:localStorage.token,
 				page:n,
-				limit:5
+				limit:10
 			},
 			success: function(data) {
 				if(data.length > 0) {
-					data.forEach(function(e, i) {
+					$.each(data,function(i, e) {
 //						$("#aa").append(e.resources[0].descp);
 //						var otitle;
 //						if ($("#aa .otitle")) {
@@ -52,11 +52,11 @@ $(function() {
 //								a.append(res.descp);
 //							}
 //						});
-						
+						console.log(i);
 						var descp='',echarts,type,echarts_data;
 						$.each(e.resources,function(ind,e){
-							console.log(ind);
-							console.log(e);
+//							console.log(ind);
+//							console.log(e);
 							
 							type = parseInt(e.type);
 							console.log(type);
@@ -104,11 +104,10 @@ $(function() {
 			var bodyheight = $(document.body).height();
 			var scorlltop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
 			var viewheight = $(window).height();
-//						console.log(bodyheight + " ===" + scorlltop + "=========" + viewheight);
+//			console.log(bodyheight + " ===" + scorlltop + "=========" + viewheight);
 			if((scorlltop + viewheight) >= bodyheight) {
 				n++;
 				if (fl) {
-//							setTimeout(,500);
 				scorllajax(n);
 				}
 				fl=false;

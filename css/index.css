@@ -23,6 +23,7 @@ body{background-color:#ebeff3;}
 .fg #code_btn{border-radius: 0;}
 .fg_hide{display: none;}
 #hot_content,#data_desc,#contont,#about_data,#viewpoint,#viewpoint_desc{margin-bottom: 60px;}
+#hot_content .news_style{border-bottom: 1px solid #D9D9D9;padding: 20px 0;}
 
 
 /*观点样式*/

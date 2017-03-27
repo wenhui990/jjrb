@@ -126,6 +126,8 @@
 			.green{color: lawngreen;}
 			#data_table h3{display: inline;}
 			#show_indicator_list a{color: #3b5998;}
+			.header_data_icon{width: 1.6em;height: 1.6em;}
+			.header_data_icon1{width: 1.3em;height: 1.3em;    vertical-align: -0.2em;}
 			
 		</style>
 	</head>
@@ -334,7 +336,7 @@
 		</div></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<!-- 矢量图标 -->
-		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/echarts.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<!--日期控件引入-->
@@ -349,7 +351,7 @@
 			$(function() {
 				setTimeout(function(){
 					console.log($("#navs li").length)
-					$("#navs li").removeClass("active").eq(2).addClass("active");
+					$("#navs li").removeClass("active").eq(0).addClass("active");
 				},1000);
 				//接口
 				var _href = "http://api.jjrb.grsx.cc",
@@ -359,7 +361,7 @@
 						host_indicator: "/data/indicator/hot", //热门
 						select_country: "/data/country/k/",//查询国家/data/country/k/{val}
 						wx: "/login/wx",//微信登录
-						indicator_list: '/data/group?type=3&with_indicator=1',
+						indicator_list: '/data/group?type=1&with_indicator=1',
 						indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD'
 					},
 					countrys=[],    //国家
@@ -491,10 +493,10 @@
 						var i_html = "<div style='display:inline-block;'>"+
 							"<p data-id='"+_id+"' class='indicators_txt' data-name='"+_name+"' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+ $("#indicator").val()+ "<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
 						$("#indicators_vals").append(i_html);
-//						for(var i=0;i<$(".indicators_txt").length;i++){
-//							indicators.push($(".indicators_txt").eq(i).attr("data-id"));
+						for(var i=0;i<$(".indicators_txt").length;i++){
+							indicators.push($(".indicators_txt").eq(i).attr("data-id"));
 //							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
-//						}
+						}
 						indicator = indicators.toString();
 						console.log(indicator);
 						dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);

@@ -193,6 +193,8 @@
 			</div>
 		</div>
 
+		
+
 		<!-- 内容 -->
 		<div class="container" id="contont">
 			<div class="row text-right add_toole">
@@ -252,6 +254,10 @@
 					<span class="glyphicon glyphicon-picture">
 				</span> 插入图片
 				</a>
+			</div>
+			<div class="alert alert-warning alert-dismissible none" id="alert_error" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <strong>警告！</strong> 文件太大了！文件的大小不能超过5M.
 			</div>
 			<button class="btn btn-primary btn-lg btn-block" id="release_wiewpoint">发布</button>
 		</div>
@@ -480,7 +486,6 @@
 				//点击确定事件
 				$(".btn_ok").on("click", function(e) {
 					e.stopPropagation();
-					//  			var 
 					var html = "<p class='row add_row new_txt pointHtmls' data-type='13'>" + $('#add_p_txt').val() + "<span class='glyphicon glyphicon-remove new_close none'></span></p>";
 					 var fl = $(".txt_desc").css("display");
 					 if(fl=="none"){
@@ -491,7 +496,7 @@
 						end = $("#endInputTime").val();
 						_url = _href + interfacelist.select_data+"?";
 						console.log(echartType)
-						urlLoad(id_val,_url,countrys,indicators,start,end,echartType);
+						dataDesc.urlLoad(id_val,_url,countrys,indicators,start,end,echartType);
 						$("#"+id_val).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
 					 }else{
 					 	$("#viewpoint_content").append(html);
@@ -516,9 +521,10 @@
 					var imgwidth = $("#imgs" + num).width();
 					$("#imgs" + num).append("<img id='ImgPr" + num + "' style='display: inherit;' /><span class='glyphicon glyphicon-remove new_close none'></span>");
 					
-					upImg("ImgPr" + num);
+					
 					var uploadForm = "#imgs" + num,fileId = "#up" + num,imgId = "#ImgPr" + num
-					uploadImg(fileId,imgId);
+					uploadImg(fileId,imgId,num);
+					upImg("ImgPr" + num);
 					console.log(uploadForm+"”"+fileId);
 					console.log("ImgPr" + num);
 				});
@@ -540,7 +546,17 @@
 						    	console.log(data);
 						    	console.log(fileId);
 						    	console.log(imgId);
-						    	$(imgId).attr("src",data);
+						    	$(imgId).prop("src",data.url);
+						    },
+						    error: function(data){
+						    	console.log(data);
+						    	if (data.status==0) {
+						    		$(imgId).parent().parent().remove();
+						    		$("#alert_error").show();
+						    		setTimeout(function(){
+						    			$("#alert_error").hide();
+						    		},8000);
+						    	}
 						    }
 						}).done(function(res) {
 						}).fail(function(res) {});
@@ -660,6 +676,8 @@
 				
 				//点击查询
 				$(document).on("click","#select_data",function(e){
+					e.stopPropagation();
+					e.preventDefault();
 					if(countrys.length>0||indicators.length>0){
 						countrys=[];
 						indicators=[];
@@ -670,15 +688,35 @@
 					for(var i=0;i<$(".indicators_txt").length;i++){
 						indicators.push($(".indicators_txt").eq(i).attr("data-id"));
 					}
-					var country = countrys.toString(),
-					    indicator = indicators.toString(),
-					    start = $("#startInputTime").val(),
-					    end = $("#endInputTime").val();
-						_url = _href + interfacelist.select_data+"?";
+					country = countrys.toString();
+					indicator = indicators.toString();
+					start = $("#startInputTime").val();
+					end = $("#endInputTime").val();
+					_url = _href + interfacelist.select_data+"?";
 //					console.log(country+" "+indicator+" "+ start +" " + end);
 					console.log(echartType)
-					urlLoad("show_data",_url,country,indicator,start,end,'line');
+					dataDesc.urlLoad("show_data",_url,country,indicator,start,end,'line');
 					return false;
+				});
+				
+				//切换数据样式
+				$(document).on("click",".echarts_style",function(){
+					$(this).css("color","#44c66a").siblings().css("color","#000");
+					console.log($(this).attr("id"));
+					var etId = $(this).attr("id");
+					if (etId=="line") {
+						echartType = "line";
+						dataDesc.urlLoad("show_data",_url,country,indicator,start,end,echartType);
+					}
+					if (etId=="bar") {
+						echartType = "bar";
+						dataDesc.urlLoad("show_data",_url,country,indicator,start,end,echartType);
+					}
+					if (etId=="oneLine") {
+						echartType = "oneLine";
+						dataDesc.urlLoad("show_data",_url,country,indicator,start,end,echartType);
+					}
+					
 				});
 				
 				
@@ -775,21 +813,6 @@
 						}
 					});
 				});
-				
-//				$("#imglist").click(function(){
-//					$.ajax({
-//						type:"post",
-//						url: _href + interfacelist.img,
-//						async:true,
-//						data:{
-//							'file':'file:///C:/Users/Administrator/Pictures/c2fdfc039245d688acbcd54ba0c27d1ed31b24a6.jpg'
-//						},
-//						success:function(data){
-//							console.log(data);
-//						}
-//					});
-//				})
-				
 			});
 
 			//时间插件调用
@@ -808,33 +831,6 @@
 				zIndex: 3000,
 			})
 		</script>
-		
-		
-		<!--<div id="uploadForm">
-		    <input id="file" type="file"/>
-		    <button id="upload" type="button" style="margin-bottom: 100px;">upload</button>
-		</div>
-		<script type="text/javascript">
-			$(document).on("change","#up1",function(){
-				var formData = new FormData();
-				formData.append('file', $('#up1')[0].files[0]);
-				console.log(formData);
-				$.ajax({
-				    url: 'http://api.jjrb.grsx.cc/upload',
-				    type: 'POST',
-				    cache: false,
-				    data: formData,
-				    processData: false,
-				    contentType: false,
-				    success: function(data){
-				    	console.log(data);
-				    	$("#ImgPr1").attr("src",data);
-				    }
-				}).done(function(res) {
-				}).fail(function(res) {});
-			});
-		</script>-->
-		
 		
 	</body>
 
