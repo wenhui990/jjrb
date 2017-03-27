@@ -1,10 +1,10 @@
 $(function() {
 	$(".active a").css("color","#3b5998;");
 	$(".nav>li").mouseover();
-	$(document).on("load",".nav>li:eq[0]",function(){
-		$(this).addClass("active")
-		console.log($(this))
-	});
+//	$(document).on("load",".nav>li:eq[0]",function(){
+//		$(this).addClass("active")
+//		console.log($(this))
+//	});
 	//初始化弹出框
 	$('[data-toggle="popover"]').popover();
 	//接口

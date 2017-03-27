@@ -8,7 +8,7 @@ $(function() {
 	}
 	setTimeout(function(){
 //		console.log($("#navs li").length)
-		$("#navs li").eq(1).addClass("active").siblings().removeClass("active");
+		$("#navs li").eq(2).addClass("active").siblings().removeClass("active");
 	},500);
 	//接口  resource type 11，12，13，14/视频、图片、文本、html片段
 	var _href = "http://api.jjrb.grsx.cc",
