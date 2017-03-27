@@ -21,14 +21,16 @@ $(function() {
 	console.log(localStorage.token);
 	//ajax按页获取观点内容
 	function scorllajax(n) {
-		var urll;
-		if(n <= 0) urll = "viewpoint.json";
-		else urll = "viewpoint" + n + ".json"
+		console.time("专家观点时间：");
 		$.ajax({
 			type: "get",
-			url: _href+interfacelist.feed,//urll, //
+			url: _href+interfacelist.feed,
 			async: true,
-			data:{token:localStorage.token,page:n},
+			data:{
+				token:localStorage.token,
+				page:n,
+				limit:5
+			},
 			success: function(data) {
 				if(data.length > 0) {
 					data.forEach(function(e, i) {
@@ -76,7 +78,7 @@ $(function() {
 								descp = e.descp
 							}
 						})
-						console.log(descp);
+//						console.log(descp);
 						
 						var html = '<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">' +
 									'<a href="my_viewpoint.html?id=' + e.owner.id + '" target="_blank"><img class="header_img" src="' + e.owner.head + '" /></a>' +
@@ -97,6 +99,7 @@ $(function() {
 				}
 			}
 		});
+		console.timeEnd("专家观点时间：");
 		$(document).on("scroll", function() {
 			var bodyheight = $(document.body).height();
 			var scorlltop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;

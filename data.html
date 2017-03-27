@@ -211,7 +211,7 @@
 		</div>
 
 		<!-- 收藏 -->
-		<div id="data_collect" style="background: #000000;">
+		<div id="data_collect" style="background: #000000;" class="none">
 			<div id="collect">
 				<a href="javascript:void(0)">收<br />藏</a>
 			</div>
@@ -362,7 +362,11 @@
 						indicator_list: '/data/group?type=3&with_indicator=1',
 						indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD'
 					},
-					countrys=[],indicators=[],_vals=[],filter_txt=[],echartType;
+					countrys=[],    //国家
+					indicators=[],  //指标
+					_vals=[],       //
+					filter_txt=[],  //过滤
+					echartType;     //图表样式
 				
 				dataDesc.navList(filter_txt);//指标导航列表
 				dataDesc.dataSearch(filter_txt);//搜索框事件
@@ -471,11 +475,12 @@
 						console.log("country_ls");
 						$("#countrys").val(txt);
 						$('.countrys_list').hide();
-						var c_html = "<div style='display:inline-block;'><p data-id='"+_id+"' class='countrys_txt' data-name='"+_name+"' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
+						var c_html = "<div style='display:inline-block;'>"+
+							"<p data-id='"+_id+"' class='countrys_txt' data-name='"+_name+"' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
 						$("#countrys_vals").append(c_html);
 						for(var i=0;i<$(".countrys_txt").length;i++){
 							countrys.push($(".countrys_txt").eq(i).attr("data-id"));
-							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
+//							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
 						}
 						country = countrys.toString();
 						dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
@@ -483,12 +488,13 @@
 						console.log("zb_ls");
 						$("#indicator").val(txt);
 						$('.zb_list').hide();
-						var i_html = "<div style='display:inline-block;'><p data-id='"+_id+"' class='indicators_txt' data-name='"+_name+"' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+ $("#indicator").val()+ "<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
+						var i_html = "<div style='display:inline-block;'>"+
+							"<p data-id='"+_id+"' class='indicators_txt' data-name='"+_name+"' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+ $("#indicator").val()+ "<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
 						$("#indicators_vals").append(i_html);
-						for(var i=0;i<$(".indicators_txt").length;i++){
-							indicators.push($(".indicators_txt").eq(i).attr("data-id"));
-							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
-						}
+//						for(var i=0;i<$(".indicators_txt").length;i++){
+//							indicators.push($(".indicators_txt").eq(i).attr("data-id"));
+//							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
+//						}
 						indicator = indicators.toString();
 						console.log(indicator);
 						dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
@@ -502,6 +508,7 @@
 				$(document).on("mouseleave",".countrys_txt,.indicators_txt",function(){
 					$(".country_txt_close").hide();
 				});
+				
 				//删除已选标签
 				/*$(document).on("click",".country_txt_close",function(){
 					$(this).parent().parent().remove();
