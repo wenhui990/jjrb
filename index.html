@@ -13,7 +13,7 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
 		<style type="text/css">
-		
+			#hot_content{padding: 10px 8%;}
 		</style>
 		
 	</head>
@@ -74,60 +74,6 @@
 		</div>
 		<!-- 内容 -->
 		<div class="container" id="hot_content">
-			<div class="row news_style">
-                <div class="col-md-3 col-lg-3 col-sm-3">
-                	<a href="http://www.yicai.com/news/5254744.html" target="_blank">
-                		<img class="lazy" data-original="http://imgcdn.yicai.com/uppics/slides/2017/03/636262131136786695.jpg@188h_250w_1e_1c" width="250" height="188" src="http://imgcdn.yicai.com/uppics/slides/2017/03/636262131136786695.jpg@188h_250w_1e_1c" style="display: inline;">
-                	</a>
-                </div>
-                <div class="col-md-1 col-lg-1 col-sm-1">
-                	
-                </div>
-                <div class="col-md-8 col-lg-8 col-sm-8">
-                    <h5 class="f-ff1 f-fwn f-fs14"></h5>
-                    <h3 class="f-ff1 f-fwn f-fs22">
-                    	<a href="http://www.yicai.com/news/5254744.html" target="_blank">邮储银行与工信部达成战略合作 5年将建设600家小微支行</a>
-                    </h3>
-                    <h4 class="f-ff1 f-fwn f-fs14">宋易康 <span>2017-03-27 12:06:00</span></h4>
-                    <p class="f-ff1 f-fs14">未来五年，邮储银行将在各级工信部门支持下，建设600家小微企业特色支行</p>
-                </div>
-			</div>
-			<div class="row news_style">
-                <div class="col-md-3 col-lg-3 col-sm-3">
-                	<a href="http://www.yicai.com/news/5254744.html" target="_blank">
-                		<img class="lazy" data-original="http://imgcdn.yicai.com/uppics/slides/2017/03/636262131136786695.jpg@188h_250w_1e_1c" width="250" height="188" src="http://imgcdn.yicai.com/uppics/slides/2017/03/636262131136786695.jpg@188h_250w_1e_1c" style="display: inline;">
-                	</a>
-                </div>
-                <div class="col-md-1 col-lg-1 col-sm-1">
-                	
-                </div>
-                <div class="col-md-8 col-lg-8 col-sm-8">
-                    <h5 class="f-ff1 f-fwn f-fs14"></h5>
-                    <h3 class="f-ff1 f-fwn f-fs22">
-                    	<a href="http://www.yicai.com/news/5254744.html" target="_blank">邮储银行与工信部达成战略合作 5年将建设600家小微支行</a>
-                    </h3>
-                    <h4 class="f-ff1 f-fwn f-fs14">宋易康 <span>2017-03-27 12:06:00</span></h4>
-                    <p class="f-ff1 f-fs14">未来五年，邮储银行将在各级工信部门支持下，建设600家小微企业特色支行</p>
-                </div>
-			</div>
-			<div class="row news_style">
-                <div class="col-md-3 col-lg-3 col-sm-3">
-                	<a href="http://www.yicai.com/news/5254744.html" target="_blank">
-                		<img class="lazy" data-original="http://imgcdn.yicai.com/uppics/slides/2017/03/636262131136786695.jpg@188h_250w_1e_1c" width="250" height="188" src="http://imgcdn.yicai.com/uppics/slides/2017/03/636262131136786695.jpg@188h_250w_1e_1c" style="display: inline;">
-                	</a>
-                </div>
-                <div class="col-md-1 col-lg-1 col-sm-1">
-                	
-                </div>
-                <div class="col-md-8 col-lg-8 col-sm-8">
-                    <h5 class="f-ff1 f-fwn f-fs14"></h5>
-                    <h3 class="f-ff1 f-fwn f-fs22">
-                    	<a href="http://www.yicai.com/news/5254744.html" target="_blank">邮储银行与工信部达成战略合作 5年将建设600家小微支行</a>
-                    </h3>
-                    <h4 class="f-ff1 f-fwn f-fs14">宋易康 <span>2017-03-27 12:06:00</span></h4>
-                    <p class="f-ff1 f-fs14">未来五年，邮储银行将在各级工信部门支持下，建设600家小微企业特色支行</p>
-                </div>
-			</div>
 		</div>
 		<footer></footer>
 		
@@ -165,15 +111,33 @@
 		    				console.log(e);
 		    				e.forEach(function(e,i){
 	//	    					var a = e.id.substring(0,4)
-		    					var htm = '<div class="col-lg-4 col-sm-6 col-md-6 col-xs-12 sidebar">'+
-										'<a href="hotspot_desc.html?id='+e.id+'"><img src="'+e.cover+'" /></a>'+
-										'<div class="tan_bg">'+
-										'	<span></span>'+
-										'	<h1><a href="hotspot_desc.html?id='+e.id+'" title="'+ e.title +'">'+e.title+'</a></h1>'+
-										'	<p>'+e.sub_title+'</p>'+
-										'</div>'+
-										'</div>';
-								$("#hot_content").append(htm);
+//		    					var htm = '<div class="col-lg-4 col-sm-6 col-md-6 col-xs-12 sidebar">'+
+//										'<a href="hotspot_desc.html?id='+e.id+'"><img src="'+e.cover+'" /></a>'+
+//										'<div class="tan_bg">'+
+//										'	<span></span>'+
+//										'	<h1><a href="hotspot_desc.html?id='+e.id+'" title="'+ e.title +'">'+e.title+'</a></h1>'+
+//										'	<p>'+e.sub_title+'</p>'+
+//										'</div>'+
+//										'</div>';
+								if(e.cover===""){
+									return true;
+								}
+								var html = '<div class="row news_style">'+
+					                '<div class="col-md-3 col-lg-3 col-sm-3">'+
+					                '	<a href="hotspot_desc.html?id='+e.id+'" target="_blank">'+
+					                '		<img class="lazy" width="250" height="188" src="'+e.cover+'" style="display: inline;">'+
+					                '	</a>'+
+					                '</div>'+
+					                '<div class="col-md-1 col-lg-1 col-sm-1"></div>'+
+					                '<div class="col-md-8 col-lg-8 col-sm-8">'+
+					                '    <h5 class="f-ff1 f-fwn f-fs14"></h5>'+
+					                '    <h3 class="f-ff1 f-fwn f-fs22">'+
+					                '    	<a href="hotspot_desc.html?id='+e.id+'" target="_blank" title="'+ e.title +'">'+e.title+'</a>'+
+					                '    </h3>'+
+					                '    <h4 class="f-ff1 f-fwn f-fs14">'+e.owner.sign+'<span></span></h4>'+
+					                '    <p class="f-ff1 f-fs14">'+e.sub_title+'</p>'+
+					                '</div></div>'
+								$("#hot_content").append(html);
 		    				})
 							fl = true;
 		    			}
@@ -188,7 +152,6 @@
 					var viewheight = $(window).height();
 		//			console.log(bodyheight + " ===" + scorlltop + "=========" + viewheight);
 					if((scorlltop + viewheight) >= bodyheight) {
-						
 						if (fl) {
 							n++;
 							ajaxPage(n);

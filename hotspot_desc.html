@@ -14,8 +14,8 @@
     <![endif]-->
 		<style type="text/css">
 			.hotspot_img {
-				width: 100%;
-				height: 300px;
+				/*width: 60%;*/
+				/*height: 300px;*/
 			}
 			
 			.hotspots {
@@ -53,6 +53,8 @@
 				margin-top: 10px;
 				line-height: 2;
 			}
+			.hotspots img{margin: 0 auto;display: block;}
+			
 		</style>
 	</head>
 
@@ -114,48 +116,21 @@
 
 		<!-- 热点详情 -->
 		<div class="container" id="hotspot_desc">
-			<img src="" alt="热点图" class="hotspot_img" />
+			
 			<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
 				<h2 class="hotspot_money"></h2>
 				<h2 class="hotspots_tit"><a href="#"></a></h2>
-				<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  2015年7月1日</span></small>
+				<small>来源： <span class="source"> 经济日报  </span> <span class="source_time"> 2015年7月1日</span></small>
 				<div class="hotspot_txt">
-					<!--<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器...
-					</p>
-					<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。
-					</p>
-					<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器...
-					</p>-->
+					
 					<p style="margin-top: 30px;">
 						*经济日报
 					</p>
 				</div>
 			</div>
-			<!--<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
-				<h2 class="hotspots_title">
-					<div class="ht_div">
-						<a href="#">经济定义</a>
-					</div>
-				</h2>
-				<div class="hotspot_txt">
-					<p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器...
-					</p>
-				</div>
-			</div>-->
-		</div>
-		<!--<div class="container" id="about_data">
-				<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
-					<h2 class="hotspots_title">
-					<div class="ht_div">
-						<a href="#">相关数据</a>
-					</div>
-				</div>
-		</h2>
-			<div style="background: #fff;">
-				<div id="hotspot_data" style="min-height: 600px;padding: 0 20px;"></div>
-			</div>
 			
-		</div>-->
+		</div>
+		
 		<footer></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -179,7 +154,8 @@
 						feed: "/feed/" //feed/{id}热点详情
 					};
 				var u = getUrlParams(),
-					id = u.id;
+					id = u.id,
+					descp='';
 //				country = u.country,
 //			    indicator = u.indicator,
 //			    start = u.start,
@@ -192,23 +168,42 @@
 					async:true,
 					success: function(data){
 						console.log(data);
-						$(".hotspot_img").prop("src",data.cover);
 						$(".hotspot_money").text(data.sub_title);
 						$(".hotspots_tit>a").text(data.title);
-						$(".source_time").text("&nbsp;"+timeF(data.created));
-						
+						$(".source_time").text(" "+timeF(data.created));
+						descp += '<div style="margin:10px auto;" id="header_img"><img src="'+data.cover+'" alt="热点图" class="hotspot_img" /></div>';
 						var a = $("<div></div>");
 						data.resources.forEach(function(res,inx){
 							console.log(res);
-							if (res.type==2) {
-								console.log("图片");
-								a.append('<p><img src="' + res.uri + '" /></p>');
-							} else{
-								a.append(res.descp);
+//							if (res.type==2) {
+//								console.log("图片");
+//								a.append('<p><img src="' + res.uri + '" /></p>');
+//							} else{
+//								a.append(res.descp);
+//							}
+							var type = res.type;
+							if (type === 12) {//图片
+								descp += '<img src="' + e.uri + '">'
+							}else if (type === 13) {//文本
+								descp += '<p>'+e.descp+'</p>'
+							} else if(type === 15){//数据
+//											console.log(e.descp);
+								var _id ='';
+								if (e.descp) {
+									console.log(e.descp.length);
+									res.descp.length<0?echarts_data=res.descp:echarts_data=JSON.parse(res.descp);
+									_id = echarts_data.id_val;
+									console.log(echarts_data)
+								}
+								descp += '<div id="'+_id+'" style="min-height:500px;"></div>'
+							}else{
+								descp += res.descp
 							}
 						});
-						console.log(a[0].outerHTML);
-						$(".hotspot_txt").html(a[0].outerHTML);
+						console.log(descp);
+						$(".hotspot_txt").before(descp);
+//						var w = $(".hotspot_img").width();
+//						$("#header_img").css("width",w+"px");
 					},
 					error: function(data,err){
 						console.log(err);

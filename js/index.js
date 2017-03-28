@@ -382,7 +382,7 @@ var dataDesc = {
 		}
 		console.log(url);
 		// 基于准备好的dom，初始化echarts图表
-		var myChart = echarts.init(document.getElementById(id));
+		var myChart = echarts.init(document.getElementById(id),'walden');
 		if (location.href.indexOf("add_viewpoint")) {
 			$("#"+id).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
 		}
@@ -569,12 +569,13 @@ var dataDesc = {
 				
 				//原生态for循环
 				var html = '';
-				for (var i=0;i<10;i++) {
+				for (var i=0,len=data.length;i<len;i++) {
 					var a= data[i];
+//					console.log($(a));
 					html += '<dl class=""><dt>'+data[i].name+'</dt>';
-					for (var j=0;j<8;j++) {
+					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
 //									console.log(a.indicators[j]);
-						html += '<dd><a href="javascriptcn:void(0);" data-id="'+a.indicators[j].id+'" class="data_nav_click" data-abc = "123">'+a.indicators[j].name_cn+'</a></dd>';
+						html += '<dd><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" >'+a.indicators[j].name_cn+'</a></dd>';
 					}
 					html +='</dl>';
 				}
@@ -614,7 +615,7 @@ var dataDesc = {
 					}else{
 						table_icon_style = 'glyphicon-arrow-down red';
 					}
-					html += '<td>'+e.country+'</td>'+
+					html += '<td>'+e.country_name+'</td>'+
 			  				'<td>'+e.val+'</td>'+
 			  				'<td><span class="table_data">'+timeF(e.created,'mm')+'</span>&nbsp;&nbsp;&nbsp;<span class="glyphicon '+table_icon_style+'"></span></td>'+
 			  				'<td>'+e.previous+'</td>'+

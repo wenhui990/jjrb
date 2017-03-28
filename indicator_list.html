@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>数据</title>
+		<title>数据指标</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
@@ -74,10 +74,10 @@
 			#indicator,#countrys{width: 100%;position: absolute;left: 0;top: 0;}
 			.countrys_list,
 			.zb_list {
-				width: 100%;background: #fff;max-height: 500px;overflow: auto;
+				width: 100%;background: #fff;height: 500px;overflow: auto;
 				position: absolute;
 				right: 0;
-				top: 33px;
+				top: 30px;
 				width: 100%;
 				z-index: 10;
 				background: #FFFFFF;
@@ -111,7 +111,7 @@
 			#data_collect{position: fixed;right: 0;top: 100px;}
 			#collect{background: #fff;}
 			#collect a{text-decoration: none;}
-			#collects{position: absolute;top: 0;right: 0;background: #fff;width: 260px;padding: 20px;max-height: 500px;border: 1px solid #999;box-shadow: 0px 0px 5px #000000;margin: 0 25px;}
+			#collects{position: absolute;top: 0;right: 0;background: #fff;width: 200px;padding: 20px;min-height: 500px;border: 1px solid #999;box-shadow: 0px 0px 5px #000000;}
 			#collects .collects_title{display: inline-block;}
 			#collects .collects_title_left{float: left;}
 			#collects .collects_title_right{float: right;}
@@ -191,13 +191,36 @@
 		</div>
 		
 		<!-- 导航菜单 -->
+		<div id="data_nav">
+			<!-- 搜索框 -->
+			<div class="container searchs">
+				<form class="form-horizontal">
+				  <div class="form-group" style="margin-left: 0;">
+				    <label for="inputSearch" class="col-sm-1 control-label">搜索</label>
+				    <div class="col-sm-10">
+				      <input type="search" class="form-control" id="inputSearch" placeholder="输入要搜索的内容"  readonly="true">
+				    </div>
+				  </div>
+				  <div class="form-group" style="margin-left: 0;">
+				    <div class="col-sm-offset-1 col-sm-10">
+				      <div class="nav_txt">
+				        <span class="text-muted">最近过滤：</span>
+				      </div>
+				    </div>
+				  </div>
+				</form>
+			</div>
+			<!-- 导航菜单列 -->
+			<div id="data_nav_lists" class="container">
+			</div>
+		</div>
 
 		<!-- 收藏 -->
-		<div id="data_collect" style="background: #000000;" class="none1">
+		<div id="data_collect" style="background: #000000;" class="none">
 			<div id="collect">
 				<a href="javascript:void(0)">收<br />藏</a>
 			</div>
-			<div id="collects" class="none1">
+			<div id="collects" class="none">
 				<div class="collects_titles">
 					<a href="#" class="collects_title_left collects_title">收藏</a>
 					<a href="#" class="collects_title_right collects_title">管理</a>
@@ -210,123 +233,15 @@
 			</div>	
 		</div>
 			
-		<!-- 显示数据内容 -->
-		<div class="" id="data_show">
-			<div class="container" id="datas">
-				<div class="row">
-					<div class="col-md-3">经济指标</div>
-					<div class="col-md-3">选择国家</div>
-					<div class="col-md-3">时间范围</div>
-					<div class="col-md-3" style="margin-left: -10px"></div>
-				</div>
-				<div class="row" style="margin: 10px 0 25px 0;">
-					<div class="lists col-md-2">
-						<input class="form_style" id="indicator" placeholder="经济指标">
-						<div class="zb_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
-							<!--<div class="zb_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
-					    	<div class="zb_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
-					    	<div class="zb_ls" data-id="19554">3CE</div>
-					    	<div class="zb_ls" data-id="19557">3TEMPO</div>-->
-						</div>
-					</div>
-					<div class="lists col-md-2">
-						<input class="form_style" id="countrys" placeholder="国家">
-						<div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
-						</div>
-					</div>
-					<div class="lists col-md-2">
-						<select class="form_style" id="start_year">
-							<option>开始年份</option>
-							
-						</select>
-					</div>
-					<div class="lists col-md-2">
-						<select class="form_style" id="end_year">
-							<option>结束年份</option>
-							
-						</select>
-					</div>
-					
-					<!--<div class="lists col-md-2">
-						<input class="form_style" id="countrys" placeholder="国家">
-						<div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
-						</div>
-					</div>-->
-				</div>
-				<div class="row">
-					对比国家
-				</div>
-				<div class="row">
-					<div id="" class="none1">
-						<p id="countrys_vals"></p>
-						<!--已选指标：<p id="indicators_vals"></p>-->
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-8">
-						<span style="font-size: 16px;">切换数据样式:</span>
-						<span class="glyphicon glyphicon-stats echarts_style" style="font-size: 30px;margin: 0 10px;" title="柱状图" id="bar"></span>
-						<span title="曲线图" id="line" class="echarts_style">
-							<svg class="icon" aria-hidden="true">
-    							<use xlink:href="#icon-zhexiantu"></use>
-							</svg>
-						</span>
-						<!--<span title="折线图" id="oneLine" class="echarts_style">
-							<svg class="icon" aria-hidden="true">
-    							<use xlink:href="#icon-zhexiantu"></use>
-							</svg>
-						</span>-->
-					</div>
-					<div class="col-md-4 none">
-						<span class="glyphicon glyphicon-star">选择展示主题：</span>
-						<span class="glyphicon glyphicon-download-alt">下载</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="container" id="data_desc">
-				<div id="echarts_main" class="none" style="min-height: 500px;margin: 50px 0;"></div>
-				
-			</div>
-		</div>
-		
-		<!-- 数据表格 -->
-		<div class="container" id="data_table" style="background: #fff;padding: 30px;margin-bottom: 100px;">
-			<div class="row" style="margin-bottom: 20px;">
-				<h3 id="show_indicator_list"><a href="indicator_list.html">指标列表</a></h3> &nbsp;-&nbsp; <h3 id="show_indicator_list_name"></h3>
-			</div>
-			<div class="row">
-				<table class="table table-hover">
-			  		<thead>
-			  			<tr>
-			  				<th></th>
-				  			<th>近期数据<span class="glyphicon glyphicon-sort"></span></th>
-				  			<th></th>
-				  			<th>前次</th>
-				  			<th>最高</th>
-				  			<th>最低</th>
-			  			</tr>
-			  		</thead>
-			  		<tbody class="dowebok">
-			  			
-			  		</tbody>
-				</table>
-			</div>
-		</div>
 		
 		<footer><div id="footer_" class="container">
 			版权©&nbsp;2017&nbsp;
 			<p id="back_top">∧</p>
 		</div></footer>
-		
-		<!-- 引入javascript文件 -->
 		<script src="js/jquery1.9.1.min.js"></script>
 		<!-- 矢量图标 -->
 		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/echarts.js"></script>
-		<script src="js/westeros.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/infographic.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/walden.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<!--日期控件引入-->
 		<script type="text/javascript" src="js/jedate/jquery.jedate.min.js"></script>
@@ -337,7 +252,6 @@
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
-//			echarts.init(dom, 'westeros');
 		</script>
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
 	</body>
