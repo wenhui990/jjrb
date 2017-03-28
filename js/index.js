@@ -480,6 +480,14 @@ var dataDesc = {
 						saveAsImage: {}
 					}
 				},
+				dataZoom: [
+			        {
+			            id: 'dataZoomX',
+			            type: 'slider',
+			            xAxisIndex: [0],
+			            filterMode: 'filter'
+			        }
+			    ],
 	//			grid: {
 	//				left: '3%',
 	//				right: '4%',
@@ -599,7 +607,9 @@ var dataDesc = {
 	},
 	//表格加载数据
 	loadDatas: function(_href,indicator){
-		console.log(_href)
+		console.log(_href);
+		$("#data_table").find("tbody").html('');
+		
 		$.ajax({
 			type:"get",
 			url: _href + "/data/stat?indicator=" + indicator,

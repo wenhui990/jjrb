@@ -1,0 +1,114 @@
+.data_img {
+		text-align: center;
+		color: #fff;
+		/*font-weight: bold;*/
+		font-size: 14px;
+	}
+	
+	.d_i_div {
+		widows: 90%;
+		margin: 0 auto;
+	}
+	
+	.data_img .d_i_div .data_img_i {
+		background: url(images/numbers-style2-big.png) no-repeat center center;
+		width: 20%;
+		height: 24px;
+		display: inline-block;
+		margin: 12% 0 6% 0;
+		background-size: cover;
+	}
+	
+	.data_img .d_i_div p {
+		padding-bottom: 5%;
+	}
+	
+	.data_img .d_i_div .d_img_touzi {
+		background: url(images/numbers-style1-big.png) no-repeat center center;
+		background-size: cover;
+		width: 18%;
+	}
+	
+	.d_touzi {
+		background: #f34060;
+	}
+	
+	.d_yuanyou {
+		background: #3dcaa4;
+	}
+	
+	.d_rongzi {
+		background: #f13b5a;
+	}
+	
+	.d_zong {
+		background: #d652d9;
+	}
+	
+	.countrys_style {
+		background: #0833A0;
+		sursor: pointer;
+		margin: 2px;
+		color: #fff;
+	}
+	.lists{min-height: 35px;display: inline-block;float: left;position: relative;line-height: 35px;}
+	.lists input,select{width: 100%;height: 35px;line-height: 35px;background: #3b5998;color: #fff;padding: 2px 5px;}
+	#indicator,#countrys{width: 100%;position: relative;}
+	.countrys_list,
+	.zb_list {
+		width: 90%;background: #fff;max-height: 500px;overflow: auto;
+		position: absolute;
+		left: 1em;
+		top: 33px;
+		z-index: 10;
+		background: #FFFFFF;
+		word-wrap: break-word;
+		word-break: break-all;
+	}
+	.new_txt,.new_img,#show_data{position: relative;}
+	.new_close{position: absolute;top: 0;right: 0;}
+	#countrys_vals,#indicators_vals{position: relative;margin: 5px;}
+	
+	
+	::-moz-placeholder { color: #fff !important; }
+	::-webkit-input-placeholder { color:#fff !important;; }
+	:-ms-input-placeholder { color:#fff !important;; }
+	input.form_style{}
+	
+	.container{padding-right: 0;padding-left: 0;}
+	.nav_txt{color: #3b5998;}
+	.nav_txt a{color: #3b5998;}
+	.nav_txt span{margin-right: 10px;}
+	
+	.searchs{background: #fff; padding-top: 20px;}
+	#inputSearch{border-radius: 0;border: 1px solid #000;}
+	#data_nav_lists{margin-top: 20px;background: #fff;padding: 20px 0;margin-bottom: 100px;}
+	#data_nav_lists dl{padding: 10px 40px;max-width: 33%;}
+	#data_nav_lists dl dt a{color: #000;}
+	#data_nav_lists dl dd{line-height: 2.5;color: #3b5998;}
+	#data_nav_lists dl dd a{color: #3b5998;}
+	
+	/* 收藏样式 */
+	#data_collect{position: fixed;right: 0;top: 100px;}
+	#collect{background: #fff;}
+	#collect a{text-decoration: none;}
+	#collects{position: absolute;top: 0;right: 0;background: #fff;width: 260px;padding: 20px;max-height: 500px;border: 1px solid #999;box-shadow: 0px 0px 5px #000000;margin: 0 25px;}
+	#collects .collects_title{display: inline-block;}
+	#collects .collects_title_left{float: left;}
+	#collects .collects_title_right{float: right;}
+	#collects .collects_titles{margin-bottom: 20px;}
+	#collects .collects_titles a{color: #000;}
+	#collects p a{color: #3b5998;}
+	#collects .collects_titles::after{display: block;content: "";clear: both;}
+	
+	/* 表格数据样式 */
+	.table_data{background: #D9D9D9;color: #fff;border-radius: 6px;padding: 5px 8px;}
+	.red{color: red;}
+	.green{color: lawngreen;}
+	#data_table h3{display: inline;}
+	#show_indicator_list a{color: #3b5998;}
+	.header_data_icon{width: 1.6em;height: 1.6em;}
+	.header_data_icon1{width: 1.3em;height: 1.3em;    vertical-align: -0.2em;}
+	
+	/* 已选国家样式 */
+	.countrys_txt{width: 100%;height: 35px;line-height: 35px;background: #3b5998;color: #fff;padding: 2px 5px;color: #fff;}

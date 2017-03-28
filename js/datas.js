@@ -19,13 +19,15 @@ var _href = "http://api.jjrb.grsx.cc",
 	filter_txt=[],  //过滤
 	echartType="line",//图表样式
 	year = "";
+//设置初始值
 var u = getUrlParams(),
-	country = u.country,
-    indicator = u.indicator,
+	country = 'CN',
+    indicator = u.id,
     start = u.start,
     end = u.end;
 var _url = _href + interfacelist.select_data+"?";
 
+//dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
 //指标导航列表
 dataDesc.navList(filter_txt);
 //搜索框事件
@@ -40,8 +42,13 @@ $(".form_year").change(function(){
 });
 
 
-if (country) {
+if (country && indicator) {
 	dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+	$("#indicator").val(indicator);
+	$("#countrys").val('中国');
+	var initHtml = "<div style='display:inline-block;margin-right:10px'>"+
+			"<p data-id='"+country+"' class='countrys_txt' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
+	$("#countrys_vals").append(initHtml);
 }else{
 	$(document).on("change",".form_country",function(){
 		var country = $(this).val();
@@ -134,10 +141,25 @@ $('.countrys_list,.zb_list').on('click', 'div.countrys_ls,div.zb_ls', function(e
 		$('.countrys_list').hide();
 		var c_html = "<div style='display:inline-block;margin-right:10px'>"+
 			"<p data-id='"+_id+"' class='countrys_txt' data-name='"+_name+"' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
-		$("#countrys_vals").append(c_html);
+//		$("#countrys_vals").append(c_html);
+		var txts = $(".countrys_txt"),country_fals=true;
+		
+		if (txts.length) {
+			for (var i=0;i<txts.length;i++) {
+				if(txts[i].innerText===txt){
+					alert("已有这个国家");
+					country_fals = false;
+					break;
+				}
+			}
+			if(country_fals){
+				$("#countrys_vals").append(c_html);
+			}
+		} else{
+			$("#countrys_vals").append(c_html);
+		}
 		for(var i=0;i<$(".countrys_txt").length;i++){
 			countrys.push($(".countrys_txt").eq(i).attr("data-id"));
-//							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
 		}
 		country = countrys.toString();
 		dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
@@ -155,6 +177,8 @@ $('.countrys_list,.zb_list').on('click', 'div.countrys_ls,div.zb_ls', function(e
 		indicator = _id;
 		console.log(indicator);
 		dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+		dataDesc.loadDatas(_href,indicator);
+		$("#show_indicator_list_name").text(_name);
 	}
 });
 

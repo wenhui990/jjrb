@@ -9,6 +9,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
+		<link rel="stylesheet" type="text/css" href="css/datas.css"/>
 		<!--[if lt IE 9]>
       <script src="js/html5shiv.min.js"></script>
       <script src="js/respond.min.js"></script>
@@ -84,6 +85,7 @@
 			
 			#modal_footer {
 				margin-bottom: 50px;
+				text-align: center;
 			}
 			
 			#contont .add_row {
@@ -136,6 +138,8 @@
 			.new_txt,.new_img,#show_data{position: relative;}
 			.new_close{position: absolute;top: 0;right: 0;}
 			#countrys_vals,#indicators_vals{position: relative;margin: 5px;}
+			
+			.lists{width: 22%;}
 		</style>
 	</head>
 
@@ -273,42 +277,45 @@
 									<textarea name="" id="add_p_txt">请输入文字...</textarea>
 								</div>
 								<div class="datas_desc">
-									<div class="form-group">
-										<label for="country">国家<span class="symbol required"></span></label>
-										<input type="text" autocomplete="off" class="form-control desc_position country" id="country" placeholder="输入国家">
-										<div class="countrys_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
-											<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
-								    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
-								    	<div class="countrys_ls" data-id="19554">3CE</div>
-								    	<div class="countrys_ls" data-id="19557">3TEMPO</div>-->
+									<div class="row" style="margin: 0 0 0 -15px;">
+										<div class="col-md-3">经济指标</div>
+										<div class="col-md-3">选择国家</div>
+										<div class="col-md-3">时间范围</div>
+										<div class="col-md-3" style="margin-left: -10px"></div>
+									</div>
+									<div class="row" style="margin: 10px 0 25px 0;">
+										<div class="lists col-md-2">
+											<input class="form-control desc_position indicator" id="indicator" placeholder="经济指标">
+											<div class="zb_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
+											</div>
 										</div>
-										
-									</div>
-									<div class="form-group">
-										<label for="indicator">经济指标<span class="symbol required"></span></label>
-										<input type="text" autocomplete="off" class="form-control desc_position indicator" id="indicator" placeholder="经济指标">
-										<div class="zb_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
-											<!--<div class="countrys_ls countrys_style" data-id="2331">Y-3（三里屯店）</div>
-									    	<div class="countrys_ls" data-id="2332">3.1 Phillip Lim（三里屯店）</div>
-									    	<div class="countrys_ls" data-id="19554">3CE</div>
-									    	<div class="countrys_ls" data-id="19557">3TEMPO</div>-->
+										<div class="lists col-md-2">
+											<input class="form-control desc_position country" id="countrys" placeholder="国家">
+											<div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
+											</div>
 										</div>
-										
+										<div class="lists col-md-2">
+											<input type="text" class="form-control desc_position start_time" id="startInputTime" placeholder="开始时间">
+										</div>
+										<div class="lists col-md-2">
+											<input type="text" class="form-control desc_position end_time" id="endInputTime" placeholder="截止时间">
+										</div>
+										<div class="form-group">
+											<input type="submit" class="btn btn-default" id="select_data" value="查询">
+										</div>
 									</div>
-									<div class="form-group">
-										<label for="startInputTime">开始时间</label>
-										<input type="text" class="form-control desc_position start_time" id="startInputTime" placeholder="开始时间">
+									<div class="row" style="margin: 0;">
+										已选国家
 									</div>
-									<div class="form-group">
-										<label for="endInputTime">截止时间</label>
-										<input type="text" class="form-control desc_position end_time" id="endInputTime" placeholder="截止时间">
+									<div class="row" style="margin: 0;">
+										<div id="" class="none1">
+											<p id="countrys_vals"></p>
+											<!--已选指标：<p id="indicators_vals"></p>-->
+										</div>
 									</div>
-									<div class="form-group">
-										<input type="submit" class="btn btn-default" id="select_data" value="查询" />
-									</div>
-									<div class="row">
+									<div class="row" style="margin: 0;">
 										<div class="col-md-8">
-											<span style="font-size: 16px;">切换数据样式:</span>
+											<span style="font-size: 16px;">选择数据样式:</span>
 											<span class="glyphicon glyphicon-stats echarts_style" style="font-size: 30px;margin: 0 10px;" title="柱状图" id="bar"></span>
 											<span title="曲线图" id="line" class="echarts_style">
 												<svg class="icon" aria-hidden="true">
@@ -322,13 +329,9 @@
 											</span>-->
 										</div>
 										<div class="col-md-4 none">
-											<span class="glyphicon glyphicon-star">收藏</span>
+											<span class="glyphicon glyphicon-star">选择展示主题：</span>
 											<span class="glyphicon glyphicon-download-alt">下载</span>
 										</div>
-									</div>
-									<div id="">
-										已选国家：<p id="countrys_vals"></p>
-										已选指标：<p id="indicators_vals"></p>
 									</div>
 									<div id="show_data" style="min-height: 300px;">
 

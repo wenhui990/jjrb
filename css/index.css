@@ -11,9 +11,9 @@ body{background-color:#ebeff3;}
 .sidebar div{position: absolute;bottom: 10px;padding: 10px;color: #fff;}
 .sidebar h1{width: 420px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .sidebar h1 a{color: #fff;}
-.modal_style{margin-top: 300px;width: 300px;font-size: 12px;text-align: center;}
+.modal_style{margin-top: 300px;width: 300px;font-size: 14px;}
 .modal_style .modal-body{padding: 30px;}
-.modal_style .modal_style_title{font-weight: bold;}
+.modal_style .modal_style_title{font-weight: bold;text-align: center;font-size: 16px;}
 .modal_style form .form-group{margin-bottom: 35px;}
 .modal_style form #wechat_tag{margin-top: 20px;color: #000;font-size: 12px;}
 .modal_style form #wechat_tag a{color: #000;font-size: 12px;}
