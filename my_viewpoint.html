@@ -136,7 +136,7 @@
 							if(data.length > 0) {
 								data.forEach(function(e, i) {
 //									console.log(e);
-									var descp='',echarts,type,echarts_data;
+									var descp='',echarts,type,echarts_data,ids=[];
 									$.each(e.resources,function(ind,e){
 //										console.log(ind);
 										console.log(e);
@@ -144,10 +144,10 @@
 										type = parseInt(e.type);
 										console.log(type);
 										if (type === 12) {//图片
-											descp += '<img src="' + e.uri + '">'
+											descp += '<img src="' + e.uri + '">';
 										}else if (type === 13) {//文本
-											descp += '<p>'+e.descp+'</p>'
-										} else if(type === 15){//数据
+											descp += '<p>'+e.descp+'</p>';
+										}else if(type === 15){//数据
 //											console.log(e.descp);
 											var _id ='';
 											if (e.descp) {
@@ -156,12 +156,14 @@
 												_id = echarts_data.id_val;
 												console.log(echarts_data)
 											}
-											descp += '<div id="'+_id+'" style="min-height:500px;"></div>'
+											ids.push(echarts_data);
+											descp += '<div id="'+_id+'" style="min-height:500px;"></div>';
+//											dataDesc.urlLoad(_id,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
 										}else if (type===14) {
 											descp += e.descp;
 										}
 									})
-									console.log(descp);
+									console.log(ids);
 									
 									var htm = '<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">' +
 										'<img class="header_img" src="' + e.owner.head + '" />' +
@@ -171,7 +173,17 @@
 										'</div> </div>';
 									$("#viewpoint").append(htm);
 									if (echarts_data) {
-										dataDesc.urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
+//										for (var i=0;i<ids.length;i++) {
+//											(function(a){
+//												dataDesc.urlLoad(ids[a].id_val,_url,ids[a].country.toString(),ids[a].indicator,ids[a].start,ids[a].end,ids[a].echartType);
+//											})(i);
+//										}
+										$.each(ids, function(i,e) {
+											console.log(e.echartType)
+											dataDesc.urlLoad(e.id_val,_url,e.country.toString(),e.indicator,e.start,e.end,e.echartType);
+										});
+//										dataDesc.urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
+
 									}
 								});
 								fl = true;

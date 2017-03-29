@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-cn">
 
@@ -9,7 +10,6 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
-		<link rel="stylesheet" type="text/css" href="css/datas.css"/>
 		<!--[if lt IE 9]>
       <script src="js/html5shiv.min.js"></script>
       <script src="js/respond.min.js"></script>
@@ -85,7 +85,6 @@
 			
 			#modal_footer {
 				margin-bottom: 50px;
-				text-align: center;
 			}
 			
 			#contont .add_row {
@@ -119,6 +118,9 @@
 				overflow: auto;
 				height: 500px;
 			}
+			.datas_desc .row{
+				margin-right: 0;
+			}
 			
 			.datas_desc .form-group {
 				position: relative;
@@ -127,19 +129,23 @@
 			.countrys_list,
 			.zb_list {
 				position: absolute;
-				top: 33px;
-				right: 0;
-				width: 196px;
+				top: 30px;
+				left: 15px;
 				z-index: 10;
 				background: #FFFFFF;
 				word-wrap: break-word;
 				word-break: break-all;
 			}
+			
+			::-moz-placeholder { color: #fff !important; }
+			::-webkit-input-placeholder { color:#fff !important;; }
+			::-ms-input-placeholder { color:#fff !important;; }
+			
 			.new_txt,.new_img,#show_data{position: relative;}
 			.new_close{position: absolute;top: 0;right: 0;}
 			#countrys_vals,#indicators_vals{position: relative;margin: 5px;}
-			
-			.lists{width: 22%;}
+			.row_style{position: relative;padding-right: 0;}
+			.row_style input,select{width: 100%;height: 30px;line-height: 30px;background: #3b5998;color: #fff;}
 		</style>
 	</head>
 
@@ -207,8 +213,11 @@
 				</span> 插入段落
 				</a>
 				<a href="javascript:;" class="toole_nav add_data" id="">
-					<span class="glyphicon glyphicon-text-width">
-				</span> 数据字典
+					<span title="曲线图" class="echarts_style glyphicon li_active">
+						<svg class="icon header_data_icon" aria-hidden="true" style="vertical-align: -0.2em">
+							<use xlink:href="#icon-zhexiantu"></use>
+						</svg>
+					</span>数据字典
 				</a>
 				<a href="javascript:;" class="toole_nav add_img" id="">
 					<span class="glyphicon glyphicon-picture">
@@ -251,8 +260,11 @@
 				</span> 插入段落
 				</a>
 				<a href="javascript:;" class="toole_nav_bottom add_data" id="">
-					<span class="glyphicon glyphicon-text-width">
-				</span> 数据字典
+					<span title="曲线图" class="echarts_style glyphicon li_active">
+						<svg class="icon header_data_icon" aria-hidden="true" style="vertical-align: -0.2em">
+							<use xlink:href="#icon-zhexiantu"></use>
+						</svg>
+					</span> 数据字典
 				</a>
 				<a href="javascript:;" class="toole_nav_bottom add_img" id="">
 					<span class="glyphicon glyphicon-picture">
@@ -272,66 +284,67 @@
 					<div class="modal-body">
 						<p class="modal_style_title">插入段落</p>
 						<form role="form" class="form-inline">
-							<div class="form-group" style="width: 100%;">
+							<div class="row">
 								<div class="txt_desc">
 									<textarea name="" id="add_p_txt">请输入文字...</textarea>
 								</div>
 								<div class="datas_desc">
-									<div class="row" style="margin: 0 0 0 -15px;">
-										<div class="col-md-3">经济指标</div>
-										<div class="col-md-3">选择国家</div>
-										<div class="col-md-3">时间范围</div>
-										<div class="col-md-3" style="margin-left: -10px"></div>
+									<div class="row">
+										<div class="row_style col-md-3">
+											<label for="countrys">国家<span class="symbol required"></span></label>
+										</div>
+										<div class="row_style col-md-3">
+											<label for="indicator">经济指标<span class="symbol required"></span></label>
+										</div>
+										<div class="row_style col-md-3">
+											<label for="startInputTime">开始时间</label>
+										</div>
+										<div class="row_style col-md-3">
+											<label for="endInputTime">截止时间</label>
+										</div>
+										<!--<div class="row_style col-md-2">
+											
+										</div>-->
 									</div>
-									<div class="row" style="margin: 10px 0 25px 0;">
-										<div class="lists col-md-2">
-											<input class="form-control desc_position indicator" id="indicator" placeholder="经济指标">
-											<div class="zb_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
+									<div class="row">
+										<div class="row_style col-md-3">
+											<input type="text" autocomplete="off" class="desc_position country" id="countrys" placeholder="输入国家">
+											<div class="countrys_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
 											</div>
 										</div>
-										<div class="lists col-md-2">
-											<input class="form-control desc_position country" id="countrys" placeholder="国家">
-											<div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
+										<div class="row_style col-md-3">
+											<input type="text" autocomplete="off" class="desc_position indicator" id="indicator" placeholder="经济指标">
+											<div class="zb_list" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;display: none;">
 											</div>
 										</div>
-										<div class="lists col-md-2">
-											<input type="text" class="form-control desc_position start_time" id="startInputTime" placeholder="开始时间">
+										<div class="row_style col-md-3">
+											<select class="form_style" id="start_year">
+												<option>开始年份</option>
+											</select>
 										</div>
-										<div class="lists col-md-2">
-											<input type="text" class="form-control desc_position end_time" id="endInputTime" placeholder="截止时间">
+										<div class="row_style col-md-3">
+											<select class="form_style" id="end_year">
+												<option>结束年份</option>
+											</select>
 										</div>
-										<div class="form-group">
-											<input type="submit" class="btn btn-default" id="select_data" value="查询">
-										</div>
-									</div>
-									<div class="row" style="margin: 0;">
-										已选国家
-									</div>
-									<div class="row" style="margin: 0;">
-										<div id="" class="none1">
-											<p id="countrys_vals"></p>
-											<!--已选指标：<p id="indicators_vals"></p>-->
-										</div>
-									</div>
-									<div class="row" style="margin: 0;">
+									</div>	
+									<div class="row">
 										<div class="col-md-8">
-											<span style="font-size: 16px;">选择数据样式:</span>
+											<span style="font-size: 16px;">切换数据样式:</span>
 											<span class="glyphicon glyphicon-stats echarts_style" style="font-size: 30px;margin: 0 10px;" title="柱状图" id="bar"></span>
 											<span title="曲线图" id="line" class="echarts_style">
 												<svg class="icon" aria-hidden="true">
 					    							<use xlink:href="#icon-zhexiantu"></use>
 												</svg>
 											</span>
-											<!--<span title="折线图" id="oneLine" class="echarts_style">
-												<svg class="icon" aria-hidden="true">
-					    							<use xlink:href="#icon-zhexiantu"></use>
-												</svg>
-											</span>-->
 										</div>
 										<div class="col-md-4 none">
-											<span class="glyphicon glyphicon-star">选择展示主题：</span>
+											<span class="glyphicon glyphicon-star">收藏</span>
 											<span class="glyphicon glyphicon-download-alt">下载</span>
 										</div>
+									</div>
+									<div id="">
+										已选国家：<p id="countrys_vals"></p>
 									</div>
 									<div id="show_data" style="min-height: 300px;">
 
@@ -339,7 +352,7 @@
 
 								</div>
 
-								<div id="modal_footer">
+								<div id="modal_footer" style="text-align: right;">
 									<button type="button" class="btn btn-info btn_ok" style="margin-right: 30px;padding: 6px 20px;">确定</button>
 									<button type="button" class="btn btn-danger btn_clean" style="padding: 6px 20px;">取消</button>
 								</div>
@@ -355,7 +368,6 @@
 		<footer></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
-		<!-- 矢量图标 -->
 		<!-- 矢量图标 -->
 		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/index.js"></script>
@@ -427,6 +439,7 @@
 				}
 			});
 		</script>
+		<!--<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>-->
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
@@ -447,9 +460,13 @@
 						select_country: "/data/country/k/",//data/country/k/{val}
 						feed: "/feed",  //观点详情页feed/{id}
 						img:'/upload'
-					};
+					},
+					countrys=[],    //国家
+					indicators,  //指标
+					echartType="line",//图表样式
+					year = "",datanum=0;
 				//全局变量
-				var countrys=[],indicators=[],id_val,_url,start,end,echartType='line';
+				var _url=_href + interfacelist.select_data+"?",start,end;
 				//初始化时间
 				var now = new Date();
 				var year = now.getFullYear();
@@ -489,15 +506,16 @@
 
 				//点击确定事件
 				$(".btn_ok").on("click", function(e) {
+					++datanum;
 					e.stopPropagation();
 					var html = "<p class='row add_row new_txt pointHtmls' data-type='13'>" + $('#add_p_txt').val() + "<span class='glyphicon glyphicon-remove new_close none'></span></p>";
 					 var fl = $(".txt_desc").css("display");
 					 if(fl=="none"){
-					 	id_val = "show_data"+now.getTime();
+					 	var id_val = "show_data"+datanum;
 					 	console.log(id_val);
-					 	$("#viewpoint_content").append('<div id="'+id_val+'" style="min-height:500px" class="pointHtmls" data-type="15"></div>');
-					 	start = $("#startInputTime").val();
-						end = $("#endInputTime").val();
+					 	$("#viewpoint_content").append('<div id="'+id_val+'" style="min-height:500px" class="pointHtmls" data-type="15" data-echart="'+echartType+'" data-country="'+countrys.toString()+'" data-start="'+start+'" data-end="'+end+'"></div>');
+//					 	start = $("#startInputTime").val();
+//						end = $("#endInputTime").val();
 						_url = _href + interfacelist.select_data+"?";
 						console.log(echartType)
 						dataDesc.urlLoad(id_val,_url,countrys,indicators,start,end,echartType);
@@ -593,8 +611,12 @@
 					$(".txt_desc").hide();
 					$(".datas_desc").show();
 					$(".modal_style_title").html("插入数据");
+					$("#indicator").val('');
+					$("#countrys").val('');
+					dataDesc.urlLoad("",_url,countrys,indicators,start,end,echartType);
 				});
 				//国家输入内容键盘弹起事件
+//				dataDesc.ciKeyup();
 				$(".country,.indicator").on("keyup", function() {
 					var country_val = $(".country").val();
 					var indicator_val = $(".indicator").val();
@@ -605,12 +627,15 @@
 //						console.log("cc");
 						_src = _href + interfacelist.select_country + country_val;
 						ci(".countrys_list", 'countrys_ls', _src);
+//						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
 					} else if(_classname.indexOf("indicator") >= 0) {
 //						console.log("dd");
 						_src = _href + interfacelist.select_indicator + indicator_val;
 						ci(".zb_list", 'zb_ls', _src);
+//						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
 					}
 				});
+
 				//国家，经济指标通用方法
 				function ci(classname, classname1, src) {
 					$(classname).show();
@@ -658,67 +683,110 @@
 				//列表点击事件
 				$('.countrys_list,.zb_list').on('click', 'div.countrys_ls,div.zb_ls', function(e) {
 					e.stopPropagation();
-					var _classname = $(this).attr("class"),_id=$(this).attr("data-id");
-					var txt = $(this).html();
-					console.log(_classname)
-					if(_classname.indexOf("countrys_ls") >= 0) {
-						console.log("country_ls");
-						$(".country").val(txt);
-						$('.countrys_list').hide();
-						var c_html = "<div style='display:inline-block;'><p data-id='"+_id+"' class='countrys_txt' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+$(".country").val()+"<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
-						$("#countrys_vals").append(c_html);
-					} else if(_classname.indexOf("zb_ls") >= 0) {
-						console.log("zb_ls");
-						$(".indicator").val(txt);
-						$('.zb_list').hide();
-						var i_html = "<div style='display:inline-block;'><p data-id='"+_id+"' class='indicators_txt' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+$(".indicator").val()+"<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
-						$("#indicators_vals").append(i_html);
-					}
-				});
-				
-				
-				
-				//点击查询
-				$(document).on("click","#select_data",function(e){
-					e.stopPropagation();
-					e.preventDefault();
-					if(countrys.length>0||indicators.length>0){
+					$("#show_data").show();
+					if(countrys.length>0){
 						countrys=[];
-						indicators=[];
+						_vals=[];
 					}
-					for(var i=0;i<$(".countrys_txt").length;i++){
-						countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+					var _classname = $(this).attr("class"),_id=$(this).attr("data-id"),_name=$(this).attr("data-name");
+					var txt = $(this).html();
+					console.log(indicators)
+					if(_classname.indexOf("countrys_ls") >= 0) {
+				//						console.log("country_ls");
+						$("#countrys").val(txt);
+						$('.countrys_list').hide();
+						var c_html = "<div style='display:inline-block;margin-right:10px'>"+
+							"<p data-id='"+_id+"' class='countrys_txt' data-name='"+_name+"' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
+				//		$("#countrys_vals").append(c_html);
+						var txts = $(".countrys_txt"),country_fals=true;
+						
+						if (txts.length) {
+							for (var i=0;i<txts.length;i++) {
+								if(txts[i].innerText===txt){
+									alert("已有这个国家");
+									country_fals = false;
+									break;
+								}
+							}
+							if(country_fals){
+								$("#countrys_vals").append(c_html);
+							}
+						} else{
+							$("#countrys_vals").append(c_html);
+						}
+						for(var i=0;i<$(".countrys_txt").length;i++){
+							countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+						}
+						dataDesc.urlLoad("show_data",_url,countrys.toString(),indicators,start,end,echartType);
+					} else if(_classname.indexOf("zb_ls") >= 0) {
+				//						console.log("zb_ls");
+						$("#indicator").val(txt);
+						$('.zb_list').hide();
+						indicators = _id;
+						console.log(indicator);
+						for(var i=0;i<$(".countrys_txt").length;i++){
+							countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+						}
+						dataDesc.urlLoad("show_data",_url,countrys.toString(),indicators,start,end,echartType);
 					}
-					for(var i=0;i<$(".indicators_txt").length;i++){
-						indicators.push($(".indicators_txt").eq(i).attr("data-id"));
-					}
-					country = countrys.toString();
-					indicator = indicators.toString();
-					start = $("#startInputTime").val();
-					end = $("#endInputTime").val();
-					_url = _href + interfacelist.select_data+"?";
-//					console.log(country+" "+indicator+" "+ start +" " + end);
-					console.log(echartType)
-					dataDesc.urlLoad("show_data",_url,country,indicator,start,end,'line');
-					return false;
 				});
+				
+				//删除国家标签
+				$(document).on("click",".country_txt_close",function(){
+					$(this).parent().parent().remove();
+					countrys=[];
+					console.log($("#countrys_vals").length);
+					if ($("#countrys_vals").length>0) {
+						console.log("已删除");
+						for(var i=0;i<$(".countrys_txt").length;i++){
+							countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+						}
+				//						console.log(countrys)
+						dataDesc.urlLoad("show_data",_url,countrys.toString(),indicators,start,end,echartType);
+					} else{
+						urlLoad("show_data",_url,countrys.toString(),indicators,start,end,echartType);
+					}
+				});
+				
+				//年份加载
+				var endyear = new Date().getFullYear(),yearhtml;
+				for(var i=100;i>0;i--){
+					yearhtml+="<option value='"+endyear+"'>"+endyear+"年</option>";
+					endyear--;
+				}
+				$("#start_year,#end_year").append(yearhtml);
+				//年份触发事件
+				$(document).on("change","#start_year,#end_year",function(){
+					$("#echarts_main").show();
+					if ($(this).attr("id")=="start_year") {
+						start = $(this).val();
+						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
+					}
+					if ($(this).attr("id")=="end_year") {
+						end = $(this).val();
+						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
+					}
+					
+				});
+				
 				
 				//切换数据样式
+//				dataDesc.echartStyle();
 				$(document).on("click",".echarts_style",function(){
 					$(this).css("color","#44c66a").siblings().css("color","#000");
 					console.log($(this).attr("id"));
 					var etId = $(this).attr("id");
 					if (etId=="line") {
 						echartType = "line";
-						dataDesc.urlLoad("show_data",_url,country,indicator,start,end,echartType);
+						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
 					}
 					if (etId=="bar") {
 						echartType = "bar";
-						dataDesc.urlLoad("show_data",_url,country,indicator,start,end,echartType);
+						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
 					}
 					if (etId=="oneLine") {
 						echartType = "oneLine";
-						dataDesc.urlLoad("show_data",_url,country,indicator,start,end,echartType);
+						dataDesc.urlLoad("show_data",_url,countrys,indicators,start,end,echartType);
 					}
 					
 				});
@@ -769,11 +837,12 @@
 							resources.push(data);
 						} else if(type === "15"){//数据
 							var data_descp = {
-								'id_val':id_val,//图表ID
-						    	'country':countrys,//国家
+								'id_val':e.getAttribute("id"),//图表ID
+						    	'country':e.getAttribute("data-country"),//国家
 						    	'indicator':indicators,//指标
-						    	'start':start,//开始时间
-						    	'end':end //时间
+						    	'start':e.getAttribute("data-start"),//开始时间
+						    	'end':e.getAttribute("data-end"), //时间
+						    	'echartType': e.getAttribute("data-echart") //图表样式
 							}
 							var data = {
 								'type': type,
@@ -790,11 +859,6 @@
 							'token' : localStorage.token,
 							'type': 3,
 							'id': localStorage.userId,
-//							'owner':{
-//								'id':localStorage.userId,
-//								'name':localStorage.userName,
-//								'phone':localStorage.phone
-//							},
 						    'resources': resources,
 						    'title': _title,
 						}
@@ -820,7 +884,7 @@
 			});
 
 			//时间插件调用
-			$("#add_viewpoint_time").jeDate({
+			/*$("#add_viewpoint_time").jeDate({
 				isinitVal: true,
 				festival: true,
 				ishmsVal: false,
@@ -833,7 +897,7 @@
 				ishmsVal: false,
 				format: "YYYY",
 				zIndex: 3000,
-			})
+			})*/
 		</script>
 		
 	</body>

@@ -1,4 +1,10 @@
 body{background-color:#ebeff3;}
+@font-face { 
+  font-family: dxp; 
+  src: url('../fonts/dxp.ttf'); 
+} 
+#logo_img{display: inline-block;}
+#logo_txt{font-family: 'lixukexingshu9be11a22f18900';font-size: 30px;display: inline-block;color: #3d5a96;line-height: 86px;}
 .dl_style{text-indent: 1em;}
 .none{display: none;}	
 #logo_img{margin-top: 0.2em;}

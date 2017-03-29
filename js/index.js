@@ -1,20 +1,23 @@
+$("header").load("header.html");
+$("footer").load("footer.html");
+$("head").append("<link href='http://cdn.webfont.youziku.com/webfonts/nomal/100608/45807/58db5e4cf629da0960bba0dc.css' rel='stylesheet' type='text/css' />");
+//接口
+var _href = "http://api.jjrb.grsx.cc",//"http://test.api.wantscart.com",
+	interfacelist = {
+		phone_code: "/login",//"/api/login", //手机验证码get?phone=
+		phone_login: "/login",//"/api/login", //手机登录post  phone=&code=
+		wx: "/login/wx"//"/api/login/wx" //微信登录post expire_in=&open_id=&	token=&refresh_token=	
+	};
+//	n = 0;
 $(function() {
 	$(".active a").css("color","#3b5998;");
-	$(".nav>li").mouseover();
-//	$(document).on("load",".nav>li:eq[0]",function(){
-//		$(this).addClass("active")
-//		console.log($(this))
-//	});
+//	$(".nav>li").mouseover();
+	
+	
+	var n =0;
 	//初始化弹出框
 	$('[data-toggle="popover"]').popover();
-	//接口
-	var _href = "http://api.jjrb.grsx.cc",//"http://test.api.wantscart.com",
-		interfacelist = {
-			phone_code: "/login",//"/api/login", //手机验证码get?phone=
-			phone_login: "/login",//"/api/login", //手机登录post  phone=&code=
-			wx: "/login/wx"//"/api/login/wx" //微信登录post expire_in=&open_id=&	token=&refresh_token=	
-		},
-		n = 0;
+	
 	//头部导航鼠标移入
 	$(document).on("mouseover", ".nav>li",function() {
 		$(this).addClass("active").siblings().removeClass("active").css("color", "#999");
@@ -364,6 +367,70 @@ Array.prototype.unique3 = function(){
 	 return res;
 }
 
+//去重排序
+var uniqueSort = function(source, compareFn) {
+        var result = [];
+        if ('function' != typeof compareFn) {
+            compareFn = function (item1, item2) {
+                return item1 - item2;
+            };
+        }
+        $.each(source, function (i, v) {
+            if (i == 0) {
+                result.push(v);
+            } else {
+                //从最后开始
+                for (var j = result.length - 1; j >= 0; j--) {
+                    if (compareFn(v, result[j]) > 0) {
+                        result.splice(j + 1, 0, v);
+                        break;
+                    } else if (j == 0) {
+                        //到0还是小
+                        result.splice(0, 0, v);
+                    }
+                }
+            }
+        });
+        return result;
+    }
+
+//国家，经济指标通用方法
+function ci(classname, classname1, src) {
+	$(classname).show();
+	$(classname).html("");
+	$.ajax({
+		type: "get",
+		url: src,
+		success: function(data) {
+			var d = data;
+//							console.log(d);
+			$(d).each(function(i, e) {
+//								console.log(e);
+				var _name,_id;
+				if (classname.indexOf("country")>=0) {
+					_id = e.iso2_code;
+					_name = e.name;
+					$(classname).append('<div class="' + classname1 + ' cou_list_id" data-id="'+_id+'" data-name="'+_name+'" title="'+e.id+'">' + _name + '</div>');
+				} else if(classname.indexOf("zb")>=0){
+					_id = e.id;
+					_name = e.name_cn;
+					if(_name==null)_name=_id
+					$(classname).append('<div class="' + classname1 + ' zb_list_id" data-id="'+_id+'" data-name="'+_name+'" title="'+_id+'">' + _name + '</div>');
+				}
+				
+			});
+		},
+		error: function(data) {
+			console.log(data.error().status);
+		}
+	});
+}
+
+
+
+
+
+
 
 var dataDesc = {
 	//图表数据获取
@@ -393,34 +460,55 @@ var dataDesc = {
 		//异步加载方法
 		$.get(url).done(function(data) {
 			myChart.hideLoading();
-			var d;
-	//		console.log(data);
-			if(typeof(data) == "object" && 
-	            Object.prototype.toString.call(data).toLowerCase() == "[object object]" && !data.length){
-	            d=data;
-	        }else{
-	        	d = JSON.parse(data);
-				console.log(d);
-	        }
+//			var d;
+//	//		console.log(data);
+//			if(typeof(data) == "object" && 
+//	            Object.prototype.toString.call(data).toLowerCase() == "[object object]" && !data.length){
+//	            d=data;
+//	        }else{
+//	        	d = JSON.parse(data);
+//				console.log(d);
+//	        }
 			
-			var time = [],_series=[],country=[],_name="";
-	//		if (!_val) {
-	//			_val=[];
-	//		}else{
-	//			_val=_val.unique3
-	//			console.log(_val)
-	//		}
-			$.each(d,function(key,val){
-				var value = [];
-				_name += key+"  ";					
-				country.push(key);
-	    		$.each(val,function(i,e){
-	    			time.push(e.date);
-	    			value.push(e.value);
-	    		});
-	//  		console.log(key);
-	//  		console.log(val);
-				//切换图表样式
+			
+	
+			// 填入数据
+            var ds = [];//merge后时间数组
+            var vs = [];//数据二维字典
+            var ss = [];
+            var cs = [];
+            //merge时间，获得x轴分类
+            $.each(data, function (key, val) {
+                var d = [];//时间数组
+                var v = [];//数据字典
+                $.each(val, function (i, obj) {
+                    v[obj.date]=obj.value;
+                    d.push(obj.date);
+                });
+                $.merge(ds, d);
+                vs[key] = v;
+            });
+            ds = uniqueSort(ds);
+            
+            //计算series
+            $.each(data, function (key, val) {
+                var s = {};//series
+                var v = vs[key];
+                var _d = [];//data
+                $.each(ds, function (i, d) {
+                    if(v[d]){
+                        _d.push(v[d]);
+                    }else{
+                        _d.push('');
+                    }
+                });
+//              s.type = 'line';
+//              s.name = key;
+//              s.areaStyle = {normal: {}};
+//              s.data = _d;
+//              ss.push(s);
+                cs.push(key);
+                //切换图表样式
 	    		if(!echartType || echartType=='' || echartType==undefined){
 	    			echartType = 'line';
 					fla = false;
@@ -432,7 +520,7 @@ var dataDesc = {
 			            type: echartType,
 			            smooth:true,
 			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-			            data: value
+			            data: _d
 					}
 				} else if(echartType==='bar' && echartType){
 					fla=true;
@@ -440,14 +528,14 @@ var dataDesc = {
 						name: key,
 			            type: echartType,
 			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-			            data: value
+			            data: _d
 					}
 				} else if(echartType==='oneLine' && echartType){
 					s = {
 						name: key,
 			            type: 'line',
 			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-			            data: value,
+			            data: _d,
 			            markPoint : {
 			                data : [
 			                    {type : 'max', name: '最大值'},
@@ -462,9 +550,70 @@ var dataDesc = {
 					}
 						
 				}
-	    		_series.push(s);
-			});
-			
+                ss.push(s);
+                
+                
+                
+                
+            });
+	
+	
+	
+//			$.each(d,function(key,val){
+//				var value = [];
+//				_name += key+"  ";					
+//				country.push(key);
+//	    		$.each(val,function(i,e){
+//	    			time.push(e.date);
+//	    			value.push(e.value);
+//	    		});
+//	//  		console.log(key);
+//	//  		console.log(val);
+//				//切换图表样式
+//	    		if(!echartType || echartType=='' || echartType==undefined){
+//	    			echartType = 'line';
+//					fla = false;
+//	    		}
+//	    		if (echartType==='line' && echartType) {
+//					fla=false;
+//					s = {
+//						name: key,
+//			            type: echartType,
+//			            smooth:true,
+//			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+//			            data: value
+//					}
+//				} else if(echartType==='bar' && echartType){
+//					fla=true;
+//					s = {
+//						name: key,
+//			            type: echartType,
+//			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+//			            data: value
+//					}
+//				} else if(echartType==='oneLine' && echartType){
+//					s = {
+//						name: key,
+//			            type: 'line',
+//			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+//			            data: value,
+//			            markPoint : {
+//			                data : [
+//			                    {type : 'max', name: '最大值'},
+//			                    {type : 'min', name: '最小值'}
+//			                ]
+//			            },
+//			            markLine : {
+//			                data : [
+//			                    {type : 'average', name: '平均值'}
+//			                ]
+//			            }
+//					}
+//						
+//				}
+//	    		_series.push(s);
+//			});
+//			
 			myChart.setOption({
 				title: {
 					text: country+" "+ indicator
@@ -473,7 +622,7 @@ var dataDesc = {
 	//				trigger: 'axis'
 				},
 				legend: {
-					data: country//["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
+					data: cs//["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
 				},
 				toolbox: {
 					feature: {
@@ -497,11 +646,12 @@ var dataDesc = {
 				xAxis: [{
 					type: 'category',
 					boundaryGap: fla,
-					data: time.unique3()//["周一","周二","周三","周四","周五","周六","周日1312"]
+					data: ds//["周一","周二","周三","周四","周五","周六","周日1312"]
 				}],
 				yAxis: [{
 					type: 'value',
 					axisLabel: {
+						inside: true,
 	                    formatter: function (value, index) {
 	                        var v = 0;
 	//                      console.log(value);
@@ -515,7 +665,7 @@ var dataDesc = {
 	                    }
 	                }
 				}],
-				series: _series
+				series: ss
 			});
 		});
 		
@@ -671,6 +821,147 @@ var dataDesc = {
 				filter_txt.unique3();
 				console.log(filter_txt);
 				localStorage.setItem("filterTxt",filter_txt);
+			}
+		});
+	},
+	//切换图表样式
+	echartStyle: function(){
+		$(document).on("click",".echarts_style",function(){
+			$(this).css("color","#44c66a").siblings().css("color","#000");
+			console.log($(this).attr("id"));
+			if ($(this).attr("id")=="line") {
+				echartType = "line";
+				dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			}
+			if ($(this).attr("id")=="bar") {
+				echartType = "bar";
+				dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			}
+			if ($(this).attr("id")=="oneLine") {
+				echartType = "oneLine";
+				dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			}
+			
+		});
+	},
+	//年份触发事件
+	yearChange: function(_url){
+		$(document).on("change","#start_year,#end_year",function(){
+			$("#echarts_main").show();
+			if ($(this).attr("id")=="start_year") {
+				start = $(this).val();
+				dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			}
+			if ($(this).attr("id")=="end_year") {
+				end = $(this).val();
+				dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			}
+			
+		});
+	},
+	//删除已选标签
+	delTxtLable: function(){
+		$(document).on("click",".country_txt_close",function(){
+			$(this).parent().parent().remove();
+			countrys=[];indicators=[],_vals=[];
+			console.log($("#countrys_vals").length);
+			if ($("#countrys_vals").length>0) {
+				console.log("已删除");
+				for(var i=0;i<$(".countrys_txt").length;i++){
+					countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+					_vals.push($(".indicators_txt").eq(i).attr("data-name"));
+				}
+		//						console.log(countrys)
+				country = countrys.toString();
+				dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			} else{
+				urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+			}
+		});
+	},
+	//国家指标列表点击事件
+	countryListClick: function(id){
+			var id;
+			if (id) {
+				id = id;
+			} else{
+				id = "echarts_main";
+			}
+			console.log(id);
+			$('.countrys_list,.zb_list').on('click', 'div.countrys_ls,div.zb_ls', function(e) {
+			e.stopPropagation();
+			$("#echarts_main").show();
+			if(countrys.length>0||indicators.length>0){
+				countrys=[];
+				indicators=[];
+				_vals=[];
+			}
+			var _classname = $(this).attr("class"),_id=$(this).attr("data-id"),_name=$(this).attr("data-name");
+			var txt = $(this).html();
+		//					console.log(_classname)
+			if(_classname.indexOf("countrys_ls") >= 0) {
+		//						console.log("country_ls");
+				$("#countrys").val(txt);
+				$('.countrys_list').hide();
+				var c_html = "<div style='display:inline-block;margin-right:10px'>"+
+					"<p data-id='"+_id+"' class='countrys_txt' data-name='"+_name+"' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
+		//		$("#countrys_vals").append(c_html);
+				var txts = $(".countrys_txt"),country_fals=true;
+				
+				if (txts.length) {
+					for (var i=0;i<txts.length;i++) {
+						if(txts[i].innerText===txt){
+							alert("已有这个国家");
+							country_fals = false;
+							break;
+						}
+					}
+					if(country_fals){
+						$("#countrys_vals").append(c_html);
+					}
+				} else{
+					$("#countrys_vals").append(c_html);
+				}
+				for(var i=0;i<$(".countrys_txt").length;i++){
+					countrys.push($(".countrys_txt").eq(i).attr("data-id"));
+				}
+				country = countrys.toString();
+				dataDesc.urlLoad(id,_url,country,indicator,start,end,echartType);
+			} else if(_classname.indexOf("zb_ls") >= 0) {
+		//						console.log("zb_ls");
+				$("#indicator").val(txt);
+				$('.zb_list').hide();
+				/*var i_html = "<div style='display:inline-block;'>"+
+					"<p data-id='"+_id+"' class='indicators_txt' data-name='"+_name+"' style='margin:0 3px;padding:1px 15px;border:1px solid #666;position:relative;'>"+ $("#indicator").val()+ "<span class='glyphicon glyphicon-remove country_txt_close none'></span></p></div>";
+				$("#indicators_vals").append(i_html);*/
+				/*for(var i=0;i<$(".indicators_txt").length;i++){
+									indicators.push($(".indicators_txt").eq(i).attr("data-id"));
+		//							_vals.push($(".indicators_txt").eq(i).attr("data-name"));
+								}*/
+				indicator = _id;
+				console.log(indicator);
+				dataDesc.urlLoad(id,_url,country,indicator,start,end,echartType);
+				dataDesc.loadDatas(_href,indicator);
+				$("#show_indicator_list_name").text(_name);
+			}
+		});
+	},
+	//国家，经济指标输入内容键盘弹起事件
+	ciKeyup: function(){
+		$("#countrys,#indicator").on("keyup", function() {
+			var country_val = $("#countrys").val();
+			var indicator_val = $("#indicator").val();
+			var _src = "";//'data.json'; //
+		//					console.log(_src);
+			var _idname = $(this).attr("id");
+			if(_idname.indexOf("country") >= 0) {
+		//						console.log("cc");
+				_src = _href + interfacelist.select_country + country_val;
+				ci(".countrys_list", 'countrys_ls', _src);
+			} else if(_idname.indexOf("indicator") >= 0) {
+		//						console.log("dd");
+				_src = _href + interfacelist.select_indicator + indicator_val;
+				ci(".zb_list", 'zb_ls', _src);
 			}
 		});
 	}
