@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>数据指标</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!-- 公共样式 -->
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
 		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
@@ -97,7 +98,9 @@
 			.container{padding-right: 0;padding-left: 0;}
 			.nav_txt{color: #3b5998;}
 			.nav_txt a{color: #3b5998;}
+			.hostimgs a{color: #3b5998;}
 			.nav_txt span{margin-right: 10px;}
+			.hostimgs span{margin-right: 10px;}
 			
 			.searchs{background: #fff; padding-top: 20px;}
 			#inputSearch{border-radius: 0;border: 1px solid #000;}
@@ -111,7 +114,7 @@
 			#data_collect{position: fixed;right: 0;top: 100px;}
 			#collect{background: #fff;}
 			#collect a{text-decoration: none;}
-			#collects{position: absolute;top: 0;right: 0;background: #fff;width: 200px;padding: 20px;min-height: 500px;border: 1px solid #999;box-shadow: 0px 0px 5px #000000;}
+			#collects{position: absolute;top: 0;right: 0;background: #fff;width: 200px;padding: 20px;max-height: 500px;border: 1px solid #999;box-shadow: 0px 0px 5px #000000;}
 			#collects .collects_title{display: inline-block;}
 			#collects .collects_title_left{float: left;}
 			#collects .collects_title_right{float: right;}
@@ -208,27 +211,44 @@
 				      </div>
 				    </div>
 				  </div>
+				  <div class="form-group" style="margin-left: 0;">
+				    <div class="col-sm-offset-1 col-sm-10">
+				      <div class="hostimgs">
+				        <span class="hostimg">热图：</span>
+				        <span><a href="scatter-life-expectancy-timeline.html" target="_blank">平均寿命</a></span>
+				      </div>
+				    </div>
+				  </div>
 				</form>
 			</div>
 			<!-- 导航菜单列 -->
 			<div id="data_nav_lists" class="container">
+				<!--<dl>
+					<dt></dt>
+					<dd class="data_nav_lists">
+						<a href="data.html?id='&name='+a.indicators[j].name_cn+'" data-id="abc" class="data_nav_click" >abc</a>
+						<span class="glyphicon glyphicon-star-empty btn_collect none" id="btn_collect"></span>
+					</dd>
+					<dd class="data_nav_lists">
+						<a href="data.html?id=a" data-id="aebc" class="data_nav_click" >aebc</a>
+						<span class="glyphicon glyphicon-star-empty btn_collect none" id="btn_collect"></span>
+					</dd>
+				</dl>-->
 			</div>
 		</div>
 
 		<!-- 收藏 -->
-		<div id="data_collect" style="background: #000000;" class="none">
+		<div id="data_collect" style="background: #000000;" class="none1">
 			<div id="collect">
 				<a href="javascript:void(0)">收<br />藏</a>
 			</div>
 			<div id="collects" class="none">
 				<div class="collects_titles">
-					<a href="#" class="collects_title_left collects_title">收藏</a>
-					<a href="#" class="collects_title_right collects_title">管理</a>
+					<a href="javascript:;" class="collects_title_left collects_title">收藏</a>
+					<a href="javascript:void(0)" class="collects_title_right collects_title">管理</a>
 				</div>
-				<div>
-					<p><a href="#">美国-通货膨胀</a></p>
-					<p><a href="#">日本-居民消费指数</a></p>
-					<p><a href="#">中国-出口价格</a></p>
+				<div class="collects_content">
+					
 				</div>
 			</div>	
 		</div>
