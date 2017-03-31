@@ -17,6 +17,12 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
 		<style type="text/css">
+			.panel{border-radius: 0 !important;border: 0 !important;}
+			.panel .panel-heading{background: #ebeff3;}
+			.list-group-item>a{display: block;}
+			.panel .list-group{border: 0 !important;}
+			.panel .list-group>li{border: 0 !important;}
+			.panel .list-group>li a{color: #3d5a96;}
 		</style>
 	</head>
 
@@ -77,21 +83,15 @@
 		
 		<!-- 导航菜单 -->
 
-		<!-- 收藏 -->
-		<div id="data_collect" style="background: #000000;" class="none">
+		<!-- 右侧导航指标 -->
+		<div id="data_collect" style="background: #000000;" class="none1">
 			<div id="collect">
-				<a href="javascript:void(0)">收<br />藏</a>
+				<a href="javascript:void(0)">指<br />标<br />列<br />表</a>
 			</div>
 			<div id="collects" class="none">
-				<div class="collects_titles">
-					<a href="#" class="collects_title_left collects_title">收藏</a>
-					<a href="#" class="collects_title_right collects_title">管理</a>
-				</div>
-				<div>
-					<p><a href="#">美国-通货膨胀</a></p>
-					<p><a href="#">日本-居民消费指数</a></p>
-					<p><a href="#">中国-出口价格</a></p>
-				</div>
+                <div class="panel-group table-responsive"  id="data_incList" role="tablist">
+                    
+                </div>
 			</div>	
 		</div>
 			
@@ -226,9 +226,71 @@
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
-//			echarts.init(dom, 'westeros');
 		</script>
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$(document).on("click",".panel-heading",function(e){
+	                /*切换折叠指示图标*/
+	                $(this).find("span").toggleClass("glyphicon-chevron-down");
+	                $(this).find("span").toggleClass("glyphicon-chevron-right");
+	            });
+			})
+			// 右侧导航列表格式
+			/*<div class="panel panel-default leftMenu">
+                <!-- 利用data-target指定要折叠的分组列表 -->
+                <div class="panel-heading" id="collapseListGroupHeading1" data-toggle="collapse" data-target="#collapseListGroup1" role="tab" >
+                    <h4 class="panel-title">
+                    	<span class="glyphicon glyphicon-chevron-down right"></span>
+                        	分组1
+                    </h4>
+                </div>
+                <!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
+                <div id="collapseListGroup1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
+                    <ul class="list-group">
+                      <li class="list-group-item">
+                        <!-- 利用data-target指定URL -->
+                        <a class="menu-item-left">
+                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
+                        </a>
+                      </li>
+                      <li class="list-group-item">
+                        <!-- 利用data-target指定URL -->
+                        <a class="menu-item-left">
+                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
+                        </a>
+                      </li>
+                    </ul>
+                </div>
+            </div><!--panel end-->
+            <div class="panel panel-default leftMenu">
+                <div class="panel-heading" id="collapseListGroupHeading2" data-toggle="collapse" data-target="#collapseListGroup2" role="tab" >
+                    <h4 class="panel-title">
+                    	<span class="glyphicon glyphicon-chevron-right right"></span>
+                        	分组2
+                    </h4>
+                </div>
+                <div id="collapseListGroup2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading2">
+                    <ul class="list-group">
+                      <li class="list-group-item">
+                        <a class="menu-item-left">
+                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
+                        </a>
+                      </li>
+                      <li class="list-group-item">
+                        <a class="menu-item-left">
+                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
+                        </a>
+                      </li>
+                      <li class="list-group-item">
+                        <a class="menu-item-left">
+                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
+                        </a>
+                      </li>
+                    </ul>
+                </div>
+            </div> */ 
+		</script>
 	</body>
 
 </html>

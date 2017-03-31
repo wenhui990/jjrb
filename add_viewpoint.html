@@ -225,7 +225,7 @@
 				</a>
 			</div>
 			<div class="row add_toole add_viewpoint_title">
-				<input type="text" name="" id="new_title" value="" placeholder="输入标题" />
+				<input type="text" name="" id="new_title" value="请输入标题" placeholder="输入标题" />
 			</div>
 			<!--<div class="row add_toole add_time_source">
 				<form role="form" class="form-inline">
@@ -464,7 +464,7 @@
 					countrys=[],    //国家
 					indicators,  //指标
 					echartType="line",//图表样式
-					year = "",datanum=0;
+					year = "";
 				//全局变量
 				var _url=_href + interfacelist.select_data+"?",start,end;
 				//初始化时间
@@ -486,11 +486,23 @@
 				console.log(nowDate);
 				//  		$("#add_viewpoint_time").val(nowDate);
 
-				//插入添加数据开始
+				//插入添加数据开始,弹窗设置
 				var modal_height = ($(window).height() * 80 / 100);
 				var num = 0;
 				$("#add_tan .modal-content").css("height", modal_height);
 				$(".datas_desc").height(modal_height * 75 / 100);
+				
+				// 标题框事件
+				$("#new_title").on('focus',function(){
+					if($(this).val().length>0&&$(this).val()==="请输入标题"){
+						$(this).val("");
+					}
+				})
+				$("#new_title").on('blur',function(){
+					if($(this).val().length<=0){
+						$(this).val("请输入标题");
+					}
+				})
 
 				//点击插入段落事件
 				$(".add_p").on("click", function(e) {
@@ -506,12 +518,11 @@
 
 				//点击确定事件
 				$(".btn_ok").on("click", function(e) {
-					++datanum;
 					e.stopPropagation();
 					var html = "<p class='row add_row new_txt pointHtmls' data-type='13'>" + $('#add_p_txt').val() + "<span class='glyphicon glyphicon-remove new_close none'></span></p>";
 					 var fl = $(".txt_desc").css("display");
 					 if(fl=="none"){
-					 	var id_val = "show_data"+datanum;
+					 	var id_val = "show_data"+now.getTime();
 					 	console.log(id_val);
 					 	$("#viewpoint_content").append('<div id="'+id_val+'" style="min-height:500px" class="pointHtmls" data-type="15" data-echart="'+echartType+'" data-country="'+countrys.toString()+'" data-start="'+start+'" data-end="'+end+'"></div>');
 //					 	start = $("#startInputTime").val();

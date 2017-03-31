@@ -60,7 +60,7 @@ $(function() {
 							
 							type = parseInt(e.type);
 							console.log(type);
-							if (type === 2) {//图片
+							if (type === 12) {//图片
 								descp += '<img src="' + e.uri + '">'
 							}else if (type === 13) {//文本
 								descp += '<p>'+e.descp+'</p>'
@@ -79,7 +79,6 @@ $(function() {
 							}
 						})
 //						console.log(descp);
-						
 						var html = '<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">' +
 									'<a href="my_viewpoint.html?id=' + e.owner.id + '" target="_blank"><img class="header_img" src="' + e.owner.head + '" /></a>' +
 									'<h2 class="viewpoint_title"><a href="viewpoint_desc.html?id=' + e.id + '" target="_blank">' + e.title + '</a></h2>' +
@@ -89,7 +88,7 @@ $(function() {
 //						console.log(html);			
 						$("#viewpoint").append(html);	
 						if (echarts_data) {
-							urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
+							dataDesc.urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end,echarts_data.echartType);
 						}
 					});
 					

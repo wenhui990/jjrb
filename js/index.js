@@ -531,25 +531,6 @@ var dataDesc = {
 			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
 			            data: _d
 					}
-				} else if(echartType==='oneLine' && echartType){
-					s = {
-						name: key,
-			            type: 'line',
-			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-			            data: _d,
-			            markPoint : {
-			                data : [
-			                    {type : 'max', name: '最大值'},
-			                    {type : 'min', name: '最小值'}
-			                ]
-			            },
-			            markLine : {
-			                data : [
-			                    {type : 'average', name: '平均值'}
-			                ]
-			            }
-					}
-						
 				}
                 ss.push(s);
                 
@@ -705,39 +686,29 @@ var dataDesc = {
 			success: function(data){
 				var html = '';
 				console.time("列循环");
-				/*$.each(data, function(i,e) {
-					console.log(e);
-					if (e.name!=='null' && e.name!=='' && e.name) {
-						html = '<dl class=""><dt>'+data.name+'</dt>';
-					}else{
-						return false;
-					}
-					
-					$.each(e.indicators,function(i,ev){
-						console.log(ev);
-						if (ev.name!=='null' && ev.name!=='' && ev.name) {
-							html += '<dd><a href="#" data-id="'+ev.id+'" class="data_nav_click">'+ev.name_cn+'</a></dd>';
-						}else{
-							return false;
-						}
-						
-					});
-					html += '</dl>'
-					console.log(html);
-				});*/
-				
 				//原生态for循环
-				var html = '';
+				var html = '',listHtml='',hrf = window.location.href;
 				for (var i=0,len=data.length;i<len;i++) {
 					var a= data[i];
 //					console.log($(a));
 					html += '<dl class=""><dt>'+data[i].name+'</dt>';
+					var listHtml = '<div class="panel panel-default leftMenu"><div class="panel-heading" id="collapseListGroupHeading'+i+'" data-toggle="collapse" data-target="#collapseListGroup'+i+'" role="tab" >'+
+		                            '<h4 class="panel-title"><span class="glyphicon glyphicon-chevron-right right"></span> '+data[i].name+'</h4></div>'+
+		                        '<div id="collapseListGroup'+i+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+i+'"><ul class="list-group">';
 					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
 //									console.log(a.indicators[j]);
 						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
+						if (hrf.indexOf("data.html")) {
+							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
+						}
 					}
 					html +='</dl>';
+					listHtml += '</ul></div></div>';
+					if (hrf.indexOf("data.html")) {
+						$("#data_incList").append(listHtml);
+					}
 				}
+				
 				$("#data_nav_lists").append(html);
 				
 				//瀑布流引用
@@ -792,7 +763,7 @@ var dataDesc = {
 	},
 	//搜索框事件
 	dataSearch: function(filter_txt){
-		// 搜索框键盘弹起事件
+		// 搜索框键盘弹起事件-过滤导航列表
 		$(document).on("keyup","#inputSearch",function(e){
 			$dd = $("#data_nav_lists dd");
 			var val = $(this).val();
@@ -814,21 +785,28 @@ var dataDesc = {
 			
 		});
 		
-		// 搜索框失去焦点加到过滤
+		// 搜索框失去焦点把值加到过滤中
 		$(document).on("blur","#inputSearch",function(e){
-			var val = $(this).val().trim();
+			var $filter_txt = $(".nav_txt").find("span").filter(":gt(0)");
+			$.each($filter_txt, function(i,e) {
+				var filterTxt = $(e).text();
+				filter_txt.push(filterTxt);
+			});
+			var val = $(this).val().trim(),fla=true;
 			if (val !== '' && val.length > 0) {
 				var html = '<span><a href="javascript:void(0);" class="data_nav_filter_txt">'+val+'</a></span>';
-				
 				for (var i=0,len=filter_txt.length;i<len;i++) {
-					var filter_val = filter_txt[i];
-					if (filter_val!==val) {
+					for (var j=0;j<len;j++) {
+						var filter_val = filter_txt[j];
+						filter_val!==val?fla = true:fla=false;
+					}
+					if (fla) {
 						filter_txt.push(val);
 						$(".nav_txt").append(html);
 						break;
 					}
 				}
-//				filter_txt.sort();
+//				filter_txt = filter_txt.sort();
 				$.unique(filter_txt);
 				console.log(filter_txt);
 				localStorage.setItem("filterTxt",filter_txt);
@@ -1080,23 +1058,32 @@ var dataDesc = {
 		// 点击收藏中管理
 		$(document).on('click',".collects_title_right",function(e){
 			e.stopPropagation();
-			if (collect_gl) {
-				$('.del_collect').show();
-				collect_gl = false;
-				$(this).text("完成");
-			} else{
-				$('.del_collect').hide();
-				collect_gl = true;
-				$(this).text("管理");
-			}
+//			if (collect_gl) {
+//				$('.del_collect').show();
+//				collect_gl = false;
+//				$(this).text("完成");
+//			} else if(!collect_gl){
+//				$('.del_collect').hide();
+//				collect_gl = true;
+//				$(this).text("管理");
+//			}
+			collectManage();
 		});
-		$("body").click(function(){
+		$(document).on('click','body',function(){
 			if ($(".collects_title_right").text()==="完成") {
 				$('.del_collect').hide();
-				collect_gl = true;
 				$(".collects_title_right").text("管理");
 			}
 		});
+		function collectManage(){
+			if ($(".collects_title_right").text()=="完成") {
+				$('.del_collect').hide();
+				$(".collects_title_right").text("管理");
+			}else if($(".collects_title_right").text()=="管理"){
+				$('.del_collect').show();
+				$(".collects_title_right").text("完成");
+			}
+		}
 	}
 }
 
