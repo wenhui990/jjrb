@@ -4,15 +4,6 @@ setTimeout(function(){
 },1000);
 // 接口
 var _href = "http://api.jjrb.grsx.cc",
-	interfacelist = {
-		select_indicator: "/data/indicator/k/", //查询indicator
-		select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
-		host_indicator: "/data/indicator/hot", //热门
-		select_country: "/data/country/k/",//查询国家/data/country/k/{val}
-		wx: "/login/wx",//微信登录
-		indicator_list: '/data/group?type=1&with_indicator=1',
-		indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD'
-	},
 	countrys=[],    //国家
 	indicators=[],  //指标
 	_vals=[],       //

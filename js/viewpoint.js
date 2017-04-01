@@ -12,11 +12,9 @@ $(function() {
 	},500);
 	//接口  resource type 11，12，13，14/视频、图片、文本、html片段
 	var _href = "http://api.jjrb.grsx.cc",
-		interfacelist = {
-			feed: "/feed/t/3",
-			select_data: "/data"
-		},
+//		interfacelist = interfacelist(),
 		n = 1,fl = true,_url = _href + interfacelist.select_data+"?";
+		
 	scorllajax(n);
 	console.log(localStorage.token);
 	//ajax按页获取观点内容

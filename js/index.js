@@ -4,11 +4,36 @@ $("head").append("<link href='http://cdn.webfont.youziku.com/webfonts/nomal/1006
 //接口
 var _href = "http://api.jjrb.grsx.cc",//"http://test.api.wantscart.com",
 	interfacelist = {
-		phone_code: "/login",//"/api/login", //手机验证码get?phone=
+		phone_code: "/login" ,//"/api/login", //手机验证码get?phone=
 		phone_login: "/login",//"/api/login", //手机登录post  phone=&code=
-		wx: "/login/wx"//"/api/login/wx" //微信登录post expire_in=&open_id=&	token=&refresh_token=	
+		wx: "/login/wx",
+		select_indicator: "/data/indicator/k/", //查询indicator
+		select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
+		host_indicator: "/data/indicator/hot", //热门
+		select_country: "/data/country/k/",//查询国家/data/country/k/{val}
+		indicator_list: '/data/group?type=1&with_indicator=1',
+		indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD',
+		feed: "/feed/t/3",
+		select_data: "/data"
 	};
 //	n = 0;
+function interfacelist(){
+	var _href = "http://api.jjrb.grsx.cc",//"http://test.api.wantscart.com",
+	interfacelist = {
+		phone_code: "/login" ,//"/api/login", //手机验证码get?phone=
+		phone_login: "/login",//"/api/login", //手机登录post  phone=&code=
+		wx: "/login/wx",
+		select_indicator: "/data/indicator/k/", //查询indicator
+		select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
+		host_indicator: "/data/indicator/hot", //热门
+		select_country: "/data/country/k/",//查询国家/data/country/k/{val}
+		indicator_list: '/data/group?type=1&with_indicator=1',
+		indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD',
+		feed: "/feed/t/3",
+		select_data: "/data"
+	};
+	return interfacelist;
+}
 $(function() {
 	$(".active a").css("color","#3b5998;");
 //	$(".nav>li").mouseover();
@@ -119,6 +144,8 @@ $(function() {
 			alert("请输入正确的手机号");
 			return ;
 		}
+		console.log(interfacelist)
+//		return;
 		$("#code_btn1").show();
 		$("#code_btn").hide();
 		code_time();
