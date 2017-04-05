@@ -720,13 +720,13 @@ var dataDesc = {
 //					console.log($(a));
 					html += '<dl class=""><dt>'+data[i].name+'</dt>';
 					var listHtml = '<div class="panel panel-default leftMenu"><div class="panel-heading" id="collapseListGroupHeading'+i+'" data-toggle="collapse" data-target="#collapseListGroup'+i+'" role="tab" >'+
-		                            '<h4 class="panel-title"><span class="glyphicon glyphicon-chevron-right right"></span> '+data[i].name+'</h4></div>'+
+		                            '<h5 class="panel-title" style="font-size:15px;"><svg class="icon sanjiao" aria-hidden="true"><use xlink:href="#icon-xiangyouxiaosanjiao"></use></svg> '+data[i].name+'</h5></div>'+
 		                        '<div id="collapseListGroup'+i+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+i+'"><ul class="list-group">';
 					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
 //									console.log(a.indicators[j]);
-						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
+						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
 						if (hrf.indexOf("data.html")) {
-							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
+							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" title="'+a.indicators[j].name_cn+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
 						}
 					}
 					html +='</dl>';

@@ -18,11 +18,12 @@
     <![endif]-->
 		<style type="text/css">
 			.panel{border-radius: 0 !important;border: 0 !important;}
-			.panel .panel-heading{background: #ebeff3;}
-			.list-group-item>a{display: block;}
+			.panel .panel-heading{background: #f8f8f8;}
+			.list-group-item>a{display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 			.panel .list-group{border: 0 !important;}
 			.panel .list-group>li{border: 0 !important;}
-			.panel .list-group>li a{color: #3d5a96;}
+			.panel .list-group>li a{color: #2457bf;}
+			#data_incList .leftMenu{margin-bottom: 10px;}
 		</style>
 	</head>
 
@@ -211,7 +212,7 @@
 		<!-- 引入javascript文件 -->
 		<script src="js/jquery1.9.1.min.js"></script>
 		<!-- 矢量图标 -->
-		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://at.alicdn.com/t/font_0uz2xv7h1ta10pb9.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/echarts.js"></script>
 		<script src="js/westeros.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/infographic.js" type="text/javascript" charset="utf-8"></script>
@@ -232,8 +233,12 @@
 			$(function(){
 				$(document).on("click",".panel-heading",function(e){
 	                /*切换折叠指示图标*/
-	                $(this).find("span").toggleClass("glyphicon-chevron-down");
-	                $(this).find("span").toggleClass("glyphicon-chevron-right");
+	               var hasxsj = $(this).find("svg").html();
+	               if (hasxsj.indexOf("xiangyouxiaosanjiao")>0) {
+	               		$(this).find("svg").html('<use xlink:href="#icon-xiangxiaxiaosanjiao"></use>');
+	               }else if(hasxsj.indexOf("xiangxiaxiaosanjiao")>0){
+	               		$(this).find("svg").html('<use xlink:href="#icon-xiangyouxiaosanjiao"></use>');
+	               }
 	            });
 			})
 			// 右侧导航列表格式
