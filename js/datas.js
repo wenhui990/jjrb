@@ -33,7 +33,13 @@ $(document).on("mouseenter",".data_nav_lists",function(){
 });
 // 鼠标移出导航列表上隐藏收藏按钮
 $(document).on("mouseleave",".data_nav_lists",function(){
-	$(".btn_collect").hide(500);
+	var classname = $(this).find('span').attr('class');
+//	console.log(classname.indexOf("star")>=0)
+	if(classname.indexOf("collstar")>=0){
+		$(this).find('span').show();
+	}else if(classname.indexOf("empty")>=0){
+		$(this).find('span').hide();
+	}
 });
 // 加载收藏事件
 dataDesc.collec(loadCollec);
@@ -49,7 +55,7 @@ function loadCollec(){
 //				console.log($(e).find("a").attr("data-id"))
 //				console.log(colles[i].id)
 				if (colles[i].id===$(e).find("a").attr("data-id")) {
-					$(e).find(".btn_collect").removeClass("glyphicon-star-empty").addClass("glyphicon-star").attr("title","取消收藏");
+					$(e).find(".btn_collect").removeClass("glyphicon-star-empty").addClass("glyphicon-star collstar").show().attr("title","取消收藏");
 				}
 			});
 		}
@@ -137,6 +143,9 @@ if (_left>210) {
 		$("#collect").show();
 	})
 }
+var collectstop = $('#collects').offset().top;
+var winHeight = $(window).height();
+$('#collects').css("height",(winHeight-collectstop-80)+'px');
 
 // 点击数据指标导航列
 $(document).on("click",".data_nav_click",function(){

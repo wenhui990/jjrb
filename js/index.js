@@ -1017,6 +1017,7 @@ var dataDesc = {
 				$(".collects_content").append();
 				$(this).attr("title","取消收藏");
 			} else if(coll_class.indexOf("glyphicon-star")>0){
+//				$(this).bind("mouseleave");
 				_this = $(this);
 				$(this).attr("title","收藏");
 				$(this).removeClass("glyphicon-star").addClass("glyphicon-star-empty");
