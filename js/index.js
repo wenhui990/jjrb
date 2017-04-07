@@ -437,12 +437,14 @@ function ci(classname, classname1, src) {
 				if (classname.indexOf("country")>=0) {
 					_id = e.iso2_code;
 					_name = e.name_zh;
+					_name_en = e.name_en;
 					$(classname).append('<div class="' + classname1 + ' cou_list_id" data-id="'+_id+'" data-name="'+_name+'" title="'+e.id+'">' + _name + '</div>');
 				} else if(classname.indexOf("zb")>=0){
 					_id = e.id;
-					_name = e.name_cn;
+					_name = e.name_zh;
+					_name_en = e.name_en;
 					if(_name==null)_name=_id
-					$(classname).append('<div class="' + classname1 + ' zb_list_id" data-id="'+_id+'" data-name="'+_name+'" title="'+_id+'">' + _name + '</div>');
+					$(classname).append('<div class="' + classname1 + ' zb_list_id" data-id="'+_id+'" data-name="'+_name+'" title="'+_name_en+'">' + _name + '</div>');
 				}
 				
 			});
@@ -609,9 +611,12 @@ var dataDesc = {
 				}],
 				series: ss
 			});
-			myChart.on('click', function (params) {
-			    console.log(params);
-			});
+			if(window.location.href.indexOf('inland_data')>=0){
+				myChart.on('click', function (params) {
+				    console.log(params);
+				    window.open('map.html?year=' + encodeURIComponent(params.name)+'&indicator='+encodeURIComponent($('#show_indicator_list_name').text()));
+				});
+			}
 		});
 		
 	},
@@ -658,16 +663,16 @@ var dataDesc = {
 					var listHtml = '<div class="panel panel-default leftMenu"><div class="panel-heading" id="collapseListGroupHeading'+i+'" data-toggle="collapse" data-target="#collapseListGroup'+i+'" role="tab" >'+
 		                            '<h5 class="panel-title" style="font-size:15px;"><svg class="icon sanjiao" aria-hidden="true"><use xlink:href="#icon-xiangyouxiaosanjiao"></use></svg> '+data[i].name+'</h5></div>'+
 		                        '<div id="collapseListGroup'+i+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+i+'"><ul class="list-group">';
-//					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
-////									console.log(a.indicators[j]);
-//						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
-//						if (hrf.indexOf("data.html")) {
-//							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" title="'+a.indicators[j].name_cn+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
-//						}
-//					}
+					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
+//									console.log(a.indicators[j]);
+						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
+						if (hrf.indexOf("data.html")) {
+							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" title="'+a.indicators[j].name_cn+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
+						}
+					}
 					html +='</dl>';
 					listHtml += '</ul></div></div>';
-					if (hrf.indexOf("data.html")) {
+					if (hrf.indexOf("data.html")>=0) {
 						$("#data_incList").append(listHtml);
 					}
 				}
@@ -903,8 +908,7 @@ var dataDesc = {
 		$("#countrys,#indicator").on("keyup", function() {
 			var country_val = $("#countrys").val();
 			var indicator_val = $("#indicator").val();
-			var _src = "";//'data.json'; //
-		//					console.log(_src);
+			var _src = '';//'data.json'; //
 			var _idname = $(this).attr("id");
 			if(_idname.indexOf("country") >= 0) {
 		//						console.log("cc");

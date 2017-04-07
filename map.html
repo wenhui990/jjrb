@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>国内数据显示</title>
+    <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/echarts3.5.2.min.js"></script>
+    <script src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script src="js/vintage.js"></script>
+    <style>
+        html, body {
+            padding: 0px;
+            margin: 0px;
+            border-width: 0px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #chart {
+            padding: 0px;
+            margin: 0px;
+            border-width: 0px;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="chart" class="chart"></div>
+</body>
+<script type="text/javascript">
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    })(jQuery);
+    
+    
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart'), 'vintage');
+	function randomData() {
+	    return Math.round(Math.random()*1000);
+	}
+	var a = $.getUrlParam('indicator');
+	console.log(decodeURIComponent(a)+'====='+ unescape(a)+"===="+decodeURI(a)+'-====-'+a);
+	var option = {
+	    title: {
+	        text: $.getUrlParam('year')+'年  '+'国内生成总值',
+	        subtext: '经济日报',
+	        left: 'center'
+	    },
+	    tooltip: {
+	        trigger: 'item'
+	    },
+	    legend: {
+	        orient: 'vertical',
+	        left: 'left',
+	        data:['iphone3','iphone4','iphone5']
+	    },
+	    visualMap: {
+	        min: 0,
+	        max: 2500,
+	        left: 'left',
+	        top: 'bottom',
+	        text: ['高','低'],           // 文本，默认为数值文本
+	        calculable: true
+	    },
+	    toolbox: {
+	        show: true,
+	        orient: 'vertical',
+	        left: 'right',
+	        top: 'center',
+	        feature: {
+	            dataView: {readOnly: false},
+	            restore: {},
+	            saveAsImage: {}
+	        }
+	    },
+	    series: [
+	        {
+	            name: '人均生产总值',
+	            type: 'map',
+	            mapType: 'china',
+	            roam: false,
+	            label: {
+	                normal: {
+	                    show: true
+	                },
+	                emphasis: {
+	                    show: true
+	                }
+	            },
+	            data:[
+	                {name: '北京',value: randomData() },
+	                {name: '天津',value: randomData() },
+	                {name: '上海',value: randomData() },
+	                {name: '重庆',value: randomData() },
+	                {name: '河北',value: randomData() },
+	                {name: '河南',value: randomData() },
+	                {name: '云南',value: randomData() },
+	                {name: '辽宁',value: randomData() },
+	                {name: '黑龙江',value: randomData() },
+	                {name: '湖南',value: randomData() },
+	                {name: '安徽',value: randomData() },
+	                {name: '山东',value: randomData() },
+	                {name: '新疆',value: randomData() },
+	                {name: '江苏',value: randomData() },
+	                {name: '浙江',value: randomData() },
+	                {name: '江西',value: randomData() },
+	                {name: '湖北',value: randomData() },
+	                {name: '广西',value: randomData() },
+	                {name: '甘肃',value: randomData() },
+	                {name: '山西',value: randomData() },
+	                {name: '内蒙古',value: randomData() },
+	                {name: '陕西',value: randomData() },
+	                {name: '吉林',value: randomData() },
+	                {name: '福建',value: randomData() },
+	                {name: '贵州',value: randomData() },
+	                {name: '广东',value: randomData() },
+	                {name: '青海',value: randomData() },
+	                {name: '西藏',value: randomData() },
+	                {name: '四川',value: randomData() },
+	                {name: '宁夏',value: randomData() },
+	                {name: '海南',value: randomData() },
+	                {name: '台湾',value: randomData() },
+	                {name: '香港',value: randomData() },
+	                {name: '澳门',value: randomData() }
+	            ]
+	        }
+	    ]
+	};
+	myChart.setOption(option);
+	
+	
+    var country = $.getUrlParam('country');
+    var indicator = $.getUrlParam('indicator');
+    var d = $.getUrlParam('d');
+
+//  load(country, indicator);
+
+    /*function load(country, indicator) {
+        // 异步加载数据
+        var url = 'http://api.jjrb.grsx.cc/data2/region?country=' + country + '&indicator=' + indicator ;
+        if (d != null) {
+            url += '&d=' + d;
+        }
+        $.get(url).done(function (result) {
+            // 填入数据
+            var ds = [];
+            var regions = [];
+            var max = 0;
+            var min;
+            $.each(result.regions, function(key, val){
+                regions[val.id]=val.name_zh;
+            });
+            $.each(result.data, function(key, val){
+                var d = {};
+                d.name=regions[val.region];
+                d.value=val.value;
+                ds.push(d);
+                if(min == undefined){
+                    min = val.value;
+                }
+                max = Math.max(val.value, max);
+                min = Math.min(val.value, min);
+            });
+            myChart.setOption({
+                title: {
+                    text: result.country.name + ' ' + d + ' ' + result.indicator.name + ' 全国分布情况',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data:[result.indicator.name]
+                },
+                visualMap: {
+                    min: Math.floor(min),
+                    max: Math.ceil(max),
+                    left: 'left',
+                    top: 'bottom',
+                    text: ['高','低'],           // 文本，默认为数值文本
+                    calculable: true
+                },
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    left: 'right',
+                    top: 'center',
+                    feature: {
+                        dataView: {readOnly: false},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                series: [{
+                    name: result.indicator.name,
+                    type: 'map',
+                    mapType: 'china',
+                    roam: false,
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    data : ds
+                }],
+            });
+        });
+    }*/
+
+    function uniqueSort(source, compareFn) {
+        var result = [];
+        if ('function' != typeof compareFn) {
+            compareFn = function (item1, item2) {
+                return item1 - item2;
+            };
+        }
+        $.each(source, function (i, v) {
+            if (i == 0) {
+                result.push(v);
+            } else {
+                //从最后开始
+                for (var j = result.length - 1; j >= 0; j--) {
+                    if (compareFn(v, result[j]) > 0) {
+                        result.splice(j + 1, 0, v);
+                        break;
+                    } else if (j == 0) {
+                        //到0还是小
+                        result.splice(0, 0, v);
+                    }
+                }
+            }
+        });
+        return result;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+</script>
+</html>
