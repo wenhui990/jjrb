@@ -18,14 +18,18 @@ var u = getUrlParams(),
     end = u.end;
 var _url = _href + interfacelist.select_data+"?";
 
-//dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
 // 指标导航列表
-dataDesc.navList(filter_txt,loadCollec);
+//dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1');
 // 搜索框事件
 dataDesc.dataSearch(filter_txt);
-// 加载指标列表数据
+// 加载表格指标列表数据
 dataDesc.loadDatas(_href,u.id);
 $("#show_indicator_list_name").text(decodeURIComponent(u.name));
+
+
+if(localStorage.token){
+	
+}
 
 // 鼠标移到导航列表上显示收藏按钮
 $(document).on("mouseenter",".data_nav_lists",function(){
@@ -68,9 +72,10 @@ $(".form_year").change(function(){
 });
 
 // 如果国家和指标有数据加载图表
+var indicator_cn = decodeURIComponent(u.name);
 if (country && indicator) {
-	dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
-	$("#indicator").val(decodeURIComponent(u.name));
+	dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType,indicator_cn);
+	$("#indicator").val(indicator_cn);
 	$("#countrys").val('中国');
 	var initHtml = "<div style='display:inline-block;margin-right:10px'>"+
 			"<p data-id='"+country+"' class='countrys_txt' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
@@ -79,7 +84,7 @@ if (country && indicator) {
 	$(document).on("change",".form_country",function(){
 		var country = $(this).val();
 		console.log(country);
-		dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+		dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType,indicator_cn);
 	});
 	
 }
@@ -121,31 +126,10 @@ for(var i=100;i>0;i--){
 $("#start_year,#end_year").append(yearhtml);
 
 
-
-
-
-// 判断收藏菜单
-var _left = $(".container").offset().left;
-if (_left>210) {
-	$("#collects").show();
-	$("#collect").hide();
-	$("#collects").css({"width":_left-100+"px","margin":"0 45px"});
-} else{
-	$("#collects").hide();
-	$("#collect").show();
-	// 收藏
-	$(document).on("mousemove","#collect",function() {
-		$("#collects").show();
-		$("#collect").hide();
-	})
-	$(document).on("mouseleave","#collects",function() {
-		$("#collects").hide();
-		$("#collect").show();
-	})
-}
+// 设置收藏框的高度
 var collectstop = $('#collects').offset().top;
 var winHeight = $(window).height();
-$('#collects').css("height",(winHeight-collectstop-80)+'px');
+$('#collects').css("maxHeight",(winHeight-collectstop-80)+'px');
 
 // 点击数据指标导航列
 $(document).on("click",".data_nav_click",function(){

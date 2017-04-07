@@ -11,12 +11,21 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navs">
 			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="indicator_list.html" class="nav_a"><span title="曲线图" class="echarts_style glyphicon li_active">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span title="曲线图" class="echarts_style glyphicon li_active">
 					<svg class="icon header_data_icon" aria-hidden="true">
 						<use xlink:href="#icon-zhexiantu"></use>
 					</svg>
-				</span>数据</a>
+				</span>数据 <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu" style="width: 100%;">
+						<li class="dropdown-header">数据</li>
+						<li class="dl_style">
+							<a href="indicator_list.html" class="login_wechat">国际数据</a>
+						</li>
+						<li class="dl_style">
+							<a href="inland_indicator_list.html" class="login_wechat">国内数据</a>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="index.html" class="nav_a"><span class="glyphicon li_active">
@@ -30,7 +39,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="Web/切图（第五周交付）/n.png"/></span>我的 <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
+					<ul class="dropdown-menu" role="menu" style="width: 100%;">
 						<li class="dropdown-header">登录</li>
 						<li class="dl_style">
 							<a href="javascript:void(0);" class="login_wechat">微信扫码</a>

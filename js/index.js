@@ -7,14 +7,13 @@ var _href = "http://api.jjrb.grsx.cc",//"http://test.api.wantscart.com",
 		phone_code: "/login" ,//"/api/login", //手机验证码get?phone=
 		phone_login: "/login",//"/api/login", //手机登录post  phone=&code=
 		wx: "/login/wx",
-		select_indicator: "/data/indicator/k/", //查询indicator
-		select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
-		host_indicator: "/data/indicator/hot", //热门
-		select_country: "/data/country/k/",//查询国家/data/country/k/{val}
-		indicator_list: '/data/group?type=1&with_indicator=1',
-		indicator_stat:'/data/stat?indicator=NY.GDP.MKTP.CD',
-		feed: "/feed/t/3",
-		select_data: "/data"
+		select_indicator: "/data2/indicator/k/", //查询indicator
+		select_data: "/data2", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
+		host_indicator: "/data2/indicator/hot", //热门
+		select_country: "/data2/country/k/",//查询国家/data/country/k/{val}
+		indicator_list: '/data2/group?type=1&with_indicator=1',
+		indicator_stat:'/data2/stat?indicator=NY.GDP.MKTP.CD',
+		feed: "/feed/t/3"
 	};
 //	n = 0;
 function interfacelist(){
@@ -437,7 +436,7 @@ function ci(classname, classname1, src) {
 				var _name,_id;
 				if (classname.indexOf("country")>=0) {
 					_id = e.iso2_code;
-					_name = e.name;
+					_name = e.name_zh;
 					$(classname).append('<div class="' + classname1 + ' cou_list_id" data-id="'+_id+'" data-name="'+_name+'" title="'+e.id+'">' + _name + '</div>');
 				} else if(classname.indexOf("zb")>=0){
 					_id = e.id;
@@ -462,7 +461,7 @@ function ci(classname, classname1, src) {
 
 var dataDesc = {
 	//图表数据获取
-	urlLoad: function(id,url,country,indicator,start,end,echartType){
+	urlLoad: function(id,url,country,indicator,start,end,echartType,indicator_cn){
 		if (country) {
 			url += "&country="+country;
 		}
@@ -489,16 +488,7 @@ var dataDesc = {
 		$.get(url).done(function(data) {
 			myChart.hideLoading();
 //			var d;
-//	//		console.log(data);
-//			if(typeof(data) == "object" && 
-//	            Object.prototype.toString.call(data).toLowerCase() == "[object object]" && !data.length){
-//	            d=data;
-//	        }else{
-//	        	d = JSON.parse(data);
-//				console.log(d);
-//	        }
-			
-			
+			console.log(data);
 	
 			// 填入数据
             var ds = [];//merge后时间数组
@@ -509,7 +499,7 @@ var dataDesc = {
             $.each(data, function (key, val) {
                 var d = [];//时间数组
                 var v = [];//数据字典
-                $.each(val, function (i, obj) {
+                $.each(val.data, function (i, obj) {
                     v[obj.date]=obj.value;
                     d.push(obj.date);
                 });
@@ -566,66 +556,9 @@ var dataDesc = {
                 
             });
 	
-	
-	
-//			$.each(d,function(key,val){
-//				var value = [];
-//				_name += key+"  ";					
-//				country.push(key);
-//	    		$.each(val,function(i,e){
-//	    			time.push(e.date);
-//	    			value.push(e.value);
-//	    		});
-//	//  		console.log(key);
-//	//  		console.log(val);
-//				//切换图表样式
-//	    		if(!echartType || echartType=='' || echartType==undefined){
-//	    			echartType = 'line';
-//					fla = false;
-//	    		}
-//	    		if (echartType==='line' && echartType) {
-//					fla=false;
-//					s = {
-//						name: key,
-//			            type: echartType,
-//			            smooth:true,
-//			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-//			            data: value
-//					}
-//				} else if(echartType==='bar' && echartType){
-//					fla=true;
-//					s = {
-//						name: key,
-//			            type: echartType,
-//			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-//			            data: value
-//					}
-//				} else if(echartType==='oneLine' && echartType){
-//					s = {
-//						name: key,
-//			            type: 'line',
-//			            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-//			            data: value,
-//			            markPoint : {
-//			                data : [
-//			                    {type : 'max', name: '最大值'},
-//			                    {type : 'min', name: '最小值'}
-//			                ]
-//			            },
-//			            markLine : {
-//			                data : [
-//			                    {type : 'average', name: '平均值'}
-//			                ]
-//			            }
-//					}
-//						
-//				}
-//	    		_series.push(s);
-//			});
-//			
 			myChart.setOption({
 				title: {
-					text: country+" "+ indicator
+					text: indicator
 				},
 				tooltip: {
 	//				trigger: 'axis'
@@ -676,11 +609,14 @@ var dataDesc = {
 				}],
 				series: ss
 			});
+			myChart.on('click', function (params) {
+			    console.log(params);
+			});
 		});
 		
 	},
 	//数据导航列
-	navList: function(filter_txt,call){
+	navList: function(filter_txt,call,url){
 		//页面加载缓冲的过滤
 		if(localStorage.filterTxt){
 			var filter_html='',
@@ -705,7 +641,7 @@ var dataDesc = {
 		
 		$.ajax({
 			type:"get",
-			url: 'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1',
+			url: url,
 			data:{
 				token:'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
 			},
@@ -722,13 +658,13 @@ var dataDesc = {
 					var listHtml = '<div class="panel panel-default leftMenu"><div class="panel-heading" id="collapseListGroupHeading'+i+'" data-toggle="collapse" data-target="#collapseListGroup'+i+'" role="tab" >'+
 		                            '<h5 class="panel-title" style="font-size:15px;"><svg class="icon sanjiao" aria-hidden="true"><use xlink:href="#icon-xiangyouxiaosanjiao"></use></svg> '+data[i].name+'</h5></div>'+
 		                        '<div id="collapseListGroup'+i+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+i+'"><ul class="list-group">';
-					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
-//									console.log(a.indicators[j]);
-						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
-						if (hrf.indexOf("data.html")) {
-							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" title="'+a.indicators[j].name_cn+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
-						}
-					}
+//					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
+////									console.log(a.indicators[j]);
+//						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
+//						if (hrf.indexOf("data.html")) {
+//							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" title="'+a.indicators[j].name_cn+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
+//						}
+//					}
 					html +='</dl>';
 					listHtml += '</ul></div></div>';
 					if (hrf.indexOf("data.html")) {

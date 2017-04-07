@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>国际数据</title>
+		<title>国内数据</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
@@ -112,17 +112,6 @@
 					    	<div class="zb_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
 							</div>
 					    </div>
-						
-						
-					</div>
-					<div class="lists col-md-6">
-						<label class="col-sm-3 control-label" style="padding-left: 0;">选择国家:</label>
-					    <div class="col-sm-9">
-					      <input class="form_style" id="countrys" placeholder="国家">
-					      <div class="countrys_list none" style="border: 1px solid rgb(153, 153, 153); padding: 2px 10px;">
-							</div>
-					    </div>
-						
 					</div>
 					<!--<div class="lists col-md-2">
 						<select class="form_style" id="start_year">
@@ -142,15 +131,7 @@
 						</div>
 					</div>-->
 				</div>
-				<div class="row">
-					对比国家
-				</div>
-				<div class="row">
-					<div id="" class="none1">
-						<p id="countrys_vals"></p>
-						<!--已选指标：<p id="indicators_vals"></p>-->
-					</div>
-				</div>
+				
 				<div class="row">
 					<div class="col-md-8">
 						<span style="font-size: 16px;">切换数据样式:</span>
@@ -182,7 +163,7 @@
 		<!-- 数据表格 -->
 		<div class="container" id="data_table" style="background: #fff;padding: 30px;margin-bottom: 100px;">
 			<div class="row" style="margin-bottom: 20px;">
-				<h3 id="show_indicator_list"><a href="indicator_list.html">指标列表</a></h3> &nbsp;-&nbsp; <h3 id="show_indicator_list_name"></h3>
+				<h3 id="show_indicator_list"><a href="inland_indicator_list.html">指标列表</a></h3> &nbsp;-&nbsp; <h3 id="show_indicator_list_name"></h3>
 			</div>
 			<div class="row">
 				<table class="table table-hover">
@@ -230,6 +211,9 @@
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
+				interfacelist = {
+					select_data: "/data2"
+				}
 				$(document).on("click",".panel-heading",function(e){
 	                /*切换折叠指示图标*/
 	               var hasxsj = $(this).find("svg").html();
@@ -266,60 +250,6 @@
 					})
 				}
 			})
-			// 右侧导航列表格式
-			/*<div class="panel panel-default leftMenu">
-                <!-- 利用data-target指定要折叠的分组列表 -->
-                <div class="panel-heading" id="collapseListGroupHeading1" data-toggle="collapse" data-target="#collapseListGroup1" role="tab" >
-                    <h4 class="panel-title">
-                    	<span class="glyphicon glyphicon-chevron-down right"></span>
-                        	分组1
-                    </h4>
-                </div>
-                <!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
-                <div id="collapseListGroup1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
-                    <ul class="list-group">
-                      <li class="list-group-item">
-                        <!-- 利用data-target指定URL -->
-                        <a class="menu-item-left">
-                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
-                        </a>
-                      </li>
-                      <li class="list-group-item">
-                        <!-- 利用data-target指定URL -->
-                        <a class="menu-item-left">
-                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
-                        </a>
-                      </li>
-                    </ul>
-                </div>
-            </div><!--panel end-->
-            <div class="panel panel-default leftMenu">
-                <div class="panel-heading" id="collapseListGroupHeading2" data-toggle="collapse" data-target="#collapseListGroup2" role="tab" >
-                    <h4 class="panel-title">
-                    	<span class="glyphicon glyphicon-chevron-right right"></span>
-                        	分组2
-                    </h4>
-                </div>
-                <div id="collapseListGroup2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading2">
-                    <ul class="list-group">
-                      <li class="list-group-item">
-                        <a class="menu-item-left">
-                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
-                        </a>
-                      </li>
-                      <li class="list-group-item">
-                        <a class="menu-item-left">
-                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
-                        </a>
-                      </li>
-                      <li class="list-group-item">
-                        <a class="menu-item-left">
-                            <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
-                        </a>
-                      </li>
-                    </ul>
-                </div>
-            </div> */ 
 		</script>
 	</body>
 

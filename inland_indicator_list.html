@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>国际数据指标</title>
+		<title>国内数据指标</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<!-- 公共样式 -->
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
@@ -267,8 +267,11 @@
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			// 指标导航列表
-			dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1');
+			dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data2/group?type=4');
 			$(function(){
+				interfacelist = {
+					select_data: "/data2"
+				}
 				console.log($('.collects_content').find('p').length)
 				// 设置收藏框的高度
 				var collectstop = $('#collects').offset().top;
