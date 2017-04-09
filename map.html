@@ -50,7 +50,7 @@
 	console.log(decodeURIComponent(a)+'====='+ unescape(a)+"===="+decodeURI(a)+'-====-'+a);
 	var option = {
 	    title: {
-	        text: $.getUrlParam('year')+'年  '+'国内生成总值',
+	        text: $.getUrlParam('year')+'年  '+decodeURIComponent(a),
 	        subtext: '经济日报',
 	        left: 'center'
 	    },
@@ -141,9 +141,9 @@
     var indicator = $.getUrlParam('indicator');
     var d = $.getUrlParam('d');
 
-//  load(country, indicator);
+    /*load(country, indicator);
 
-    /*function load(country, indicator) {
+    function load(country, indicator) {
         // 异步加载数据
         var url = 'http://api.jjrb.grsx.cc/data2/region?country=' + country + '&indicator=' + indicator ;
         if (d != null) {

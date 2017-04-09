@@ -19,7 +19,7 @@ var u = getUrlParams(),
 var _url = _href + interfacelist.select_data+"?";
 
 // 指标导航列表
-dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1');
+//dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1');
 // 搜索框事件
 dataDesc.dataSearch(filter_txt);
 // 加载表格指标列表数据

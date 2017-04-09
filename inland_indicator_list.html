@@ -267,7 +267,7 @@
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			// 指标导航列表
-			dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1');
+			dataDesc.navList(filter_txt,loadCollec, 'http://api.jjrb.grsx.cc/data/group?type=1&with_indicator=1');//_href + interfacelist.indicator_list
 			$(function(){
 				console.log($('.collects_content').find('p').length)
 				// 设置收藏框的高度

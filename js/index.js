@@ -507,6 +507,8 @@ var dataDesc = {
                 });
                 $.merge(ds, d);
                 vs[key] = v;
+                console.log(val)
+                indicator_name_cn = val.indicator.name_zh;
             });
             ds = uniqueSort(ds);
             
@@ -560,7 +562,7 @@ var dataDesc = {
 	
 			myChart.setOption({
 				title: {
-					text: indicator
+					text: indicator_name_cn
 				},
 				tooltip: {
 	//				trigger: 'axis'
@@ -614,7 +616,7 @@ var dataDesc = {
 			if(window.location.href.indexOf('inland_data')>=0){
 				myChart.on('click', function (params) {
 				    console.log(params);
-				    window.open('map.html?year=' + encodeURIComponent(params.name)+'&indicator='+encodeURIComponent($('#show_indicator_list_name').text()));
+				    window.open('map.html?year=' + encodeURIComponent(params.name)+'&indicator='+encodeURI(encodeURIComponent($('#show_indicator_list_name').text())));
 				});
 			}
 		});
@@ -655,7 +657,8 @@ var dataDesc = {
 				var html = '';
 				console.time("列循环");
 				//原生态for循环
-				var html = '',listHtml='',hrf = window.location.href;
+				var html = '',listHtml='',hrf = window.location.href,urlPage;
+				window.location.href.indexOf('inland')?urlPage = 'inland_data.html':urlPage = 'data.html';
 				for (var i=0,len=data.length;i<len;i++) {
 					var a= data[i];
 //					console.log($(a));
@@ -665,7 +668,7 @@ var dataDesc = {
 		                        '<div id="collapseListGroup'+i+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+i+'"><ul class="list-group">';
 					for (var j=0,jlen=$(a)[0].indicators.length;j<jlen;j++) {
 //									console.log(a.indicators[j]);
-						html += '<dd class="data_nav_lists"><a href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
+						html += '<dd class="data_nav_lists"><a href="'+urlPage+'?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" class="data_nav_click" title="'+a.indicators[j].name_cn+'" >'+a.indicators[j].name_cn+'</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
 						if (hrf.indexOf("data.html")) {
 							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id='+a.indicators[j].id+'&name='+a.indicators[j].name_cn+'" data-id="'+a.indicators[j].id+'" title="'+a.indicators[j].name_cn+'"><span class="glyphicon glyphicon-triangle-right"></span>'+a.indicators[j].name_cn+'</a></li>'
 						}
