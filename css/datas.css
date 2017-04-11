@@ -54,10 +54,10 @@
 	#countrys_vals,#indicators_vals{position: relative;margin: 5px;}
 	
 	
-	::-moz-placeholder { color: #fff !important; }
+	/*::-moz-placeholder { color: #fff !important; }
 	::-webkit-input-placeholder { color:#fff !important;; }
 	:-ms-input-placeholder { color:#fff !important;; }
-	input.form_style{}
+	input.form_style{}*/
 	
 	.container{padding-right: 0;padding-left: 0;}
 	.nav_txt{color: #3b5998;}

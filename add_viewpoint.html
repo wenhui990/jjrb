@@ -454,10 +454,10 @@
 				//接口
 				var _href = "http://api.jjrb.grsx.cc",
 					interfacelist = {
-						select_indicator: "/data/indicator/k/",
-						select_data: "/data",
-						host_indicator: "/data/indicaotr/hot",
-						select_country: "/data/country/k/",//data/country/k/{val}
+						select_indicator: "/data2/indicator/k/",
+						select_data: "/data2",
+						host_indicator: "/data2/indicaotr/hot",
+						select_country: "/data2/country/k/",//data/country/k/{val}
 						feed: "/feed",  //观点详情页feed/{id}
 						img:'/upload'
 					},
@@ -666,7 +666,7 @@
 									$(classname).append('<div class="' + classname1 + ' cou_list_id" data-id="'+_id+'" title="'+_name+'">' + _name + '</div>');
 								} else if(classname.indexOf("zb")>=0){
 									_id = e.id;
-									_name = e.name_cn;
+									_name = e.name_zh;
 									if(_name==null)_name=_id
 									$(classname).append('<div class="' + classname1 + ' zb_list_id" data-id="'+_id+'" title="'+_id+'">' + _name + '</div>');
 								}

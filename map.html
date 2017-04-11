@@ -48,7 +48,7 @@
 	}
 	var a = $.getUrlParam('indicator');
 	console.log(decodeURIComponent(a)+'====='+ unescape(a)+"===="+decodeURI(a)+'-====-'+a);
-	var option = {
+	/*var option = {
 	    title: {
 	        text: $.getUrlParam('year')+'年  '+decodeURIComponent(a),
 	        subtext: '经济日报',
@@ -134,14 +134,14 @@
 	        }
 	    ]
 	};
-	myChart.setOption(option);
+	myChart.setOption(option);*/
 	
 	
     var country = $.getUrlParam('country');
     var indicator = $.getUrlParam('indicator');
     var d = $.getUrlParam('d');
 
-    /*load(country, indicator);
+    load(country, indicator);
 
     function load(country, indicator) {
         // 异步加载数据
@@ -218,7 +218,7 @@
                 }],
             });
         });
-    }*/
+    }
 
     function uniqueSort(source, compareFn) {
         var result = [];
