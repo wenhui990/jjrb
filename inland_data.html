@@ -210,6 +210,8 @@
 		</script>
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			//右侧导航
+			dataDesc.navList(filter_txt,loadCollec, 'http://api.jjrb.grsx.cc/data2/group?type=4&with_indicator=1');
 			$(function(){
 				$(document).on("click",".panel-heading",function(e){
 	                /*切换折叠指示图标*/

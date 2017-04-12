@@ -207,6 +207,8 @@
 				    <div class="col-sm-offset-1 col-sm-10">
 				      <div class="nav_txt">
 				        <span class="text-muted">最近过滤：</span>
+				        <!--<span><a href="javascript:void(0);" class="data_nav_filter_txt">人口</a></span>
+				        <span><a href="javascript:void(0);" class="data_nav_filter_txt">生产力</a></span>-->
 				      </div>
 				    </div>
 				  </div>
@@ -268,7 +270,7 @@
 		<script type="text/javascript">
 			
 			$(function(){
-				// 指标导航列表
+				// 指标右侧导航列表
 				dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data2/group?type=1&with_indicator=1');
 				console.log($('.collects_content').find('p').length)
 				// 设置收藏框的高度

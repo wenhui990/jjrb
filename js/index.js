@@ -50,6 +50,18 @@ $(function() {
 	$(document).on("mouseout", ".nav>li", function() {
 		$(this).find("a").css("color", "#999");
 		$(this).removeClass("active")
+		var _loca_href = window.location.href;
+		console.log(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1);
+		if(_loca_href.indexOf('index') > -1) {
+			$(".navs>li").eq(1).addClass("active").css("color", "#3b5998");
+			console.log(_loca_href.indexOf('index') > -1);
+		} else if(_loca_href.indexOf('viewpoint') > -1) {
+			$(".navs>li").eq(2).addClass("active").css("color", "#3b5998");
+			console.log(_loca_href.indexOf('viewpoint') > -1);
+		} else if(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1) {
+			$(".navs>li").eq(0).addClass("active").css("color", "#3b5998");
+			console.log(_loca_href);
+		}
 	});
 	$("body").click(function() {
 		$("#phone").hide();
@@ -357,11 +369,11 @@ function timeF(time, mm) {
 	var y = t.getFullYear();
 	var m = t.getMonth();
 	var d = t.getDate();
-	if(m<9){
-		m = '0'+m;
+	if(m < 9) {
+		m = '0' + m;
 	}
-	if(d<10){
-		d = '0'+d;
+	if(d < 10) {
+		d = '0' + d;
 	}
 	if(mm) {
 		return y + "-" + m;
@@ -441,9 +453,9 @@ var uniqueSort = function(source, compareFn) {
 function ci(classname, classname1, src) {
 	$(classname).show();
 	$(classname).html("");
-	if(window.location.href.indexOf('inland')>-1){
+	if(window.location.href.indexOf('inland') > -1) {
 		src += '?source=100';
-	}else{
+	} else {
 		src += '?source=101'
 	}
 	$.ajax({
@@ -639,9 +651,9 @@ var dataDesc = {
 			if(window.location.href.indexOf('inland_data') >= 0) {
 				myChart.on('click', function(params) {
 					console.log(params);
-//					newWin('map.html?year=' + encodeURIComponent(params.name) + '&indicator=' + encodeURI(encodeURIComponent($('#show_indicator_list_name').text())), 'map_on')
-					newWin('map.html?indicator='+indicator+'&country=CN&d=' + encodeURIComponent(params.name), 'map_on');
-//					window.open('map.html?year=' + encodeURIComponent(params.name) + '&indicator=' + encodeURI(encodeURIComponent($('#show_indicator_list_name').text())));
+					//					newWin('map.html?year=' + encodeURIComponent(params.name) + '&indicator=' + encodeURI(encodeURIComponent($('#show_indicator_list_name').text())), 'map_on')
+					newWin('map.html?indicator=' + indicator + '&country=CN&d=' + encodeURIComponent(params.name), 'map_on');
+					//					window.open('map.html?year=' + encodeURIComponent(params.name) + '&indicator=' + encodeURI(encodeURIComponent($('#show_indicator_list_name').text())));
 				});
 			}
 		});
@@ -676,7 +688,7 @@ var dataDesc = {
 			type: "get",
 			url: url,
 			data: {
-				token: localStorage.token//'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
+				token: localStorage.token //'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
 			},
 			async: true,
 			success: function(data) {
@@ -687,9 +699,9 @@ var dataDesc = {
 					listHtml = '',
 					hrf = window.location.href,
 					urlPage;
-				window.location.href.indexOf('inland')>-1 ? urlPage = 'inland_data.html' : urlPage = 'data.html';
+				window.location.href.indexOf('inland') > -1 ? urlPage = 'inland_data.html' : urlPage = 'data.html';
 				console.log(urlPage);
-//				return;
+				//				return;
 				for(var i = 0, len = data.length; i < len; i++) {
 					var a = data[i];
 					//					console.log($(a));
@@ -789,32 +801,45 @@ var dataDesc = {
 		});
 
 		// 搜索框失去焦点把值加到过滤中
-		$(document).on("blur", "#inputSearch", function(e) {
+		$(document).on("keydown", "#inputSearch", function(e) {
+			if(e.keyCode==13){
+				return false;
+			}
 			var $filter_txt = $(".nav_txt").find("span").filter(":gt(0)");
-			$.each($filter_txt, function(i, e) {
-				var filterTxt = $(e).text();
-				filter_txt.push(filterTxt);
-			});
-			var val = $(this).val().trim(),
-				fla = true;
-			if(val !== '' && val.length > 0) {
-				var html = '<span><a href="javascript:void(0);" class="data_nav_filter_txt">' + val + '</a></span>';
-				for(var i = 0, len = filter_txt.length; i < len; i++) {
-					for(var j = 0; j < len; j++) {
-						var filter_val = filter_txt[j];
-						filter_val !== val ? fla = true : fla = false;
-					}
-					if(fla) {
-						filter_txt.push(val);
-						$(".nav_txt").append(html);
-						break;
+			var lasttimes = e.timeStamp;
+			setTimeout(function() {
+				var val = $('#inputSearch').val().trim(),
+					fla = true;
+				if(lasttimes-e.timeStamp==0) {
+					$.each($filter_txt, function(i, e) {
+						var filterTxt = $(e).text();
+						filter_txt.push(filterTxt);
+					});
+					if(val !== '' && val.length > 0) {
+						var html = '<span><a href="javascript:void(0);" class="data_nav_filter_txt">' + val + '</a></span>';
+						if(!filter_txt.length) {
+							filter_txt.push(val);
+							$(".nav_txt").append(html);
+						}
+						for(var i = 0, len = filter_txt.length; i < len; i++) {
+							for(var j = 0; j < len; j++) {
+								var filter_val = filter_txt[j];
+								filter_val !== val ? fla = true : fla = false;
+								if(!fla) break;
+							}
+
+						}
+						if(fla) {
+							filter_txt.push(val);
+							$(".nav_txt").append(html);
+						}
+						//				filter_txt = filter_txt.sort();
+						$.unique(filter_txt);
+						console.log(filter_txt);
+						localStorage.setItem("filterTxt", filter_txt);
 					}
 				}
-				//				filter_txt = filter_txt.sort();
-				$.unique(filter_txt);
-				console.log(filter_txt);
-				localStorage.setItem("filterTxt", filter_txt);
-			}
+			}, 1000);
 		});
 	},
 	//切换图表样式
