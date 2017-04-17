@@ -1,13 +1,5 @@
-$("header").load("header.html");
-$("footer").load("footer.html");
 $(function() {
-	if (!localStorage.token) {
-		alert("请登录后进行操作！");
-		$("#phone").show();
-		return false;
-	}
 	setTimeout(function(){
-//		console.log($("#navs li").length)
 		$("#navs li").eq(2).addClass("active").siblings().removeClass("active");
 	},500);
 	//接口  resource type 11，12，13，14/视频、图片、文本、html片段
@@ -50,14 +42,14 @@ $(function() {
 //								a.append(res.descp);
 //							}
 //						});
-						console.log(i);
+//						console.log(i);
 						var descp='',echarts,type,echarts_data;
 						$.each(e.resources,function(ind,e){
 //							console.log(ind);
 //							console.log(e);
 							
 							type = parseInt(e.type);
-							console.log(type);
+//							console.log(type);
 							if (type === 12) {//图片
 								descp += '<img src="' + e.uri + '">'
 							}else if (type === 13) {//文本
@@ -82,9 +74,19 @@ $(function() {
 									'<h2 class="viewpoint_title"><a href="viewpoint_desc.html?id=' + e.id + '" target="_blank">' + e.title + '</a></h2>' +
 									'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(e.created) + '</span></small>' +
 									'      <div class="viewpoint_txt">'+ descp +
-									'</div> </div>';
+									'</div><a href="viewpoint_desc.html?id=' + e.id + '" target="_blank">查看更多...</a></div>';
 //						console.log(html);			
-						$("#viewpoint").append(html);	
+						$("#viewpoint").append(html);
+						$.each($('.viewpoint_txt'), function(ind,event) {
+							var a = $(event).find('p:lt(3)').text().length;
+//							console.log(a);
+							if (a>=200) {
+								$(event).find('p:gt(3)').hide();
+							} else{
+								$(event).find('p:gt(3)').hide();
+							}
+						});
+							
 						if (echarts_data) {
 							dataDesc.urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end,echarts_data.echartType);
 						}

@@ -20,8 +20,8 @@ body{background-color:#ebeff3;}
 .modal_style{margin-top: 300px;width: 300px;font-size: 14px;}
 .modal_style .modal-body{padding: 30px;}
 .modal_style .modal_style_title{font-weight: bold;text-align: center;font-size: 16px;}
-.modal_style form .form-group{margin-bottom: 35px;}
-.modal_style form #wechat_tag{margin-top: 20px;color: #000;font-size: 12px;}
+.modal_style form .form-group{margin-bottom: 35px;text-align: center;}
+.modal_style form #wechat_tag{margin-top: 20px;color: #000;font-size: 12px;text-align: center;}
 .modal_style form #wechat_tag a{color: #000;font-size: 12px;}
 .modal_style form .modal_style_btn{border-radius: 0;/*background-color: #999;height: 25px;width: 100%;text-shadow: none;padding: 0;line-height: 25px;color: #fff;border-radius: 0;font-size: 12px;*/}
 .modal_style .modal-content{border-radius: 0;}
@@ -30,7 +30,8 @@ body{background-color:#ebeff3;}
 .fg #code_btn{border-radius: 0;}
 .fg_hide{display: none;}
 #hot_content,#data_desc,#contont,#about_data,#viewpoint,#viewpoint_desc{margin-bottom: 60px;}
-#hot_content .news_style{border-bottom: 1px solid #D9D9D9;padding: 20px 0;}
+#hot_content .news_style{border-bottom: 1px solid #D9D9D9;padding: 20px 0;background-color: #fff;color: #000;}
+#hot_content .news_style a{color: #000;}
 
 
 /*观点样式*/
@@ -39,6 +40,8 @@ body{background-color:#ebeff3;}
 .viewpoint small{color: #999;}
 .viewpoint h2 a{color: #000;}
 .viewpoint .viewpoint_txt{margin-top: 10px;line-height: 2;}
+.viewpoint .viewpoint_txt img{display: none;}
+
 #phone,#WeChat,#add_tan{position: fixed;top:0;background: rgba(0,0,0,0.6);width: 100%;min-height: 1100px;width:100%;z-index: 998;display: none;}
 
 #viewpoint_desc .media{background-color: #fff;padding: 20px 30px;}
@@ -84,6 +87,7 @@ body{background-color:#ebeff3;}
 
 footer{background: #f8f8f8;width:100%;height: 50px;line-height: 50px;position: fixed;bottom: 0;left: 0;margin-top: 60px;}
 #back_top{float: right;font-size: 30px;font-weight: bold;width: 30px;height: 50px;}
+#back_top img{width: 64%;}
 #back_top:hover{cursor: pointer;}
 .icon {
    width: 2.5em; height: 2.5em;

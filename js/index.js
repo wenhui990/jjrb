@@ -33,9 +33,19 @@ function interfacelist() {
 		};
 	return interfacelist;
 }
+
 $(function() {
 	$(".active a").css("color", "#3b5998;");
-	//	$(".nav>li").mouseover();
+	setTimeout(function(){
+		if (!localStorage.token) {
+			alert("请登录后进行操作！");
+			$("#phone").show();
+			return false;
+		}else{
+			$('.login_none').hide();
+			localStorage.head?$("#user_img").attr('src',e.user.head):$("#user_img").attr('src','images/tabbar-profile-f.png');
+		}
+	},500);
 
 	var n = 0;
 	//初始化弹出框
@@ -51,15 +61,15 @@ $(function() {
 		$(this).find("a").css("color", "#999");
 		$(this).removeClass("active")
 		var _loca_href = window.location.href;
-		console.log(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1);
+//		console.log(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1);
 		if(_loca_href.indexOf('index') > -1) {
-			$(".navs>li").eq(1).addClass("active").css("color", "#3b5998");
+			$(".nav>li").eq(1).addClass("active").css("color", "#3b5998");
 			console.log(_loca_href.indexOf('index') > -1);
 		} else if(_loca_href.indexOf('viewpoint') > -1) {
-			$(".navs>li").eq(2).addClass("active").css("color", "#3b5998");
-			console.log(_loca_href.indexOf('viewpoint') > -1);
+			$(".nav>li").eq(2).addClass("active").css("color", "#3b5998");
+//			console.log(_loca_href.indexOf('viewpoint') > -1);
 		} else if(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1) {
-			$(".navs>li").eq(0).addClass("active").css("color", "#3b5998");
+			$(".nav>li").eq(0).addClass("active").css("color", "#3b5998");
 			console.log(_loca_href);
 		}
 	});
@@ -91,10 +101,10 @@ $(function() {
 			if(clas == ".login_wechat" || a == "#WeChat") {
 				var obj = new WxLogin({
 					id: "wx",
-					appid: "wxbdc5610cc59c1631",
+					appid: "wxed782be999f86e0e",
 					scope: "snsapi_login",
-					redirect_uri: "https://passport.yhd.com/wechat/callback.do",
-					state: "",
+					redirect_uri:  encodeURIComponent("http://" + window.location.host + "/login.php"),
+					state: Math.ceil(Math.random()*1000),
 					style: "",
 					href: ""
 				});
@@ -120,15 +130,6 @@ $(function() {
 	toggle_login(".login_wechat", "#WeChat", "#phone");
 	toggle_login(".login_phone", "#phone", "#WeChat");
 
-	//手机微信登陆切换-方法2
-	//	$(document).on("click",".login_wechat",function(){
-	//		$("#WeChat").show();
-	//		$("#phone").hide();
-	//	});
-	//	$(document).on("click",".login_phone",function(){
-	//		$("#phone").show();
-	//		$("#WeChat").hide();
-	//	});
 	$('[data-target="#WeChat"]').click(function() {
 		$("#WeChat").show();
 		$("#phone").hide();
@@ -239,6 +240,7 @@ $(function() {
 					localStorage.token = e.token;
 					localStorage.userId = e.user.id;
 					localStorage.userName = e.user.name;
+					localStorage.head = e.user.head;
 					$("#phone").hide();
 					location.reload();
 				},
@@ -800,7 +802,7 @@ var dataDesc = {
 
 		});
 
-		// 搜索框失去焦点把值加到过滤中
+		// 搜索框弹起后一分钟后无动作把值加到过滤中
 		$(document).on("keydown", "#inputSearch", function(e) {
 			if(e.keyCode==13){
 				return false;
@@ -839,7 +841,7 @@ var dataDesc = {
 						localStorage.setItem("filterTxt", filter_txt);
 					}
 				}
-			}, 1000);
+			}, 60000);
 		});
 	},
 	//切换图表样式
@@ -1124,6 +1126,7 @@ var dataDesc = {
 	}
 }
 
+// 微信刷新失效方法
 function newWin(url, id) {
 	var a = document.createElement('a');
 	a.setAttribute('href', url);

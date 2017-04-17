@@ -118,9 +118,9 @@
 		<div class="container" id="hotspot_desc">
 			
 			<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
-				<h2 class="hotspot_money"></h2>
+				<!--<h2 class="hotspot_money"></h2>-->
 				<h2 class="hotspots_tit"><a href="#"></a></h2>
-				<small>来源： <span class="source"> 经济日报  </span> <span class="source_time"> 2015年7月1日</span></small>
+				<small>来源： <span class="source"> 经济日报  </span> <span class="source_time"></span></small>
 				<div class="hotspot_txt">
 					
 					<p style="margin-top: 30px;">
@@ -168,7 +168,7 @@
 					async:true,
 					success: function(data){
 						console.log(data);
-						$(".hotspot_money").text(data.sub_title);
+//						$(".hotspot_money").text(data.sub_title);
 						$(".hotspots_tit>a").text(data.title);
 						$(".source_time").text(" "+timeF(data.created));
 						descp += '<div style="margin:10px auto;" id="header_img"><img src="'+data.cover+'" alt="热点图" class="hotspot_img" /></div>';
