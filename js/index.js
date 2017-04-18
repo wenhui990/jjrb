@@ -14,6 +14,7 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 		indicator_list: '/data2/group?type=1&with_indicator=1',
 		indicator_stat: '/data2/stat?indicator=NY.GDP.MKTP.CD',
 		feed: "/feed/t/3"
+
 	};
 //	n = 0;
 function interfacelist() {
@@ -36,41 +37,57 @@ function interfacelist() {
 
 $(function() {
 	$(".active a").css("color", "#3b5998;");
-	setTimeout(function(){
-		if (!localStorage.token) {
+	setTimeout(function() {
+		if(!localStorage.token) {
 			alert("请登录后进行操作！");
 			$("#phone").show();
 			return false;
-		}else{
+		} else {
 			$('.login_none').hide();
-			localStorage.head?$("#user_img").attr('src',e.user.head):$("#user_img").attr('src','images/tabbar-profile-f.png');
+			localStorage.head ? $("#user_img").attr('src', e.user.head) : $("#user_img").attr('src', 'images/tabbar-profile-f.png');
 		}
-	},500);
+	}, 500);
 
 	var n = 0;
 	//初始化弹出框
 	$('[data-toggle="popover"]').popover();
 
 	//头部导航鼠标移入
+	var imgSrc;
 	$(document).on("mouseover", ".nav>li", function() {
 		$(this).addClass("active").siblings().removeClass("active").css("color", "#999");
 		$(this).find("a").css("color", "#000000");
+		imgSrc = $(this).find('img').attr('src');
+		//		console.log(imgSrc+'==='+imgSrc.replace(/[n.]/,'f'));
+		//		$(this).find('img').attr('src',imgSrc.replace(/^-n?.$/,'-f.'));
+		var _text = $(this).find('a').text();
+		if(_text.indexOf('中经热点') > -1) {
+			$(this).find('img').attr('src', 'images/tabbar-news-f.png');
+		} else if(_text.indexOf('专家论点') > -1) {
+			$(this).find('img').attr('src', 'images/tabbar-paper-f.png');
+		} else if(_text.indexOf('数据立方') > -1) {
+			$(this).find('img').attr('src', 'images/tabbar-numbers-f.png');
+		}
 	});
 	//头部导航鼠标移出
 	$(document).on("mouseout", ".nav>li", function() {
 		$(this).find("a").css("color", "#999");
-		$(this).removeClass("active")
+		$(this).removeClass("active");
+		$(this).find('img').attr('src', imgSrc);
 		var _loca_href = window.location.href;
-//		console.log(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1);
+		//		console.log(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1);
 		if(_loca_href.indexOf('index') > -1) {
 			$(".nav>li").eq(1).addClass("active").css("color", "#3b5998");
-			console.log(_loca_href.indexOf('index') > -1);
+			$('.hot_header_img').attr('src', 'images/tabbar-news-f.png');
+			//			$('.hot_header_img').attr('src','images/tabbar-news-n.png');
 		} else if(_loca_href.indexOf('viewpoint') > -1) {
 			$(".nav>li").eq(2).addClass("active").css("color", "#3b5998");
-//			console.log(_loca_href.indexOf('viewpoint') > -1);
+			$('.viewpoint_header_img').attr('src', 'images/tabbar-paper-f.png');
+			//			$('.viewpoint_header_img').attr('src','images/tabbar-paper-n.png');
 		} else if(_loca_href.indexOf('data') > -1 || _loca_href.indexOf('indicator') > -1) {
 			$(".nav>li").eq(0).addClass("active").css("color", "#3b5998");
-			console.log(_loca_href);
+			$('.data_header_img').attr('src', 'images/tabbar-numbers-f.png');
+			//			$('.data_header_img').attr('src','images/tabbar-numbers-n.png');
 		}
 	});
 	$("body").click(function() {
@@ -103,8 +120,8 @@ $(function() {
 					id: "wx",
 					appid: "wxed782be999f86e0e",
 					scope: "snsapi_login",
-					redirect_uri:  encodeURIComponent("http://" + window.location.host + "/login.php"),
-					state: Math.ceil(Math.random()*1000),
+					redirect_uri: encodeURIComponent("http://" + window.location.host + "/login.php"),
+					state: Math.ceil(Math.random() * 1000),
 					style: "",
 					href: ""
 				});
@@ -369,9 +386,9 @@ function code_time() {
 function timeF(time, mm) {
 	var t = new Date(time);
 	var y = t.getFullYear();
-	var m = t.getMonth();
+	var m = t.getMonth() + 1;
 	var d = t.getDate();
-	if(m < 9) {
+	if(m < 10) {
 		m = '0' + m;
 	}
 	if(d < 10) {
@@ -804,7 +821,7 @@ var dataDesc = {
 
 		// 搜索框弹起后一分钟后无动作把值加到过滤中
 		$(document).on("keydown", "#inputSearch", function(e) {
-			if(e.keyCode==13){
+			if(e.keyCode == 13) {
 				return false;
 			}
 			var $filter_txt = $(".nav_txt").find("span").filter(":gt(0)");
@@ -812,7 +829,7 @@ var dataDesc = {
 			setTimeout(function() {
 				var val = $('#inputSearch').val().trim(),
 					fla = true;
-				if(lasttimes-e.timeStamp==0) {
+				if(lasttimes - e.timeStamp == 0) {
 					$.each($filter_txt, function(i, e) {
 						var filterTxt = $(e).text();
 						filter_txt.push(filterTxt);
@@ -1137,4 +1154,35 @@ function newWin(url, id) {
 		document.body.appendChild(a);
 	}
 	a.click();
+}
+
+// 判断收藏菜单
+function onsize() {
+	var _left = $(".container").offset().left;
+	if(_left > 210) {
+		if(localStorage.token) {
+			$("#collects").show();
+		}
+		$("#collect").hide();
+		$("#collects").css({
+			"width": _left - 100 + "px",
+			"margin": "0 45px"
+		});
+		$(document).on("mouseleave", "#collects", function() {
+			$("#collect").hide();
+			$("#collects").show();
+		})
+	} else {
+		$("#collects").hide();
+		$("#collect").show();
+		// 收藏
+		$(document).on("mousemove", "#collect", function() {
+			$("#collects").show();
+			$("#collect").hide();
+		})
+		$(document).on("mouseleave", "#collects", function() {
+			$("#collects").hide();
+			$("#collect").show();
+		})
+	}
 }

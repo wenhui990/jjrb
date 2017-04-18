@@ -106,60 +106,27 @@
 			<div id="comment">
 				<div id="comment_title">
 					<span class="comment_img c_img1">
-					<span class="badge pull-left num num1">42</span>
+					<span class="badge pull-left num comment_num"></span>
 					</span>
 
-					<span class="comment_img c_img2">
-					<span class="badge pull-left num num2">102</span>
+					<span class="comment_img c_img2" unselectable="on" onselectstart="return false;" style="-moz-user-select:none;">
+					<span class="badge pull-left num zan_num"></span>
 					</span>
 					<div class="pull-right" style="line-height: 25px;">
 						<span class="comment_img c_img1 comment_add_icon"></span>
-						<a href="#" class="comment_add">添加评论</a>
+						<a href="javascript:void(0);" class="comment_add">添加评论</a>
 					</div>
 					<div class="clearfix"></div>
 				</div>
 				<div class="comments">
-					<div class="row">
-						<div class="col-md-1">
-							<a href="#">
-								<img src="images/erweima.png" alt="头像" width="30" height="30" />
-							</a>
-						</div>
-						<div class="col-md-11 comments_name">
-							<span class="comments_author">吴敬琏</span>
-							<span class="source_time">2015年7月1日</span>
-						</div>
-						<div class="col-md-11 comments_desc">
-							<p>2015年7月1日复苏加快立法精神打击风口浪尖来了</p>
-						</div>
+					
+					<div id="more_comment" class="" style="text-align: center;margin: 20px auto;">
+						<a href="javascript:void(0)">查看更多评论</a>
 					</div>
-					<div class="row">
-						<div class="col-md-1">
-							<a href="#">
-								<img src="images/erweima.png" alt="头像" width="30" height="30" />
-							</a>
-						</div>
-						<div class="col-md-11 comments_name">
-							<span class="comments_author">吴敬琏</span>
-							<span class="source_time">2015年7月1日</span>
-						</div>
-						<div class="col-md-11 col-md-offset-1 comments_desc">
-							<p>2015年7月1日复苏加快立法精神打击风口浪尖来了</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-1">
-							<a href="#">
-								<img src="images/erweima.png" alt="头像" width="30" height="30" />
-							</a>
-						</div>
-						<div class="col-md-11 comments_name">
-							<span class="comments_author">吴敬琏</span>
-							<span class="source_time">2015年7月1日</span>
-						</div>
-						<div class="col-md-11 col-md-offset-1 comments_desc">
-							<p>2015年7月1日复苏加快立法精神打击风口浪尖来了</p>
-						</div>
+					<div class="row comment none">
+						<textarea name="" rows="2" placeholder="请输入要评论的内容" style="width: 100%;" id="comment_content"></textarea>
+						<span class="txt_error pull-left none">请输入评论内容，不能为空！</span>
+						<button class="btn btn-success btn-sm pull-right comment_ok">发表评论</button>
 					</div>
 				</div>
 			</div>
@@ -189,8 +156,8 @@
 					$("#phone").show();
 					return false;
 				}
+				
 				setTimeout(function(){
-					console.log($("#navs li").length)
 					$("#navs li").eq(1).addClass("active").siblings().removeClass("active");
 				},500);
 				//			alert(getUrlParams().id);
@@ -198,18 +165,155 @@
 				var _href = "http://api.jjrb.grsx.cc",
 					interfacelist = {
 						feed: "/feed",
-						select_data: "/data"
+						comment_list: '/aggregator/391/5/entity', // 评论列表get
+//						comment_nums: '/aggregator/391/5', //评论数get
+						add_comment: '/aggregator/391/5/entity',  //发表评论post
+						zan: '/aggregator/391/1', //赞post
+						zan_numsPing: '/aggregator/391/', //赞数1get,评论数5
+						select_data: "/data2"
 					},
 					u = getUrlParams(),
 					urll = _href + interfacelist.feed + "/" + u.id,
+					next_url = _href + interfacelist.feed + "/" + (parseInt(u.id)+1),
 					_url = _href + interfacelist.select_data+"?";
+				var headImg = localStorage.head?localStorage.head:'images/Group Copy 4.png';
+				var page = 1;
+				
+				/* 评论区域  */
+				
+				// 点击添加评论按钮
+				$(document).on('click','.comment_add',function(){
+					$('.comment').show();
+				});
+				
+				// 点击发布评论
+				$(document).on('click','.comment_ok',function(){
+					if($('#comment_content').val()=='' || $('#comment_content').val().length<1){
+						$('.txt_error').show().css('color','red');
+						setTimeout(function(){
+							$('.txt_error').hide();
+						},2000);
+					}else{
+//						addComment();
+					}
+					
+				});
+				$(document).on('click','.c_img2',function(){
+					$.ajax({
+						type:"post",
+						url: _href + interfacelist.zan,
+						async:true,
+						data: {
+							token: localStorage.token
+						},
+						success: function(data){
+							if(parseInt(data.id)!=0){
+								var num = parseInt($('.zan_num').text());
+								$('.zan_num').text(++num);
+							}else{
+								alert("已经赞过了！");
+							}
+						}
+					});
+				});
+				
+				// 点击查看更多评论
+				$(document).on('click','#more_comment',function(){
+					page++;
+					commentList(page);
+				});
+				
+				commentList(page); // 获取评论列表
+				pinglunZan(5);//评论数
+				pinglunZan(1);//赞数
+				
+				// 发布评论
+				function addComment(){
+					$.ajax({
+						type:"post",
+						url: _href + interfacelist.add_comment,
+						async:true,
+						data:{
+							token: localStorage.token,
+							descp: $('#comment_content').val()
+						},
+						success: function(data){
+							if(parseInt(data.id)>0){
+								$('.txt_error').show().text('发表成功！').css('color','#24b701');
+								var html = '<div class="row"><div class="col-md-1">'+
+									'<a href="javascript:;"><img src="'+headImg+'" alt="头像" width="30" height="30" /></a></div>'+
+									'<div class="col-md-11 comments_name">'+
+									'	<span class="comments_author">'+localStorage.userName+'</span>'+
+									'	<span class="source_time">'+timeF(new Date())+'</span>'+
+									'</div>'+
+									'<div class="col-md-11 comments_desc">'+
+									'	<p>'+$('#comment_content').val()+'</p>'+
+									'</div></div>';
+								$('#more_comment').before(html);
+								setTimeout(function(){
+									$('.txt_error').hide();
+								},2000);
+							}
+						}
+					});
+				}				
+				
+				// 取评论列表
+				function commentList(page){
+					$.ajax({
+						type:"get",
+						url: _href + interfacelist.comment_list,
+						async:true,
+						data:{
+							page:page,
+							token: localStorage.token
+						},
+						success: function(data){
+							var _len;
+							$.each(data, function(i,e) {
+								_len = i;
+								var html = '<div class="row"><div class="col-md-1">'+
+									'<a href="javascript:;"><img src="'+(e.entity.head?e.entity.head:headImg)+'" alt="头像" width="30" height="30" /></a></div>'+
+									'<div class="col-md-11 comments_name">'+
+									'	<span class="comments_author">'+e.entity.name+'</span>'+
+									'	<span class="source_time">'+timeF(e.created)+'</span>'+
+									'</div>'+
+									'<div class="col-md-11 comments_desc">'+
+									'	<p>'+e.descp+'</p>'+
+									'</div></div>';
+								$('#more_comment').before(html);
+							});
+							(_len>=20)?$('#more_comment').show():$('#more_comment').hide();
+						}
+					});
+				}
+				
+				
+				
+				// 取评论数和赞数
+				function pinglunZan(a){
+					$.ajax({
+						type:"get",
+						url: _href + interfacelist.zan_numsPing + a,
+						async:true,
+						success: function(data){
+							if(a===5){
+								$('.comment_num').text(data.num);
+							}else if(a===1){
+								$('.zan_num').text(data.rnum);
+							}
+						}
+					});
+				}
+				
+				// 获取观点内容
 				$.ajax({
 					type: "get",
 					url: urll, //,_href+interfacelist.feed,//
 					async: true,
 					data:{token:localStorage.token},
 					success: function(data) {
-						console.log(data);
+//						console.log(data);
 //						var head = data.owner.head?data.owner.head:"";
 						$("#viewpoint_desc .media-left img").attr("src", data.owner.head);
 						$("#viewpoint_desc .media-heading").html(data.owner.name);
@@ -229,7 +333,7 @@
 							console.log(e);
 							
 							type = parseInt(e.type);
-							console.log(type);
+//							console.log(type);
 							if (type === 12) {//图片
 								descp += '<img src="' + e.uri + '">'
 							}else if (type === 13) {//文本
@@ -253,8 +357,9 @@
 							'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
 							'<div class="viewpoint_txt">' + descp + '<p>*经济日报</p></div> ';
 						$(".viewpoint").append(htm);
+						$('.viewpoint_txt img').show();
 						if (echarts_data) {
-							urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
+							dataDesc.urlLoad(echarts_data.id_val,_url,echarts_data.country,echarts_data.indicator,echarts_data.start,echarts_data.end);
 						}
 					}
 				});
@@ -263,6 +368,23 @@
 					var _href = $(".next_comment").attr("href");
 					$(".next_comment").attr("href",_href + (_id+1));
 				});
+				
+				nextViewpoint();
+				// 获取下一篇内容的信息
+				function nextViewpoint(){
+					$.ajax({
+						type: "get",
+						url: next_url,
+						async: true,
+						data:{token:localStorage.token},
+						success: function(data) {
+							$('.comment_footer .c_f_style').find('img').attr('src',data.owner.head);
+							$('.comment_footer .c_f_style').find('span').text(data.owner.name);
+							$('.comment_footer').find('p.c_f_style').text(data.title);
+							$('.source_time').text(timeF(data.created));
+						}
+					});
+				}
 			});
 
 			

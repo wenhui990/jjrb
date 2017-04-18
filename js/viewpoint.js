@@ -1,6 +1,7 @@
 $(function() {
 	setTimeout(function(){
-		$("#navs li").eq(2).addClass("active").siblings().removeClass("active");
+		$(".nav>li").eq(2).addClass("active").css("color", "#3b5998");
+		$('.viewpoint_header_img').attr('src','images/tabbar-paper-f.png');
 	},500);
 	//接口  resource type 11，12，13，14/视频、图片、文本、html片段
 	var _href = "http://api.jjrb.grsx.cc",
@@ -81,9 +82,9 @@ $(function() {
 							var a = $(event).find('p:lt(3)').text().length;
 //							console.log(a);
 							if (a>=200) {
-								$(event).find('p:gt(3)').hide();
+								$(event).find('p:gt(1)').hide();
 							} else{
-								$(event).find('p:gt(3)').hide();
+								$(event).find('p:gt(2)').hide();
 							}
 						});
 							

@@ -11,13 +11,12 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="js/jedate/skin/jedate.css" />
 		<!--<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>-->
-		<link rel="stylesheet" type="text/css" href="css/datas.css"/>
+		<link rel="stylesheet" type="text/css" href="css/datas.css" />
 		<!--[if lt IE 9]>
       <script src="js/html5shiv.min.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
 		<style type="text/css">
-			
 			.data_img {
 				text-align: center;
 				color: #fff;
@@ -71,12 +70,40 @@
 				margin: 2px;
 				color: #fff;
 			}
-			.lists{margin-right: 10px;min-height: 35px;display: inline-block;width: 23%;float: left;position: relative;}
-			.lists input,select{width: 100%;height: 35px;line-height: 35px;background: #3b5998;color: #fff;padding: 2px 5px;}
-			#indicator,#countrys{width: 100%;position: absolute;left: 0;top: 0;}
+			
+			.lists {
+				margin-right: 10px;
+				min-height: 35px;
+				display: inline-block;
+				width: 23%;
+				float: left;
+				position: relative;
+			}
+			
+			.lists input,
+			select {
+				width: 100%;
+				height: 35px;
+				line-height: 35px;
+				background: #3b5998;
+				color: #fff;
+				padding: 2px 5px;
+			}
+			
+			#indicator,
+			#countrys {
+				width: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
 			.countrys_list,
 			.zb_list {
-				width: 100%;background: #fff;height: 500px;overflow: auto;
+				width: 100%;
+				background: #fff;
+				height: 500px;
+				overflow: auto;
 				position: absolute;
 				right: 0;
 				top: 30px;
@@ -86,31 +113,100 @@
 				word-wrap: break-word;
 				word-break: break-all;
 			}
-			.new_txt,.new_img,#show_data{position: relative;}
-			.new_close{position: absolute;top: 0;right: 0;}
-			#countrys_vals,#indicators_vals{position: relative;margin: 5px;}
 			
+			.new_txt,
+			.new_img,
+			#show_data {
+				position: relative;
+			}
 			
-			::-moz-placeholder { color: #fff !important; }
-			::-webkit-input-placeholder { color:#fff !important;; }
-			:-ms-input-placeholder { color:#fff !important;; }
-			input.form_style{}
+			.new_close {
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
 			
-			.container{padding-right: 0;padding-left: 0;}
-			.nav_txt{color: #3b5998;}
-			.nav_txt a{color: #3b5998;}
-			.hostimgs a{color: #3b5998;}
-			.nav_txt span{margin-right: 10px;}
-			.hostimgs span{margin-right: 10px;}
+			#countrys_vals,
+			#indicators_vals {
+				position: relative;
+				margin: 5px;
+			}
 			
-			.searchs{background: #fff; padding-top: 20px;}
-			#inputSearch{border-radius: 0;border: 1px solid #000;}
-			#data_nav_lists{margin-top: 20px;background: #fff;padding: 20px 0;margin-bottom: 100px;}
-			#data_nav_lists dl{padding: 10px 40px;max-width: 33%;}
-			#data_nav_lists dl dt a{color: #000;}
-			#data_nav_lists dl dd{line-height: 2.5;color: #3b5998;}
-			#data_nav_lists dl dd a{color: #3b5998;}
+			::-moz-placeholder {
+				color: #fff !important;
+			}
 			
+			::-webkit-input-placeholder {
+				color: #fff !important;
+				;
+			}
+			
+			:-ms-input-placeholder {
+				color: #fff !important;
+				;
+			}
+			
+			input.form_style {}
+			
+			.container {
+				padding-right: 0;
+				padding-left: 0;
+			}
+			
+			.nav_txt {
+				color: #3b5998;
+			}
+			
+			.nav_txt a {
+				color: #3b5998;
+			}
+			
+			.hostimgs a {
+				color: #3b5998;
+			}
+			
+			.nav_txt span {
+				margin-right: 10px;
+			}
+			
+			.hostimgs span {
+				margin-right: 10px;
+			}
+			
+			.searchs {
+				background: #fff;
+				padding-top: 20px;
+			}
+			
+			#inputSearch {
+				border-radius: 0;
+				border: 1px solid #000;
+			}
+			
+			#data_nav_lists {
+				margin-top: 20px;
+				background: #fff;
+				padding: 20px 0;
+				margin-bottom: 100px;
+			}
+			
+			#data_nav_lists dl {
+				padding: 10px 40px;
+				max-width: 33%;
+			}
+			
+			#data_nav_lists dl dt a {
+				color: #000;
+			}
+			
+			#data_nav_lists dl dd {
+				line-height: 2.5;
+				color: #3b5998;
+			}
+			
+			#data_nav_lists dl dd a {
+				color: #3b5998;
+			}
 			/* 收藏样式 */
 			/*#data_collect{position: fixed;right: 0;top: 100px;}
 			#collect{background: #fff;}
@@ -123,15 +219,13 @@
 			#collects .collects_titles a{color: #000;}
 			#collects p a{color: #3b5998;}
 			#collects .collects_titles::after{display: block;content: "";clear: both;}*/
-			
-			
 		</style>
 	</head>
 
 	<body>
 		<!-- 头部导航 -->
 		<header></header>
-		
+
 		<!-- 头部导航结束  -->
 
 		<div id="wx_phone">
@@ -146,10 +240,10 @@
 									<a class="btn btn-info btn-sm btn-block none" id="phone_error">手机格式不正确！重新输入</a>
 									<input type="text" class="form-control" id="input_Phone" placeholder="请输入手机号">
 									<!--<input type="password" class="form-control" id="input_password" placeholder="请输入密码">-->
-									
+
 									<input type="text" class="form-control form-group-sm " id="input_Phone_code" placeholder="请输入验证码">
 									<a class="btn btn-info btn-sm btn-block none" id="code_btn1"><span id="code_num"><i>60</i>后可重新</span>获取验证码</a>
-									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn"  data-placement="bottom" value="获取验证码" />
+									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn" data-placement="bottom" value="获取验证码" />
 								</div>
 								<!--<input type="button" class="btn modal_style_btn btn_next fg" value="下一步">-->
 								<input type="button" class="btn btn-success btn-block modal_style_btn btn_login phone_code_login" value="登录">
@@ -182,19 +276,26 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- 导航菜单 -->
 		<div id="data_nav">
 			<!-- 搜索框 -->
 			<div class="container searchs">
 				<form class="form-horizontal">
-				  <div class="form-group" style="margin-left: 0;">
-				    <label for="inputSearch" class="col-sm-1 control-label">搜索</label>
-				    <div class="col-sm-10">
-				      <input type="search" class="form-control" id="inputSearch" placeholder="输入要搜索的内容"  readonly="true">
-				    </div>
-				  </div>
-				  <div class="form-group" style="margin-left: 0;">
+					<div class="form-group" style="margin-left: 0;line-height: 2.5em;">
+						<label for="inputSearch" class="col-sm-1 control-label" style="padding-top: 0;">搜索</label>
+						<div class="col-sm-5">
+							<input type="search" class="form-control" id="inputSearch" placeholder="输入要搜索的内容" readonly="true">
+						</div>
+						<div class="col-sm-6">
+							<div class="hostimgs">
+								<label class="hostimg">热图：</label>
+								<span><a href="scatter-life-expectancy-timeline.html" target="_blank">20国GDP数据</a></span>
+								<span><a href="map-parallel-prices.html" target="_blank">全球物价收入数据</a></span>
+							</div>
+						</div>
+					</div>
+					<!--<div class="form-group" style="margin-left: 0;">
 				    <div class="col-sm-offset-1 col-sm-10">
 				      <div class="hostimgs">
 				        <span class="hostimg">热图：</span>
@@ -202,16 +303,16 @@
 				        <span><a href="map-parallel-prices.html" target="_blank">全球物价收入数据</a></span>
 				      </div>
 				    </div>
-				  </div>
-				  <div class="form-group" style="margin-left: 0;">
-				    <div class="col-sm-offset-1 col-sm-10">
-				      <div class="nav_txt">
-				        <span class="text-muted">最近过滤：</span>
-				        <!--<span><a href="javascript:void(0);" class="data_nav_filter_txt">人口</a></span>
+				  </div>-->
+					<div class="form-group" style="margin-left: 0;">
+						<div class="col-sm-offset-1 col-sm-10">
+							<div class="nav_txt">
+								<span class="text-muted">最近过滤：</span>
+								<!--<span><a href="javascript:void(0);" class="data_nav_filter_txt">人口</a></span>
 				        <span><a href="javascript:void(0);" class="data_nav_filter_txt">生产力</a></span>-->
-				      </div>
-				    </div>
-				  </div>
+							</div>
+						</div>
+					</div>
 				</form>
 			</div>
 			<!-- 导航菜单列 -->
@@ -241,16 +342,17 @@
 					<a href="javascript:void(0)" class="collects_title_right collects_title">管理</a>
 				</div>
 				<div class="collects_content">
-					
+
 				</div>
-			</div>	
+			</div>
 		</div>
-			
-		
-		<footer><div id="footer_" class="container">
-			版权©&nbsp;2017&nbsp;
-			<p id="back_top">∧</p>
-		</div></footer>
+
+		<footer>
+			<div id="footer_" class="container">
+				版权©&nbsp;2017&nbsp;
+				<p id="back_top">∧</p>
+			</div>
+		</footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<!-- 矢量图标 -->
 		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
@@ -268,39 +370,16 @@
 		</script>
 		<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			
-			$(function(){
+			$(function() {
 				// 指标右侧导航列表
-				dataDesc.navList(filter_txt,loadCollec,'http://api.jjrb.grsx.cc/data2/group?type=1&with_indicator=1');
+				dataDesc.navList(filter_txt, loadCollec, 'http://api.jjrb.grsx.cc/data2/group?type=1&with_indicator=1');
 				console.log($('.collects_content').find('p').length)
 				// 设置收藏框的高度
 				var collectstop = $('#collects').offset().top;
 				var winHeight = $(window).height();
-				$('#collects').css("maxHeight",(winHeight-collectstop-180)+'px');
-				// 判断收藏菜单
-				var _left = $(".container").offset().left;
-				if (_left>210) {
-					console.log($('.collects_content').find('p').length)
-					if(localStorage.token){
-						$("#collects").show();
-						$("#collect").hide();
-					}else{
-						$("#collects").hide();
-					}
-					$("#collects").css({"width":_left-100+"px","margin":"0 45px"});
-				} else{
-					$("#collects").hide();
-					$("#collect").show();
-					// 收藏
-					$(document).on("mousemove","#collect",function() {
-						$("#collects").show();
-						$("#collect").hide();
-					})
-					$(document).on("mouseleave","#collects",function() {
-						$("#collects").hide();
-						$("#collect").show();
-					})
-				}
+				$('#collects').css("maxHeight", (winHeight - collectstop - 180) + 'px');
+				window.onresize = onsize;
+				onsize();
 			});
 		</script>
 	</body>

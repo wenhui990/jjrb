@@ -246,27 +246,8 @@
 				var winHeight = $(window).height();
 				$('#collects').css("height",(winHeight-collectstop-180)+'px');
 //				console.log(winHeight-collectstop-180)
-	            // 判断收藏菜单
-				var _left = $(".container").offset().left;
-				if (_left>210) {
-					if(localStorage.token){
-						$("#collects").show();
-					}
-					$("#collect").hide();
-					$("#collects").css({"width":_left-100+"px","margin":"0 45px"});
-				} else{
-					$("#collects").hide();
-					$("#collect").show();
-					// 收藏
-					$(document).on("mousemove","#collect",function() {
-						$("#collects").show();
-						$("#collect").hide();
-					})
-					$(document).on("mouseleave","#collects",function() {
-						$("#collects").hide();
-						$("#collect").show();
-					})
-				}
+	            window.onresize = onsize;
+				onsize();
 			})
 			// 右侧导航列表格式
 			/*<div class="panel panel-default leftMenu">

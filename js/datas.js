@@ -1,7 +1,8 @@
 setTimeout(function(){
-	console.log($("#navs li").length)
-	$("#navs li").removeClass("active").eq(0).addClass("active");
-},1000);
+//	console.log($("#navs li").length)
+	$(".nav>li").eq(0).addClass("active").css("color", "#3b5998");
+	$('.data_header_img').attr('src','images/tabbar-numbers-f.png');
+},500);
 // 接口
 var _href = "http://api.jjrb.grsx.cc",
 	countrys=[],    //国家
