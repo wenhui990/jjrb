@@ -13,10 +13,88 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
 		<style type="text/css">
-			.imgs img{width: 100%;}
-			.viewpoint_txt img{width: 100%;}
-			.viewpoint_txt p{line-height: 2;}
-			.new_txt{display: none;}
+			.imgs img {
+				width: 100%;
+			}
+			
+			.viewpoint_txt img {
+				width: 100%;
+			}
+			
+			.viewpoint_txt p {
+				line-height: 2;
+			}
+			
+			.new_txt {
+				display: none;
+			}
+			/* 收藏样式 */
+			
+			#data_collect {
+				position: fixed;
+				right: 0;
+				top: 100px;
+				z-index: 20;
+			}
+			
+			#collect {
+				background: #fff;
+			}
+			
+			#collect a {
+				text-decoration: none;
+			}
+			
+			#collects {
+				position: absolute;
+				top: 8px;
+				right: 0;
+				background: #fff;
+				width: 260px;
+				padding: 20px;
+				overflow: auto;
+				border: 1px solid #e1e4e8;
+			}
+			
+			#collects .collects_title {
+				display: inline-block;
+			}
+			
+			#collects .collects_title_left {
+				float: left;
+			}
+			
+			#collects .collects_title_right {
+				float: right;
+			}
+			
+			#collects .collects_titles {
+				margin-bottom: 20px;
+			}
+			
+			#collects .collects_titles a {
+				color: #000;
+			}
+			
+			#collects p a {
+				color: #3b5998;
+			}
+			
+			#collects .collects_titles::after {
+				display: block;
+				content: "";
+				clear: both;
+			}
+			
+			#role_img {
+				border-radius: 50%;
+			}
+			
+			#role_name {
+				margin-left: 20px;
+				font-size: 16px;
+				font-weight: 600;
+			}
 		</style>
 	</head>
 
@@ -37,10 +115,10 @@
 									<a class="btn btn-info btn-sm btn-block none" id="phone_error">手机格式不正确！重新输入</a>
 									<input type="text" class="form-control" id="input_Phone" placeholder="请输入手机号">
 									<!--<input type="password" class="form-control" id="input_password" placeholder="请输入密码">-->
-									
+
 									<input type="text" class="form-control form-group-sm " id="input_Phone_code" placeholder="请输入验证码">
 									<a class="btn btn-info btn-sm btn-block none" id="code_btn1"><span id="code_num"><i>60</i>后可重新</span>获取验证码</a>
-									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn"  data-placement="bottom" value="获取验证码" />
+									<input type="button" class="btn btn-primary btn-sm btn-block " id="code_btn" data-placement="bottom" value="获取验证码" />
 								</div>
 								<!--<input type="button" class="btn modal_style_btn btn_next fg" value="下一步">-->
 								<input type="button" class="btn btn-success btn-block modal_style_btn btn_login phone_code_login" value="登录">
@@ -77,8 +155,21 @@
 		<!-- 观点内容 -->
 		<!--观点内容背景颜色#f5efe4-->
 		<div class="container" id="viewpoint">
-			
+
 		</div>
+
+		<!-- 专家列表 -->
+		<div id="data_collect" style="background: #000000;" class="none1">
+			<div id="collect">
+				<a href="javascript:void(0)">专<br />家<br />列<br />表</a>
+			</div>
+			<div id="collects" class="none1">
+				<div class="collects_content">
+
+				</div>
+			</div>
+		</div>
+
 		<footer></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -88,7 +179,58 @@
 		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript" src="js/viewpoint.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var page =1,fl=true;
+				rolesList(page);
+				
+				
+				// 滚动事件
+				$('#collects').on("scroll",function() {
+					var boxheight = $('#collects').height();
+					var scorlltop = $('#collects').scrollTop();
+					var viewheight = $('.collects_content').height();
+					console.log(scorlltop+"===="+boxheight+'++++'+viewheight)
+					if((scorlltop + boxheight) >= viewheight) {
+						if (fl) {
+							page++;
+							rolesList(page);
+						}
+						fl=false;
+					}
+				});
 
+				// 设置专家列表的高度
+				var collectstop = $('#collects').offset().top;
+				var winHeight = $(window).height();
+				$('#collects').css("maxHeight", (winHeight - collectstop - 180) + 'px');
+				window.onresize = onsize;
+				onsize();
+				
+				// 右侧专家列表
+				function rolesList(page) {
+					$.ajax({
+						type: "get",
+						url: "http://api.jjrb.grsx.cc/user/list/1",
+						async: true,
+						data: {
+							page: page,
+							token: localStorage.token
+						},
+						success: function(data) {
+							$.each(data, function(i, e) {
+								var html = '<div style="margin: 10px auto;">' +
+									'<a href="my_viewpoint.html?id=' + e.id + '" style="text-decoration: none;">' +
+									'<img src="' + e.head + '" width="40" height="40" id="role_img"/>' +
+									'<span id="role_name">' + e.name + '</span></a></div>';
+								$('.collects_content').append(html);
+							});
+							fl=true;
+						}
+					});
+				}
+			});
+		</script>
 	</body>
 
 </html>

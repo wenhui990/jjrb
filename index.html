@@ -14,6 +14,8 @@
     <![endif]-->
 		<style type="text/css">
 			#hot_content{padding: 10px 8%;}
+			.sub_titile{font-size: 24px;}
+			.title{font-weight: 600;}
 		</style>
 		
 	</head>
@@ -111,15 +113,6 @@
 		    			success: function(e){
 		    				console.log(e);
 		    				e.forEach(function(e,i){
-	//	    					var a = e.id.substring(0,4)
-//		    					var htm = '<div class="col-lg-4 col-sm-6 col-md-6 col-xs-12 sidebar">'+
-//										'<a href="hotspot_desc.html?id='+e.id+'"><img src="'+e.cover+'" /></a>'+
-//										'<div class="tan_bg">'+
-//										'	<span></span>'+
-//										'	<h1><a href="hotspot_desc.html?id='+e.id+'" title="'+ e.title +'">'+e.title+'</a></h1>'+
-//										'	<p>'+e.sub_title+'</p>'+
-//										'</div>'+
-//										'</div>';
 								if(e.cover===""){
 									return true;
 								}
@@ -133,9 +126,9 @@
 					                '<div class="col-md-8 col-lg-8 col-sm-8" style="margin-top:35px;">'+
 					                '    <h5 class="f-ff1 f-fwn f-fs14"></h5>'+
 					                '    <h3 class="f-ff1 f-fwn f-fs22">'+
-					                '    	<a href="hotspot_desc.html?id='+e.id+'" target="_blank" title="'+ e.title +'">'+e.title+'</a>'+
+					                '    	<a href="hotspot_desc.html?id='+e.id+'" class="title" target="_blank" title="'+ e.title +'">'+e.title+'</a>'+
 					                '    </h3>'+
-					                '    <p class="f-ff1 f-fs14">'+e.sub_title+'</p>'+
+					                '    <p class="f-ff1 f-fs14 sub_titile">'+e.sub_title+'</p>'+
 					                '</div></div>'
 								$("#hot_content").append(html);
 		    				})

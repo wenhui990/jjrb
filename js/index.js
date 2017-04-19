@@ -16,6 +16,17 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 		feed: "/feed/t/3"
 
 	};
+
+/*$.ajax({
+	type:"get",
+	url:"http://api.jjrb.grsx.cc/user/285",
+	async:true,
+//	data:{
+//		token: localStorage.token,
+//		head:'http://m.jjrb.grsx.cc/images/123.jpg'
+//	}
+});*/
+
 //	n = 0;
 function interfacelist() {
 	var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
@@ -40,18 +51,20 @@ $(function() {
 	setTimeout(function() {
 		if(!localStorage.token) {
 			alert("请登录后进行操作！");
+//			$('body').off();
 			$("#phone").show();
 			return false;
 		} else {
 			$('.login_none').hide();
-			localStorage.head ? $("#user_img").attr('src', e.user.head) : $("#user_img").attr('src', 'images/tabbar-profile-f.png');
+			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
 		}
+		ifExpert();// 判断用户是专家还是普通用户
 	}, 500);
 
 	var n = 0;
 	//初始化弹出框
 	$('[data-toggle="popover"]').popover();
-
+	
 	//头部导航鼠标移入
 	var imgSrc;
 	$(document).on("mouseover", ".nav>li", function() {
@@ -258,6 +271,7 @@ $(function() {
 					localStorage.userId = e.user.id;
 					localStorage.userName = e.user.name;
 					localStorage.head = e.user.head;
+					localStorage.role = e.user.role;
 					$("#phone").hide();
 					location.reload();
 				},
@@ -267,6 +281,12 @@ $(function() {
 			});
 		}
 	});
+	// 退出登录
+	$(document).on('click','#exit',function(){
+		localStorage.clear();
+		window.location.reload();
+	});
+	
 
 	//检查手机端和pc
 	var system = {
@@ -670,9 +690,7 @@ var dataDesc = {
 			if(window.location.href.indexOf('inland_data') >= 0) {
 				myChart.on('click', function(params) {
 					console.log(params);
-					//					newWin('map.html?year=' + encodeURIComponent(params.name) + '&indicator=' + encodeURI(encodeURIComponent($('#show_indicator_list_name').text())), 'map_on')
 					newWin('map.html?indicator=' + indicator + '&country=CN&d=' + encodeURIComponent(params.name), 'map_on');
-					//					window.open('map.html?year=' + encodeURIComponent(params.name) + '&indicator=' + encodeURI(encodeURIComponent($('#show_indicator_list_name').text())));
 				});
 			}
 		});
@@ -1186,3 +1204,18 @@ function onsize() {
 		})
 	}
 }
+
+// 判断用户是专家还是普通用户
+function ifExpert(){
+	if(localStorage.role==='0'){
+		$("#my_menu").remove();
+		$(".label_name").text('普通用户');
+	}else if(localStorage.role==='1'){
+		$(".label_name").text('专家');
+	}else if(localStorage.role==='9'){
+		$(".label_name").text('管理员');
+	}
+}
+//
+//w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0kTMsxQWMcwIzNa2YzdrhlTMdsIiZwi42Nay9Wbn9BAdt
+//w1N3dahtnIny9Vaty4WZskJiOcsICdazhTNrvdWadpNGbwu9FdaioTYny1WZt0kjMs3QWMc1YTOaxIzdrhhDMdsIiZwi4WMay9Wbn9BAdt=oDM

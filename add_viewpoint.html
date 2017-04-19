@@ -799,7 +799,7 @@
 				
 				$(document).on("click",".new_close",function(){
 					$(".new_txt,.new_img,#show_data").css("border","0");
-					$(this).parent().remove();
+					$(this).parents('.pointHtmls').remove();
 				});
 				$(document).on("mouseenter",".new_txt,.new_img,#show_data",function(){
 					$(".new_close").show();

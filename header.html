@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default" role="navigation">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
     <span class="sr-only">Toggle navigation</span>
@@ -41,7 +41,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span class="glyphicon"><img src="images/n.png" id="user_img" width="19" height="24" /></span>我的 <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu" style="width: 100%;">
+					<ul class="dropdown-menu" id="my_menu" role="menu" style="width: 100%;">
 						<li class="dropdown-header login_none">登录</li>
 						<li class="dl_style login_none">
 							<a href="javascript:void(0);" class="login_wechat">微信扫码</a>
@@ -50,10 +50,13 @@
 							<a href="javascript:void(0);" class="login_phone">手机号</a>
 						</li>
 						<li>
-							<a href="add_viewpoint.html">发布观点</a>
+							<a href="add_viewpoint.html">发布观点<!--<i class="label label-default label_name">专家</i>--></a>
 						</li>
 						<li>
-							<a href="my_viewpoint.html">历史观点</a>
+							<a href="my_viewpoint.html">我的观点<!--<i class="label label-default label_name">专家</i>--></a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" id="exit">退出登录</a>
 						</li>
 					</ul>
 				</li>
