@@ -1,5 +1,6 @@
 $("header").load("header.html");
 $("footer").load("footer.html");
+// 导入logo字体css
 $("head").append("<link href='http://cdn.webfont.youziku.com/webfonts/nomal/100608/45807/58db5e4cf629da0960bba0dc.css' rel='stylesheet' type='text/css' />");
 //接口
 var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
@@ -131,7 +132,7 @@ $(function() {
 			if(clas == ".login_wechat" || a == "#WeChat") {
 				var obj = new WxLogin({
 					id: "wx",
-					appid: "wxed782be999f86e0e",
+					appid: "wx1bbe2aa6dfb5768b",//secretKey:c4950ce9353f76e692bd8345c54bfed1
 					scope: "snsapi_login",
 					redirect_uri: encodeURIComponent("http://" + window.location.host + "/login.php"),
 					state: Math.ceil(Math.random() * 1000),

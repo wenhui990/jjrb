@@ -262,130 +262,137 @@
 		<script src="js/bootstrap.min.js"></script>
 		<!--日期控件引入-->
 		<script type="text/javascript" src="js/jedate/jquery.jedate.min.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
+		<!--<script type="text/javascript" src="js/index.js"></script>-->
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
-			$(function() {
-				setTimeout(function(){
-					console.log($("#navs li").length)
-					$("#navs li").eq(2).addClass("active").siblings().removeClass("active");
-				},500);
-				//接口
-				var _href = "http://api.jjrb.grsx.cc",
-					interfacelist = {
-						select_indicator: "/data/indicator/k/", //查询indicator
-						select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
-						host_indicator: "/data/indicator/hot", //热门
-						select_country: "/data/country/k/",//查询国家/data/country/k/{val}
-						wx: "/login/wx"//微信登录post expire_in=&open_id=&	token=&refresh_token=	
-					};
-				
-/*				//时间
-				$(document).on("click",".form_year",function(){
-					$("#year").click();
-					if ($("#year").val()) {
-						$(this).append("<option selected='selected'>"+$("#year").val()+"</option>");
-					}
-				});
-				$("#year").jeDate({//时间插件调用
-					isinitVal: false,
-					festival: true,
-					ishmsVal: false,
-					format: "YYYY",
-					zIndex: 3000,
-				})*/
-				var year = "";
-				$(".form_year").change(function(){
-					year = $(this).val();
-					console.log(year);
-				});
-				
-				var u = getUrlParams();
-				country = u.country,
-			    indicator = u.indicator,
-			    start = u.start,
-			    end = u.end;
-			    var _url = _href + interfacelist.select_data+"?";//'data.json';//
-//			    urlLoad("echarts_main",_url,u.country,u.indicator,u.start,u.end);
-//			    if (country) {
-//			    	urlLoad("echarts_main",_url,country,indicator,start,end);
-//			    }else{
-//			    	$(document).on("change",".form_country",function(){
-//			    		var country = $(this).val();
-			    		console.log(country);
-//			    		urlLoad("echarts_main",_url,country,indicator,start,end);
-//			    	});
-//			    	
-//			    }
- 				//国家
-				$.ajax({
-					type:"get",
-					url: _href + interfacelist.select_country+"中",
-					async:true,
-					success: function(data){
-						console.log(data);
-						$(data).each(function(i,e){
-//							console.log(e);
-							var html = "<option value='"+e.iso2_code+"'>"+e.name+"</option>"
-							$("#countrys").append(html);
-						});
-					},
-					error: function(){
-						
-					}
-					
-				});
-				//经济指标
-				$.ajax({
-					type:"get",
-					url: _href + interfacelist.select_indicator+"gd",
-					async:true,
-					success: function(data){
+//			$(function() {
+//				setTimeout(function(){
+//					console.log($("#navs li").length)
+//					$("#navs li").eq(2).addClass("active").siblings().removeClass("active");
+//				},500);
+//				//接口
+//				var _href = "http://api.jjrb.grsx.cc",
+//					interfacelist = {
+//						select_indicator: "/data/indicator/k/", //查询indicator
+//						select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
+//						host_indicator: "/data/indicator/hot", //热门
+//						select_country: "/data/country/k/",//查询国家/data/country/k/{val}
+//						wx: "/login/wx"//微信登录post expire_in=&open_id=&	token=&refresh_token=	
+//					};
+//				
+///*				//时间
+//				$(document).on("click",".form_year",function(){
+//					$("#year").click();
+//					if ($("#year").val()) {
+//						$(this).append("<option selected='selected'>"+$("#year").val()+"</option>");
+//					}
+//				});
+//				$("#year").jeDate({//时间插件调用
+//					isinitVal: false,
+//					festival: true,
+//					ishmsVal: false,
+//					format: "YYYY",
+//					zIndex: 3000,
+//				})*/
+//				var year = "";
+//				$(".form_year").change(function(){
+//					year = $(this).val();
+//					console.log(year);
+//				});
+//				
+//				var u = getUrlParams();
+//				country = u.country,
+//			    indicator = u.indicator,
+//			    start = u.start,
+//			    end = u.end;
+//			    var _url = _href + interfacelist.select_data+"?";//'data.json';//
+////			    urlLoad("echarts_main",_url,u.country,u.indicator,u.start,u.end);
+////			    if (country) {
+////			    	urlLoad("echarts_main",_url,country,indicator,start,end);
+////			    }else{
+////			    	$(document).on("change",".form_country",function(){
+////			    		var country = $(this).val();
+//			    		console.log(country);
+////			    		urlLoad("echarts_main",_url,country,indicator,start,end);
+////			    	});
+////			    	
+////			    }
+// 				//国家
+//				$.ajax({
+//					type:"get",
+//					url: _href + interfacelist.select_country+"中",
+//					async:true,
+//					success: function(data){
 //						console.log(data);
-						$(data).each(function(i,e){
-							var name = e.name_cn;
-							if(name==null)name=e.name;
-							var html = "<option value='"+e.id+"'>"+name+"</option>"
-							$("#indicator").append(html);
-						});
-					},
-					error: function(){
-						
-					}
-					
-				});
-				var endyear = new Date().getFullYear(),yearhtml;
-				for(var i=100;i>0;i--){
-					yearhtml+="<option value='"+endyear+"'>"+endyear+"年</option>";
-					endyear--;
-				}
-				$("#start_year,#end_year").append(yearhtml);
-				
-				$(document).on("change","#countrys,#indicator,#start_year,#end_year",function(){
-					if ($(this).attr("id")=="countrys") {
-						country = $(this).val();
-//						_url += "&country="+country;
-						urlLoad("echarts_main",_url,country,indicator,start,end);
-					}
-					if ($(this).attr("id")=="indicator") {
-						indicator = $(this).val();
-//						_url += "&indicator="+indicator;
-						urlLoad("echarts_main",_url,country,indicator,start,end);
-					}
-					if ($(this).attr("id")=="start_year") {
-						start = $(this).val();
-//						_url += "&start="+start;
-						urlLoad("echarts_main",_url,country,indicator,start,end);
-					}
-					if ($(this).attr("id")=="end_year") {
-						end = $(this).val();
-//						_url += "&end="+end;
-						urlLoad("echarts_main",_url,country,indicator,start,end);
-					}
-					
-				});
-			});
+//						$(data).each(function(i,e){
+////							console.log(e);
+//							var html = "<option value='"+e.iso2_code+"'>"+e.name+"</option>"
+//							$("#countrys").append(html);
+//						});
+//					},
+//					error: function(){
+//						
+//					}
+//					
+//				});
+//				//经济指标
+//				$.ajax({
+//					type:"get",
+//					url: _href + interfacelist.select_indicator+"gd",
+//					async:true,
+//					success: function(data){
+////						console.log(data);
+//						$(data).each(function(i,e){
+//							var name = e.name_cn;
+//							if(name==null)name=e.name;
+//							var html = "<option value='"+e.id+"'>"+name+"</option>"
+//							$("#indicator").append(html);
+//						});
+//					},
+//					error: function(){
+//						
+//					}
+//					
+//				});
+//				var endyear = new Date().getFullYear(),yearhtml;
+//				for(var i=100;i>0;i--){
+//					yearhtml+="<option value='"+endyear+"'>"+endyear+"年</option>";
+//					endyear--;
+//				}
+//				$("#start_year,#end_year").append(yearhtml);
+//				
+//				$(document).on("change","#countrys,#indicator,#start_year,#end_year",function(){
+//					if ($(this).attr("id")=="countrys") {
+//						country = $(this).val();
+////						_url += "&country="+country;
+//						urlLoad("echarts_main",_url,country,indicator,start,end);
+//					}
+//					if ($(this).attr("id")=="indicator") {
+//						indicator = $(this).val();
+////						_url += "&indicator="+indicator;
+//						urlLoad("echarts_main",_url,country,indicator,start,end);
+//					}
+//					if ($(this).attr("id")=="start_year") {
+//						start = $(this).val();
+////						_url += "&start="+start;
+//						urlLoad("echarts_main",_url,country,indicator,start,end);
+//					}
+//					if ($(this).attr("id")=="end_year") {
+//						end = $(this).val();
+////						_url += "&end="+end;
+//						urlLoad("echarts_main",_url,country,indicator,start,end);
+//					}
+//					
+//				});
+//			});
+			var aaa = '<script ljklj="fsaf">fjdaskl;<\/script><script ljklj="fsaf">fjdaskl;<\/script><script ljklj="fsaf">fjdaskl;function(){}<\/script>243222222222222222';
+			var SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+
+			aaa.replace(SCRIPT_REGEX, '');
+			console.log(aaa.replace(SCRIPT_REGEX, ''));
+			
+			
 			
 		</script>
 	</body>

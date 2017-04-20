@@ -9,7 +9,7 @@ $(function() {
 		n = 1,fl = true,_url = _href + interfacelist.select_data+"?";
 		
 	scorllajax(n);
-	console.log(localStorage.token);
+//	console.log(localStorage.token);
 	//ajax按页获取观点内容
 	function scorllajax(n) {
 		console.time("专家观点时间：");
@@ -24,9 +24,9 @@ $(function() {
 			},
 			success: function(data) {
 				if(data.length > 0) {
-					$.each(data,function(i, e) {
+					$.each(data,function(i, even) {
 						var descp='',echarts,type,echarts_data;
-						$.each(e.resources,function(ind,e){
+						$.each(even.resources,function(ind,e){
 //							console.log(ind);
 //							console.log(e);
 							
@@ -53,17 +53,15 @@ $(function() {
 //						var des = JSON.stringify(descp);
 						var SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
 
-						descp.replace(SCRIPT_REGEX, '');
-						console.log(descp);
-						window.ddd = descp;
+						var _descp = descp.replace(SCRIPT_REGEX, '');
 						
 //						return;
 						var html = '<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">' +
-									'<a href="my_viewpoint.html?id=' + e.owner.id + '" target="_blank"><img class="header_img" src="' + e.owner.head + '" /></a>' +
-									'<h2 class="viewpoint_title"><a href="viewpoint_desc.html?id=' + e.id + '" target="_blank">' + e.title + '</a></h2>' +
-									'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(e.created) + '</span></small>' +
-									'      <div class="viewpoint_txt">'+ descp +
-									'</div><a href="viewpoint_desc.html?id=' + e.id + '" target="_blank">查看更多...</a></div>';
+									'<a href="my_viewpoint.html?id=' + even.owner.id + '" target="_blank"><img class="header_img" src="' + even.owner.head + '" /></a>' +
+									'<h2 class="viewpoint_title"><a href="viewpoint_desc.html?id=' + even.id + '" target="_blank">' + even.title + '</a></h2>' +
+									'<small>来源： <span class="source"> '+even.owner.name+'  </span> <span class="source_time">&nbsp;  ' + timeF(even.created) + '</span></small>' +
+									'      <div class="viewpoint_txt">'+ _descp +
+									'</div><a href="viewpoint_desc.html?id=' + even.id + '" target="_blank">查看更多...</a></div>';
 //						console.log(html);			
 						$("#viewpoint").append(html);
 						$.each($('.viewpoint_txt'), function(ind,event) {
@@ -85,6 +83,7 @@ $(function() {
 				} else {
 					$("#viewpoint").html("没有内容");
 				}
+				$('.artical-player-wrap').hide();
 			}
 		});
 		console.timeEnd("专家观点时间：");
@@ -94,9 +93,9 @@ $(function() {
 			var viewheight = $(window).height();
 //			console.log(bodyheight + " ===" + scorlltop + "=========" + viewheight);
 			if((scorlltop + viewheight) >= bodyheight) {
-				n++;
 				if (fl) {
-				scorllajax(n);
+					n++;
+					scorllajax(n);
 				}
 				fl=false;
 			}

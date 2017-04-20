@@ -46,8 +46,8 @@
 			}
 			
 			#collects {
-				position: absolute;
-				top: 8px;
+				position: relative;
+				top: 32px;
 				right: 0;
 				background: #fff;
 				width: 260px;
@@ -70,6 +70,7 @@
 			
 			#collects .collects_titles {
 				margin-bottom: 20px;
+				border-bottom: 1px solid #999;
 			}
 			
 			#collects .collects_titles a {
@@ -86,15 +87,14 @@
 				clear: both;
 			}
 			
-			#role_img {
+			.role_img {
 				border-radius: 50%;
 			}
 			
-			#role_name {
-				margin-left: 20px;
-				font-size: 16px;
-				font-weight: 600;
+			.collects_content>.media{
+				/*border-bottom: 1px solid #eee;*/
 			}
+			
 		</style>
 	</head>
 
@@ -159,11 +159,16 @@
 		</div>
 
 		<!-- 专家列表 -->
-		<div id="data_collect" style="background: #000000;" class="none1">
+		<div id="data_collect" class="none1">
 			<div id="collect">
 				<a href="javascript:void(0)">专<br />家<br />列<br />表</a>
 			</div>
-			<div id="collects" class="none1">
+			<div id="collects" class="none">
+				<div class="collects_titles">
+					<h5 class="collects_title_left collects_title">专家列表</h5>
+					<a href="javascript:void(0)" class="collects_title_right collects_title"></a>
+				</div>
+				<div id="scrollbar"></div>
 				<div class="collects_content">
 
 				</div>
@@ -181,22 +186,22 @@
 		<script type="text/javascript" src="js/viewpoint.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				var page =1,fl=true;
+				var page = 1,
+					fl = true;
 				rolesList(page);
-				
-				
+
 				// 滚动事件
-				$('#collects').on("scroll",function() {
+				$('#collects').on("scroll", function() {
 					var boxheight = $('#collects').height();
 					var scorlltop = $('#collects').scrollTop();
 					var viewheight = $('.collects_content').height();
-					console.log(scorlltop+"===="+boxheight+'++++'+viewheight)
+//					console.log(scorlltop + "====" + boxheight + '++++' + viewheight)
 					if((scorlltop + boxheight) >= viewheight) {
-						if (fl) {
+						if(fl) {
 							page++;
 							rolesList(page);
 						}
-						fl=false;
+						fl = false;
 					}
 				});
 
@@ -206,7 +211,7 @@
 				$('#collects').css("maxHeight", (winHeight - collectstop - 180) + 'px');
 				window.onresize = onsize;
 				onsize();
-				
+
 				// 右侧专家列表
 				function rolesList(page) {
 					$.ajax({
@@ -219,13 +224,15 @@
 						},
 						success: function(data) {
 							$.each(data, function(i, e) {
-								var html = '<div style="margin: 10px auto;">' +
-									'<a href="my_viewpoint.html?id=' + e.id + '" style="text-decoration: none;">' +
-									'<img src="' + e.head + '" width="40" height="40" id="role_img"/>' +
-									'<span id="role_name">' + e.name + '</span></a></div>';
+								var html = 	'<div class="media"><div class="media-left media-middle">' +
+									'<a href="my_viewpoint.html?id='+e.id+'" target="_blank"><img class="media-object role_img" src="'+e.head+'" width="40" height="40" alt="..." /></a></div>' +
+									'<div class="media-body">' +
+									'	<h4 class="media-heading">'+e.name+'</h4>' +
+									'	<small>'+e.sign+'</small>' +
+									'</div></div>';
 								$('.collects_content').append(html);
 							});
-							fl=true;
+							fl = true;
 						}
 					});
 				}

@@ -128,7 +128,7 @@
 					                '    <h3 class="f-ff1 f-fwn f-fs22">'+
 					                '    	<a href="hotspot_desc.html?id='+e.id+'" class="title" target="_blank" title="'+ e.title +'">'+e.title+'</a>'+
 					                '    </h3>'+
-					                '    <p class="f-ff1 f-fs14 sub_titile">'+e.sub_title+'</p>'+
+					                '    <p class="f-ff1 f-fs14 sub_titile">'+e.owner.name+' '+timeF(e.created)+'</p>'+
 					                '</div></div>'
 								$("#hot_content").append(html);
 		    				})
