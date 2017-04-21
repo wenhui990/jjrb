@@ -155,6 +155,7 @@
             var regions = [];
             var max = 0;
             var min;
+            var danwei = result.indicator.unit?'(单位：'+result.indicator.unit+')':'';
             $.each(result.regions, function(key, val){
                 regions[val.id]=val.name_zh;
             });
@@ -171,7 +172,7 @@
             });
             myChart.setOption({
                 title: {
-                    text: result.country.name + ' ' + d + ' ' + result.indicator.name + ' 全国分布情况',
+                    text: result.country.name + ' ' + d + ' ' + result.indicator.name + ' 全国分布情况'+danwei,
                     left: 'center'
                 },
                 tooltip: {

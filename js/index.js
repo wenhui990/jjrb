@@ -463,30 +463,34 @@ Array.prototype.unique3 = function() {
 }
 
 //去重排序
-var uniqueSort = function(source, compareFn) {
-	var result = [];
-	if('function' != typeof compareFn) {
-		compareFn = function(item1, item2) {
-			return item1 - item2;
-		};
-	}
-	$.each(source, function(i, v) {
-		if(i == 0) {
-			result.push(v);
-		} else {
-			//从最后开始
-			for(var j = result.length - 1; j >= 0; j--) {
-				if(compareFn(v, result[j]) > 0) {
-					result.splice(j + 1, 0, v);
-					break;
-				} else if(j == 0) {
-					//到0还是小
-					result.splice(0, 0, v);
-				}
-			}
-		}
-	});
-	return result;
+function uniqueSort(source, compareFn) {
+    var result = [];
+    if ('function' != typeof compareFn) {
+        compareFn = function (item1, item2) {
+            return parseInt(item1) - parseInt(item2);
+        };
+    }
+    $.each(source, function (i, v) {
+        if (i == 0) {
+            result.push(v);
+        } else {
+            //从最后开始
+            for (var j = result.length - 1; j >= 0; j--) {
+                var compare = compareFn(v, result[j]);
+                if (compare == 0){
+                    break;
+                }else if (compare > 0) {
+                    result.splice(j + 1, 0, v);
+                    break;
+                }
+                if (j == 0) {
+                    //到0还是小
+                    result.splice(0, 0, v);
+                }
+            }
+        }
+    });
+    return result;
 }
 
 //国家，经济指标通用方法
@@ -577,6 +581,9 @@ var dataDesc = {
 				vs[key] = v;
 				console.log(val)
 				indicator_name_cn = val.indicator.name_zh;
+				if(val.indicator.unit){
+					indicator_name_cn += '(单位：' +val.indicator.unit+ ')'
+				}
 			});
 			ds = uniqueSort(ds);
 
@@ -639,10 +646,10 @@ var dataDesc = {
 
 			myChart.setOption({
 				title: {
-					text: indicator_name_cn
+					text: indicator_name_cn 
 				},
 				tooltip: {
-					//				trigger: 'axis'
+					trigger: 'axis'
 				},
 				legend: {
 					data: cs //["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
