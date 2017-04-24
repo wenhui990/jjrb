@@ -13,9 +13,8 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
 		<style type="text/css">
-			.hotspot_img {
-				/*width: 60%;*/
-				/*height: 300px;*/
+			#header_img .hotspot_img {
+				width: inherit;
 			}
 			
 			.hotspots {
@@ -53,7 +52,7 @@
 				margin-top: 10px;
 				line-height: 2;
 			}
-			.hotspots img{margin: 0 auto;display: block;}
+			.hotspots img{margin: 0 auto;display: block;width: 100%;}
 			
 		</style>
 	</head>
@@ -137,10 +136,11 @@
 		<!-- 矢量图标 -->
 		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/index.js"></script>
-		<script src="js/echarts.js"></script>
+		<!--<script src="js/echarts.js"></script>-->
+		<script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			$("header").load("header.html");
-			$("footer").load("footer.html");
+//			$("header").load("header.html");
+//			$("footer").load("footer.html");
 			$(function() {
 				// 基于准备好的dom，初始化echarts图表
 				//var myChart = echarts.init(document.getElementById('hotspot_data'));
@@ -167,6 +167,7 @@
 					url: _href + interfacelist.feed + id,
 					async:true,
 					success: function(data){
+//						alert(1);
 						console.log(data);
 //						$(".hotspot_money").text(data.sub_title);
 						$(".hotspots_tit>a").text(data.title);
@@ -183,14 +184,14 @@
 //							}
 							var type = res.type;
 							if (type === 12) {//图片
-								descp += '<img src="' + e.uri + '">'
+								descp += '<img src="' + res.uri + '">'
 							}else if (type === 13) {//文本
-								descp += '<p>'+e.descp+'</p>'
+								descp += '<p>'+res.descp+'</p>'
 							} else if(type === 15){//数据
 //											console.log(e.descp);
 								var _id ='';
-								if (e.descp) {
-									console.log(e.descp.length);
+								if (res.descp) {
+									console.log(res.descp.length);
 									res.descp.length<0?echarts_data=res.descp:echarts_data=JSON.parse(res.descp);
 									_id = echarts_data.id_val;
 									console.log(echarts_data)
@@ -202,11 +203,13 @@
 						});
 						console.log(descp);
 						$(".hotspot_txt").before(descp);
+//						alert(descp);
 //						var w = $(".hotspot_img").width();
 //						$("#header_img").css("width",w+"px");
 					},
 					error: function(data,err){
 						console.log(err);
+//						alert();
 					}
 				});
 

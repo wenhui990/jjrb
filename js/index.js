@@ -18,16 +18,6 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 
 	};
 
-/*$.ajax({
-	type:"get",
-	url:"http://api.jjrb.grsx.cc/user/285",
-	async:true,
-//	data:{
-//		token: localStorage.token,
-//		head:'http://m.jjrb.grsx.cc/images/123.jpg'
-//	}
-});*/
-
 //	n = 0;
 function interfacelist() {
 	var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
@@ -50,16 +40,23 @@ function interfacelist() {
 $(function() {
 	$(".active a").css("color", "#3b5998;");
 	setTimeout(function() {
-		if(!localStorage.token) {
-			alert("请登录后进行操作！");
-//			$('body').off();
-			$("#phone").show();
-			return false;
-		} else {
+		var _uri = window.location.href;
+		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
 			$('.login_none').hide();
-			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
+		}else{
+			if(!localStorage.token) {
+				alert("请登录后进行操作！");
+	//			$('body').off();
+				$("#phone").show();
+				return false;
+			}else {
+				$('.login_none').hide();
+				localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
+				ifExpert();// 判断用户是专家还是普通用户
+			}
 		}
-		ifExpert();// 判断用户是专家还是普通用户
+		
+		
 	}, 500);
 
 	var n = 0;
@@ -132,27 +129,28 @@ $(function() {
 			if(clas == ".login_wechat" || a == "#WeChat") {
 				var obj = new WxLogin({
 					id: "wx",
-					appid: "wx1bbe2aa6dfb5768b",//secretKey:c4950ce9353f76e692bd8345c54bfed1
-					scope: "snsapi_login",
-					redirect_uri: encodeURIComponent("http://" + window.location.host + "/login.php"),
+					appid: "wx1bbe2aa6dfb5768b",
+					
+					redirect_uri: encodeURIComponent(_href + interfacelist.wx),
 					state: Math.ceil(Math.random() * 1000),
+					scope: 'snsapi_login',
 					style: "",
 					href: ""
 				});
-				$.ajax({
-					type: "post",
-					url: _href + interfacelist.wx,
-					data: {
-						expire_in: 1,
-						open_id: 2,
-						token: localStorage.token,
-						refresh_token: "343"
-					},
-					async: true,
-					success: function(e) {
-						console.log(e);
-					}
-				});
+//				$.ajax({
+//					type: "post",
+//					url: _href + interfacelist.wx,
+//					data: {
+//						expire_in: 1,
+//						open_id: 'wx1bbe2aa6dfb5768b',
+//						token: localStorage.token,
+//						refresh_token: "343"
+//					},
+//					async: true,
+//					success: function(e) {
+//						console.log(e);
+//					}
+//				});
 				//				$("#wx").find("img").attr("src","");
 			}
 			$("#input_Phone").focus();
@@ -320,6 +318,13 @@ $(function() {
 			"margin-top": "-8px"
 		});
 		$(".data_img_i").css("height", "75px");
+		$("body").touchstart(function() {
+			$("#phone").hide();
+			$("#WeChat").hide();
+			$(document.body).css({
+				"overflow": "auto"
+			});
+		});
 	}
 
 	//返回顶部
@@ -589,6 +594,7 @@ var dataDesc = {
 
 			//计算series
 			$.each(data, function(key, val) {
+//				alert(val.country.name)
 				var s = {}; //series
 				var v = vs[key];
 				var _d = []; //data
@@ -604,7 +610,7 @@ var dataDesc = {
 				//              s.areaStyle = {normal: {}};
 				//              s.data = _d;
 				//              ss.push(s);
-				cs.push(key);
+				cs.push(val.country.name);
 				//切换图表样式
 				if(!echartType || echartType == '' || echartType == undefined) {
 					echartType = 'line';
@@ -613,7 +619,7 @@ var dataDesc = {
 				if(echartType === 'line' && echartType) {
 					fla = false;
 					s = {
-						name: key,
+						name: val.country.name,
 						type: echartType,
 						smooth: true,
 						itemStyle: {
@@ -628,7 +634,7 @@ var dataDesc = {
 				} else if(echartType === 'bar' && echartType) {
 					fla = true;
 					s = {
-						name: key,
+						name: val.country.name,
 						type: echartType,
 						itemStyle: {
 							normal: {
@@ -1224,6 +1230,3 @@ function ifExpert(){
 		$(".label_name").text('管理员');
 	}
 }
-//
-//w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0kTMsxQWMcwIzNa2YzdrhlTMdsIiZwi42Nay9Wbn9BAdt
-//w1N3dahtnIny9Vaty4WZskJiOcsICdazhTNrvdWadpNGbwu9FdaioTYny1WZt0kjMs3QWMc1YTOaxIzdrhhDMdsIiZwi4WMay9Wbn9BAdt=oDM
