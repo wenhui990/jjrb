@@ -354,7 +354,7 @@
 						})
 						console.log(descp);
 						var htm = '<h2 class="viewpoint_title"><a href="#">' + data.title + '</a></h2>' +
-							'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
+							'<small>来源： <span class="source">'+data.owner.name+'</span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
 							'<div class="viewpoint_txt">' + descp + '<p>*经济日报</p></div> ';
 						$(".viewpoint").append(htm);
 						$('.viewpoint_txt img').show();

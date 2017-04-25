@@ -18,31 +18,12 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 
 	};
 
-//	n = 0;
-function interfacelist() {
-	var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
-		interfacelist = {
-			phone_code: "/login", //"/api/login", //手机验证码get?phone=
-			phone_login: "/login", //"/api/login", //手机登录post  phone=&code=
-			wx: "/login/wx",
-			select_indicator: "/data/indicator/k/", //查询indicator
-			select_data: "/data", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
-			host_indicator: "/data/indicator/hot", //热门
-			select_country: "/data/country/k/", //查询国家/data/country/k/{val}
-			indicator_list: '/data/group?type=1&with_indicator=1',
-			indicator_stat: '/data/stat?indicator=NY.GDP.MKTP.CD',
-			feed: "/feed/t/3",
-			select_data: "/data"
-		};
-	return interfacelist;
-}
-
 $(function() {
 	$(".active a").css("color", "#3b5998;");
 	setTimeout(function() {
 		var _uri = window.location.href;
 		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
-			$('.login_none').hide();
+			$('.login_none').show();
 		}else{
 			if(!localStorage.token) {
 				alert("请登录后进行操作！");
@@ -55,10 +36,13 @@ $(function() {
 				ifExpert();// 判断用户是专家还是普通用户
 			}
 		}
-		
+		if(localStorage.token){
+			$('.login_none').hide();
+			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
+			ifExpert();
+		}
 		
 	}, 500);
-
 	var n = 0;
 	//初始化弹出框
 	$('[data-toggle="popover"]').popover();
@@ -104,8 +88,6 @@ $(function() {
 	$("body").click(function() {
 		$("#phone").hide();
 		$("#WeChat").hide();
-		//		$(".collects_title_right").click();
-		//		$(".dropdown").addClass("open");
 		$(document.body).css({
 			"overflow": "auto"
 		});
@@ -305,6 +287,7 @@ $(function() {
 		console.log("电脑");
 	} else {
 		console.log("手持设备");
+		$('.modal_style').css('margin','50px auto');
 		$(document).on("load", "#logo_img", function() {
 			$(this).css({
 				"width": "35px",
@@ -398,10 +381,10 @@ function code_time() {
 	var time = setInterval(function() {
 		code_num--;
 		//		console.log(code_num);
-		$("#code_num i").html(code_num);
+		$("#code_num i").html(code_num+'S');
 		if(code_num <= 0) {
 			code_num = 60;
-			$("#code_num i").html(code_num);
+			$("#code_num i").html(code_num+'S');
 			clearInterval(time);
 			$("#code_btn1").hide();
 			$("#code_btn").show();
@@ -552,7 +535,7 @@ var dataDesc = {
 		if(end && end !== 'undefined') {
 			url += "&end=" + end;
 		}
-		console.log(url);
+//		console.log(url);
 		// 基于准备好的dom，初始化echarts图表
 		var myChart = echarts.init(document.getElementById(id), 'walden');
 		if(location.href.indexOf("add_viewpoint")) {
@@ -567,7 +550,7 @@ var dataDesc = {
 		$.get(url).done(function(data) {
 			myChart.hideLoading();
 			//			var d;
-			console.log(data);
+//			console.log(data);
 
 			// 填入数据
 			var ds = []; //merge后时间数组
@@ -584,7 +567,7 @@ var dataDesc = {
 				});
 				$.merge(ds, d);
 				vs[key] = v;
-				console.log(val)
+//				console.log(val)
 				indicator_name_cn = val.indicator.name_zh;
 				if(val.indicator.unit){
 					indicator_name_cn += '(单位：' +val.indicator.unit+ ')'
@@ -797,16 +780,29 @@ var dataDesc = {
 	loadDatas: function(_href, indicator) {
 		console.log(_href);
 		$("#data_table").find("tbody").html('');
-
+		var _uri = window.location.href,_url,_name;
+		console.log(_uri);
+		if (_uri.indexOf('inland')>-1) {
+			_url = _href + "/data2/stat/CN?indicator=";
+			
+		}else{
+			_url = _href + "/data2/stat?indicator="
+		}
 		$.ajax({
 			type: "get",
-			url: _href + "/data/stat?indicator=" + indicator,
+			url: _url + indicator,
 			async: true,
 			success: function(data) {
 				//							console.log(data);
 				console.time("表格数据：");
+				
 				$.each(data, function(i, e) {
 					//								console.log(e);
+					if (_uri.indexOf('inland')>-1) {
+						_name = e.region_name
+					}else{
+						_name = e.country_name
+					}
 					var table_icon_style = '',
 						html = '<tr>';
 					if((e.previous - e.val) > 0) {
@@ -814,7 +810,7 @@ var dataDesc = {
 					} else {
 						table_icon_style = 'glyphicon-arrow-down red';
 					}
-					html += '<td>' + e.country_name + '</td>' +
+					html += '<td>' + _name + '</td>' +
 						'<td>' + e.val + '</td>' +
 						'<td><span class="table_data">' + timeF(e.time, 'mm') + '</span>&nbsp;&nbsp;&nbsp;<span class="glyphicon ' + table_icon_style + '"></span></td>' +
 						'<td>' + e.previous + '</td>' +
@@ -969,6 +965,7 @@ var dataDesc = {
 			var _classname = $(this).attr("class"),
 				_id = $(this).attr("data-id"),
 				_name = $(this).attr("data-name");
+				window.history.pushState({},0,'?id='+_id+'&name='+_name)
 			var txt = $(this).html();
 			//					console.log(_classname)
 			if(_classname.indexOf("countrys_ls") >= 0) {

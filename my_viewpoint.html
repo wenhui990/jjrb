@@ -140,11 +140,9 @@
 //									console.log(e);
 									var descp='',echarts,type,echarts_data,ids=[];
 									$.each(e.resources,function(ind,e){
-//										console.log(ind);
-										console.log(e);
-										
+//										console.log(e);
 										type = parseInt(e.type);
-										console.log(type);
+//										console.log(type);
 										if (type === 12) {//图片
 											descp += '<img src="' + e.uri + '">';
 										}else if (type === 13) {//文本
@@ -153,10 +151,10 @@
 //											console.log(e.descp);
 											var _id ='';
 											if (e.descp) {
-												console.log(e.descp.length);
+//												console.log(e.descp.length);
 												e.descp.length<0?echarts_data=e.descp:echarts_data=JSON.parse(e.descp);
 												_id = echarts_data.id_val;
-												console.log(echarts_data)
+//												console.log(echarts_data)
 											}
 											ids.push(echarts_data);
 											descp += '<div id="'+_id+'" style="min-height:500px;"></div>';
@@ -165,12 +163,12 @@
 											descp += e.descp;
 										}
 									})
-									console.log(ids);
+//									console.log(ids);
 									
 									var htm = '<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">' +
 										'<img class="header_img" src="' + e.owner.head + '" />' +
 										'<h2 class="viewpoint_title"><a href="viewpoint_desc.html?id=' + e.id + '" target="_blank">' + e.title + '</a></h2>' +
-										'<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  ' + timeF(e.created) + '</span></small>' +
+										'<small>来源： <span class="source">'+e.owner.name+'</span> <span class="source_time">&nbsp;  ' + timeF(e.created) + '</span></small>' +
 										'      <div class="viewpoint_txt">' + descp +
 										'</div> </div>';
 									$("#viewpoint").append(htm);

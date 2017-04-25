@@ -539,3 +539,5 @@ footer {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	background-color: #c5c4c4;
 }
+
+#navs span.caret{padding: 0;}

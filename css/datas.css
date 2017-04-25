@@ -74,7 +74,7 @@
 	
 	/* 收藏样式 */
 	#data_collect{position: fixed;right: 0;top: 100px;z-index: 20;}
-	#collect{background: #fff;}
+	#collect{background: #fff;padding: 6px;}
 	#collect a{text-decoration: none;}
 	#collects{position: absolute;top: 8px;right: 0;background: #fff;width: 260px;padding: 20px;overflow: auto;border: 1px solid #e1e4e8;}
 	#collects .collects_title{display: inline-block;}
