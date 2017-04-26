@@ -18,17 +18,26 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 
 	};
 
+
+
 $(function() {
-	$(".active a").css("color", "#3b5998;");
+	var dialogHtml = '<div class="modal fade" id="publicDialog" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">提示信息</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">确定</button></div></div></div></div>';
+	
 	setTimeout(function() {
+		$(".active a").css("color", "#3b5998;");
+		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-180)+"px");
 		var _uri = window.location.href;
 		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
 			$('.login_none').show();
 		}else{
 			if(!localStorage.token) {
-				alert("请登录后进行操作！");
-	//			$('body').off();
-				$("#phone").show();
+				$('body').append(dialogHtml);
+				$('#publicDialog').find('.modal-dialog').css('top',($(window).height()/2-150)+'px');
+				$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
+				$('#publicDialog').modal('show');
+				$('#publicDialog').on('hidden.bs.modal',function(){
+					$("#phone").show();
+				});
 				return false;
 			}else {
 				$('.login_none').hide();
@@ -85,13 +94,13 @@ $(function() {
 			//			$('.data_header_img').attr('src','images/tabbar-numbers-n.png');
 		}
 	});
-	$("body").click(function() {
-		$("#phone").hide();
-		$("#WeChat").hide();
-		$(document.body).css({
-			"overflow": "auto"
-		});
-	});
+//	$("body").click(function() {
+//		$("#phone").hide();
+//		$("#WeChat").hide();
+//		$(document.body).css({
+//			"overflow": "auto"
+//		});
+//	});
 
 	//点击登录区域阻止冒泡
 	$("#phone div,#WeChat div").on("click", function(e) {
@@ -101,7 +110,6 @@ $(function() {
 	function toggle_login(clas, a, b) {
 		$(document).on("click", clas, function(e) {
 			//			e.stopPropagation();
-			//			alert(a+"==="+b);
 			$(document.body).css({
 				"overflow": "hidden"
 			});
@@ -163,7 +171,8 @@ $(function() {
 	$("#code_btn").stop(true, true).click(function(e) {
 		var _phone = $("#input_Phone").val();
 		if(_phone.length < 11 || _phone == "" || _phone.length > 11) {
-			alert("请输入正确的手机号");
+			$('#publicDialog').find('.modal-body').html('请输入正确的手机号！');
+			$('#publicDialog').modal('show');
 			return;
 		}
 		console.log(interfacelist)
@@ -178,7 +187,8 @@ $(function() {
 				phone: _phone
 			},
 			success: function(e) {
-				alert("发送成功");
+				$('#publicDialog').find('.modal-body').html('发送成功！');
+				$('#publicDialog').modal('show');
 			}
 		});
 	});
@@ -213,25 +223,42 @@ $(function() {
 					code: _code
 				},
 				success: function(e) {
-					alert("登录成功");
+					$('#publicDialog').find('.modal-body').html('登录成功！');
+					$('#publicDialog').modal('show');
 					console.log(e);
 					if(data != 'success') {
 						//location.href= data;//"http://wap.wantscart.com/admin/login?from="+location.href;
 					}
 				},
 				error: function(e) {
-					alert("登陆失败");
+					$('#publicDialog').find('.modal-body').html('登录失败！');
+					$('#publicDialog').modal('show');
 				}
 			});
 		} else if(_classname.indexOf("phone_code_login") >= 0) {
 			console.log("手机号验证码登录");
 			console.log(!forms(false, true));
-			if(forms(false, true)) {
-				$("#input_Phone_code").focus();
-				return;
-			}
 			_code = $("#input_Phone_code").val();
 			localStorage.phone = _phone;
+			if(_phone.length = 0 || _phone == "") {
+				$('#publicDialog').find('.modal-body').html('请输入手机号，不能为空！');
+				$('#publicDialog').modal('show');
+				$("#input_Phone").focus();
+				return false;
+			}
+			if(_phone.length > 11 || _phone.length < 11) {
+				$('#publicDialog').find('.modal-body').html('请输入正确的11位手机号！');
+				$('#publicDialog').modal('show');
+				$("#input_Phone").focus();
+				return false;
+			}
+			if(_code.length = 0 || _code == "") {
+				$('#publicDialog').find('.modal-body').html('请输入验证码，不能为空！');
+				$('#publicDialog').modal('show');
+				$("#input_Phone_code").focus();
+				return false;
+			}
+			
 			console.log(_code);
 			$.ajax({
 				type: "post",
@@ -243,7 +270,8 @@ $(function() {
 				success: function(e) {
 					console.log(e);
 					if(e.msg == "无效的短信验证码") {
-						alert("无效的短信验证码");
+						$('#publicDialog').find('.modal-body').html('无效的短信验证码！');
+						$('#publicDialog').modal('show');
 						console.log(e.detail + "===");
 						return false;
 					}
@@ -295,6 +323,8 @@ $(function() {
 				"margin-top": "-8px"
 			});
 		});
+		if(location.href.indexOf('hotspot_desc')>-1){$('header').hide();}
+		$('.hotspots_tit').css('font-size','20px');
 		$("#logo_img").css({
 			"width": "35px",
 			"height": "35px",
@@ -341,34 +371,40 @@ function forms(p, c) {
 		_code = $("#input_Phone_code").val();
 	/*if (p) {
 		if (_phone.length=0||_phone=="") {
-			alert("请输入手机号，不能为空！");
+			$('#publicDialog').find('.modal-body').html('请输入手机号，不能为空！');
+			$('#publicDialog').modal('show');
 			$("#input_Phone").focus();
 			return false;
 		}
 		if (_phone.length>11||_phone.length<11) {
-			alert("请输入正确的11位手机号！");
+			$('#publicDialog').find('.modal-body').html('请输入正确的11位手机号！');
+			$('#publicDialog').modal('show');
 			$("#input_Phone").focus();
 			return false;
 		}
 		if (_password.length=0||_password=="") {
-			alert("请输入密码，密码不能为空！");
+			$('#publicDialog').find('.modal-body').html('请输入密码，密码不能为空！');
+			$('#publicDialog').modal('show');
 			$("#input_password").focus();
 			return false;
 		}
 	} else */
 	if(c) {
 		if(_phone.length = 0 || _phone == "") {
-			alert("请输入手机号，不能为空！");
+			$('#publicDialog').find('.modal-body').html('请输入手机号，不能为空！');
+			$('#publicDialog').modal('show');
 			$("#input_Phone").focus();
 			return false;
 		}
 		if(_phone.length > 11 || _phone.length < 11) {
-			alert("请输入正确的11位手机号！");
+			$('#publicDialog').find('.modal-body').html('请输入正确的11位手机号！');
+			$('#publicDialog').modal('show');
 			$("#input_Phone").focus();
 			return false;
 		}
 		if(_code.length = 0 || _code == "") {
-			alert("请输入验证码，不能为空！");
+			$('#publicDialog').find('.modal-body').html('请输入验证码，不能为空！');
+			$('#publicDialog').modal('show');
 			$("#input_Phone_code").focus();
 			return false;
 		}
@@ -522,7 +558,7 @@ function ci(classname, classname1, src) {
 
 var dataDesc = {
 	//图表数据获取
-	urlLoad: function(id, url, country, indicator, start, end, echartType, indicator_cn) {
+	urlLoad: function(id, url, country, indicator, start, end, echartType) {
 		if(country) {
 			url += "&country=" + country;
 		}
@@ -571,6 +607,15 @@ var dataDesc = {
 				indicator_name_cn = val.indicator.name_zh;
 				if(val.indicator.unit){
 					indicator_name_cn += '(单位：' +val.indicator.unit+ ')'
+				}
+				if($("#show_indicator_list_name")){
+					$("#show_indicator_list_name").text(val.indicator.name_zh);
+				}
+				if($("#show_indicator_list_name")){
+					$("#show_indicator_list_name").text(val.indicator.name_zh);
+				}
+				if($("#indicator")){
+					$("#indicator").val(val.indicator.name_zh);
 				}
 			});
 			ds = uniqueSort(ds);
@@ -717,7 +762,9 @@ var dataDesc = {
 			}
 			$(".nav_txt").append(filter_html);
 		}
-
+		var urlPage;
+				window.location.href.indexOf('inland') > -1 ? urlPage = 'inland_data.html' : urlPage = 'data.html';
+		console.log(urlPage);
 		$.ajax({
 			type: "get",
 			url: url,
@@ -727,14 +774,12 @@ var dataDesc = {
 			async: true,
 			success: function(data) {
 				var html = '';
-				console.time("列循环");
+//				console.time("列循环");
 				//原生态for循环
 				var html = '',
 					listHtml = '',
-					hrf = window.location.href,
-					urlPage;
-				window.location.href.indexOf('inland') > -1 ? urlPage = 'inland_data.html' : urlPage = 'data.html';
-				console.log(urlPage);
+					hrf = window.location.href;
+					
 				//				return;
 				for(var i = 0, len = data.length; i < len; i++) {
 					var a = data[i];
@@ -745,9 +790,9 @@ var dataDesc = {
 						'<div id="collapseListGroup' + i + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading' + i + '"><ul class="list-group">';
 					for(var j = 0, jlen = $(a)[0].indicators.length; j < jlen; j++) {
 						//									console.log(a.indicators[j]);
-						html += '<dd class="data_nav_lists"><a href="' + urlPage + '?id=' + a.indicators[j].id + '&name=' + a.indicators[j].name_zh + '" data-id="' + a.indicators[j].id + '" class="data_nav_click" title="' + a.indicators[j].name_zh + '" >' + a.indicators[j].name_zh + '</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
+						html += '<dd class="data_nav_lists"><a href="' + urlPage + '?id=' + a.indicators[j].id + '" data-id="' + a.indicators[j].id + '" class="data_nav_click" title="' + a.indicators[j].name_zh + '" >' + a.indicators[j].name_zh + '</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
 						if(hrf.indexOf("data.html")) {
-							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="data.html?id=' + a.indicators[j].id + '&name=' + a.indicators[j].name_zh + '" data-id="' + a.indicators[j].id + '" title="' + a.indicators[j].name_zh + '"><span class="glyphicon glyphicon-triangle-right"></span>' + a.indicators[j].name_zh + '</a></li>'
+							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="'+urlPage+'?id=' + a.indicators[j].id + '" data-id="' + a.indicators[j].id + '" title="' + a.indicators[j].name_zh + '"><span class="glyphicon glyphicon-triangle-right"></span>' + a.indicators[j].name_zh + '</a></li>'
 						}
 					}
 					html += '</dl>';
@@ -766,7 +811,7 @@ var dataDesc = {
 					columnWidth: pbl_width / 3
 				});
 				$("#inputSearch").removeProp("readonly");
-				console.timeEnd("列循环");
+//				console.timeEnd("列循环");
 				//点击最近过滤文字
 				$(document).on("click", ".data_nav_filter_txt", function() {
 					var val = $(this).text();
@@ -794,7 +839,7 @@ var dataDesc = {
 			async: true,
 			success: function(data) {
 				//							console.log(data);
-				console.time("表格数据：");
+//				console.time("表格数据：");
 				
 				$.each(data, function(i, e) {
 					//								console.log(e);
@@ -819,7 +864,7 @@ var dataDesc = {
 					html += '</tr>';
 					$("#data_table").find("tbody").append(html);
 				});
-				console.timeEnd("表格数据：");
+//				console.timeEnd("表格数据：");
 			}
 		});
 	},
@@ -981,7 +1026,8 @@ var dataDesc = {
 				if(txts.length) {
 					for(var i = 0; i < txts.length; i++) {
 						if(txts[i].innerText === txt) {
-							alert("已有这个国家");
+							$('#publicDialog').find('.modal-body').html('已有这个国家！');
+							$('#publicDialog').modal('show');
 							country_fals = false;
 							break;
 						}
