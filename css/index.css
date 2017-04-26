@@ -20,6 +20,7 @@ body {
 	display: inline-block;
 	color: #3d5a96;
 	line-height: 86px;
+	margin-left: 5px;
 }
 
 .dl_style {
@@ -31,7 +32,7 @@ body {
 }
 
 #logo_img {
-	width: 66%;
+	width: 50px;
 }
 
 #navs li span {
@@ -44,7 +45,7 @@ body {
 	padding: 25px 40px;
 	font-weight: bold;
 	font-size: 18px;
-	line-height: 2;
+	line-height: 2.2;
 }
 
 .navbar-nav>.active>a {
@@ -98,7 +99,7 @@ body {
 }
 
 .modal_style {
-	margin-top: 300px;
+	/*margin-top: 300px;*/
 	width: 300px;
 	font-size: 14px;
 }

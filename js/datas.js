@@ -25,7 +25,6 @@ var _url = _href + interfacelist.select_data+"?";
 dataDesc.dataSearch(filter_txt);
 // 加载表格指标列表数据
 dataDesc.loadDatas(_href,u.id);
-$("#show_indicator_list_name").text(decodeURIComponent(u.name));
 
 
 if(localStorage.token){
@@ -73,10 +72,10 @@ $(".form_year").change(function(){
 });
 
 // 如果国家和指标有数据加载图表
-var indicator_cn = decodeURIComponent(u.name);
+//var indicator_cn = decodeURIComponent(u.name);
 if (country && indicator) {
-	dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType,indicator_cn);
-	$("#indicator").val(indicator_cn);
+	dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
+//	$("#indicator").val(indicator_cn);
 	$("#countrys").val('中国');
 	var initHtml = "<div style='display:inline-block;margin-right:10px'>"+
 			"<p data-id='"+country+"' class='countrys_txt' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
