@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 		<title>发布观点</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
@@ -183,6 +184,7 @@
 				position: absolute;
 				top: 0;
 				right: 0;
+				cursor: pointer;
 			}
 			
 			#countrys_vals,
@@ -387,9 +389,14 @@
 										<div class="col-md-8">
 											<span style="font-size: 16px;">切换数据样式:</span>
 											<span class="glyphicon glyphicon-stats echarts_style" style="font-size: 30px;margin: 0 10px;" title="柱状图" id="bar"></span>
-											<span title="曲线图" id="line" class="echarts_style">
+											<span title="曲线图" id="oneLine" class="echarts_style">
 												<svg class="icon" aria-hidden="true">
-					    							<use xlink:href="#icon-zhexiantu"></use>
+					    							<use xlink:href="#icon-quxian"></use>
+												</svg>
+											</span>
+											<span title="面积图" id="line" class="echarts_style">
+												<svg class="icon" aria-hidden="true">
+					    							<use xlink:href="#icon-mianjitu"></use>
 												</svg>
 											</span>
 										</div>
@@ -425,7 +432,7 @@
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<!-- 矢量图标 -->
-		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://at.alicdn.com/t/font_ndwqosjxyz2utyb9.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<!--图表插件引入-->
 		<script type="text/javascript" src="js/echarts.min.js"></script>
@@ -497,12 +504,13 @@
 		</script>
 		<!--<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>-->
 		<script type="text/javascript">
-			$("header").load("header.html");
-			$("footer").load("footer.html");
+//			$("header").load("header.html");
+//			$("footer").load("footer.html");
 
 			$(function() {
 				if(!localStorage.token) {
-					alert("请登录后进行操作！");
+					$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
+					$('#publicDialog').modal('show');
 					$("#phone").show();
 					return false;
 				}
@@ -541,9 +549,17 @@
 					return a;
 				}
 				var nowDate = year + "-" + getTime(month) + "-" + getTime(day) + " " + getTime(hour) + ":" + getTime(minute);
-				console.log(nowDate);
-				//  		$("#add_viewpoint_time").val(nowDate);
 
+//				var dialogHtml = '<div class="modal fade" id="publicDialog" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">提示信息</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">确定</button></div></div></div></div>';
+//				$('body').append(dialogHtml);
+//				var _uri = window.location.href;
+//				var explorer =navigator.userAgent;
+//				console.log(explorer)
+//				if ((!window.ActiveXObject || "ActiveXObject" in window) && (_uri.indexOf('data.html')>-1||_uri.indexOf('add_viewpoint.html')>-1)) {
+//					$('#publicDialog').find('.modal-body').html('您使用的浏览器版本太低！,为了更好的体验效果，请使用非IE的浏览器打开网页，如谷歌浏览器（推荐），火狐浏览器，QQ浏览器，360浏览器（极速模式），搜狗浏览器（高速模式）');
+//					$('#publicDialog').modal('show');
+//				}
+				
 				//插入添加数据开始,弹窗设置
 				var modal_height = ($(window).height() * 80 / 100);
 				var num = 0;
@@ -602,17 +618,25 @@
 
 					var uploadForm = "#imgs" + num,
 						fileId = "#up" + num,
-						imgId = "#ImgPr" + num
-					uploadImg(fileId, imgId, num);
+						imgId = "#ImgPr" + num;
+					
+					if(!!window.ActiveXObject || "ActiveXObject" in window){
+						uploadImg(fileId, imgId, num);
+					}else{
+						$(document).on("change", fileId, function() {
+							uploadImg(fileId, imgId, num);
+						});
+					}
 					upImg("ImgPr" + num);
 					console.log(uploadForm + "”" + fileId);
-					console.log("ImgPr" + num);
+					console.log(imgId);
 				});
 
 				//上传图片
 				function uploadImg(fileId, imgId) {
-					$(document).on("change", fileId, function() {
+//					$(document).on("change", fileId, function() {
 						var formData = new FormData();
+						console.log($(fileId)[0].files[0])
 						formData.append('file', $(fileId)[0].files[0]);
 						console.log(formData);
 						$.ajax({
@@ -639,7 +663,7 @@
 								}
 							}
 						}).done(function(res) {}).fail(function(res) {});
-					});
+//					});
 				}
 
 				//调用插入图片
@@ -767,7 +791,8 @@
 						if(txts.length) {
 							for(var i = 0; i < txts.length; i++) {
 								if(txts[i].innerText === txt) {
-									alert("已有这个国家");
+									$('#publicDialog').find('.modal-body').html('已有这个国家！');
+				$('#publicDialog').modal('show');
 									country_fals = false;
 									break;
 								}
@@ -787,7 +812,7 @@
 						$("#indicator").val(txt);
 						$('.zb_list').hide();
 						indicators = _id;
-						console.log(indicator);
+//						console.log(indicator);
 						for(var i = 0; i < $(".countrys_txt").length; i++) {
 							countrys.push($(".countrys_txt").eq(i).attr("data-id"));
 						}
@@ -859,20 +884,20 @@
 					$(".new_txt,.new_img,#show_data").css("border", "0");
 					$(this).parents('.pointHtmls').remove();
 				});
-				$(document).on("mouseenter", ".new_txt,.new_img,#show_data", function() {
-					$(".new_close").show();
+				$(document).on("mouseenter", ".pointHtmls", function() {
+					$(this).find(".new_close").show();
 					//					console.log($(this).prop("class"))
 					if($(this).prop("class").valueOf("new_txt")) {
-						$(".new_txt").css("border", "1px solid #666");
+						$(this).css("border", "1px solid #666");
 					}
 					if($(this).prop("class").valueOf("new_img")) {
-						$(".new_img").css("border", "1px solid #666");
+						$(this).css("border", "1px solid #666");
 					}
 					if($(this).prop("id").valueOf("show_data")) {
-						$("#show_data").css("border", "1px solid #666");
+						$(this).css("border", "1px solid #666");
 					}
 				});
-				$(document).on("mouseleave", ".new_txt,.new_img,#show_data", function() {
+				$(document).on("mouseleave", ".pointHtmls", function() {
 					$(".new_close").hide();
 					$(this).css("border", "0");
 				});
@@ -937,34 +962,23 @@
 							'data': JSON.stringify(data)
 						},
 						success: function(e) {
-							alert("发布成功！");
-							window.location.href = 'http://m.jjrb.grsx.cc/my_viewpoint.html';
+							$('#publicDialog').find('.modal-body').html('发布成功！');
+							$('#publicDialog').modal('show');
+							$('#publicDialog').on('hidden.bs.modal',function(){
+								window.location.href = 'http://m.jjrb.grsx.cc/my_viewpoint.html';
+							});
+							
 							console.log(e);
 						},
 						error: function() {
-							alert("发布失败！");
+							$('#publicDialog').find('.modal-body').html('发布失败！');
+							$('#publicDialog').modal('show');
 						}
 					});
 				});
 			});
 
-			//时间插件调用
-			/*$("#add_viewpoint_time").jeDate({
-				isinitVal: true,
-				festival: true,
-				ishmsVal: false,
-				format: "YYYY-MM-DD",
-				zIndex: 3000,
-			})
-			$("#startInputTime,#endInputTime").jeDate({
-				isinitVal: true,
-				festival: true,
-				ishmsVal: false,
-				format: "YYYY",
-				zIndex: 3000,
-			})*/
 		</script>
 
-	</body>
 
 </html>

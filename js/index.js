@@ -14,24 +14,31 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 		select_country: "/data2/country/k/", //查询国家/data/country/k/{val}
 		indicator_list: '/data2/group?type=1&with_indicator=1',
 		indicator_stat: '/data2/stat?indicator=NY.GDP.MKTP.CD',
-		feed: "/feed/t/3"
+		feed: "/feed/t/3/"
 
 	};
 
 
 
 $(function() {
-	var dialogHtml = '<div class="modal fade" id="publicDialog" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">提示信息</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">确定</button></div></div></div></div>';
+	var dialogHtml = '<div class="modal fade bs-example-modal-sm" id="publicDialog" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog"><div class="modal-dialog modal-sm" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">提示信息</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">确定</button></div></div></div></div>';
 	
 	setTimeout(function() {
+		$('body').append(dialogHtml);
+		var _uri = window.location.href;
+		var explorer =navigator.userAgent;
+		if ((!!window.ActiveXObject || "ActiveXObject" in window) && (_uri.indexOf('data.html')>-1||_uri.indexOf('add_viewpoint.html')>-1)) {
+			$('#publicDialog').find('.modal-body').html('您使用的浏览器版本太低！为了体验更好的效果，请使用<strong>非IE</strong>的浏览器打开页面，如谷歌浏览器（推荐），火狐浏览器，QQ浏览器，360浏览器（极速模式），搜狗浏览器（高速模式）！');
+			$('#publicDialog').modal('show');
+		}
 		$(".active a").css("color", "#3b5998;");
 		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-180)+"px");
-		var _uri = window.location.href;
+		
 		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
 			$('.login_none').show();
 		}else{
 			if(!localStorage.token) {
-				$('body').append(dialogHtml);
+				
 				$('#publicDialog').find('.modal-dialog').css('top',($(window).height()/2-150)+'px');
 				$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
 				$('#publicDialog').modal('show');
@@ -188,6 +195,10 @@ $(function() {
 			},
 			success: function(e) {
 				$('#publicDialog').find('.modal-body').html('发送成功！');
+				$('#publicDialog').modal('show');
+			},
+			error: function(){
+				$('#publicDialog').find('.modal-body').html('发送失败！');
 				$('#publicDialog').modal('show');
 			}
 		});
@@ -593,6 +604,7 @@ var dataDesc = {
 			var vs = []; //数据二维字典
 			var ss = [];
 			var cs = [];
+			var indicator_name_cn;
 			//merge时间，获得x轴分类
 			$.each(data, function(key, val) {
 				var d = []; //时间数组
@@ -672,6 +684,13 @@ var dataDesc = {
 							}
 						},
 						data: _d
+					}
+				} else if(echartType === 'oneLine' && echartType){
+					s = {
+						name:val.country.name,
+			            type: 'line',
+			            stack: '总量',
+			            data: _d
 					}
 				}
 				ss.push(s);
@@ -850,10 +869,13 @@ var dataDesc = {
 					}
 					var table_icon_style = '',
 						html = '<tr>';
-					if((e.previous - e.val) > 0) {
+					if((e.previous - e.val) < 0) {
 						table_icon_style = 'glyphicon-arrow-up green';
 					} else {
 						table_icon_style = 'glyphicon-arrow-down red';
+					}
+					if((e.previous - e.val) == 0){
+						table_icon_style = '';
 					}
 					html += '<td>' + _name + '</td>' +
 						'<td>' + e.val + '</td>' +

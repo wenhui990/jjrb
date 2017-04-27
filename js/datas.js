@@ -26,6 +26,8 @@ dataDesc.dataSearch(filter_txt);
 // 加载表格指标列表数据
 dataDesc.loadDatas(_href,u.id);
 
+var containerWidth = $('#data_show').find('.container').width();
+$('#echarts_main').width(containerWidth);
 
 if(localStorage.token){
 	
