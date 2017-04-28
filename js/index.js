@@ -34,7 +34,7 @@ $(function() {
 		$(".active a").css("color", "#3b5998;");
 		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-180)+"px");
 		
-		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
+		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0 || _uri.indexOf('viewpoint_desc.html')>0 || _uri.indexOf('viewpoint.html')>0){
 			$('.login_none').show();
 		}else{
 			if(!localStorage.token) {
@@ -335,7 +335,7 @@ $(function() {
 			});
 		});
 		if(location.href.indexOf('hotspot_desc')>-1){$('header').hide();}
-		$('.hotspots_tit').css('font-size','20px');
+		$('.hotspots_tit,.viewpoint_title').css('font-size','20px');
 		$("#logo_img").css({
 			"width": "35px",
 			"height": "35px",

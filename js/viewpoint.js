@@ -1,4 +1,5 @@
-$(function() {
+//$(function() {
+window.onload = function(){
 	setTimeout(function(){
 		$(".nav>li").eq(2).addClass("active").css("color", "#3b5998");
 		$('.viewpoint_header_img').attr('src','images/tabbar-paper-f.png');
@@ -101,4 +102,5 @@ $(function() {
 			}
 		});
 	}
-});
+}
+//});
