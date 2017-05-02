@@ -48,7 +48,7 @@
 								<p id="wechat_tag">
 									<!--<a href="javascript:void(0)" data-toggle="modal" data-target="#PhoneCode" class="phone_code">手机验证码登录<span class="glyphicon glyphicon-play"></span></a>-->
 									<a href="javascript:void(0)" data-toggle="modal" data-target="#Phone" class="phone_no fg_hide">手机号登录<span class="glyphicon glyphicon-play"></span></a>
-									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="">微信登录<span class="glyphicon glyphicon-play"></span></a>
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="login_wechat">微信登录<span class="glyphicon glyphicon-play"></span></a>
 								</p>
 							</form>
 						</div>
@@ -60,7 +60,7 @@
 				<div class="modal-dialog modal_style">
 					<div class="modal-content">
 						<div class="modal-body">
-							<p class="modal_style_title">扫码登录</p>
+							<!--<p class="modal_style_title">扫码登录</p>-->
 							<form role="form">
 								<div class="form-group" id="wx">
 									<img src="images/erweima.png" alt="微信扫码" />
@@ -86,6 +86,7 @@
 		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
 		<!--<script type="text/javascript" src="js/index.js"></script>-->
 		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+		<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$("header").load("header.html");
 			$("footer").load("footer.html");
@@ -109,7 +110,10 @@
 		    			type:"get",
 		    			'url': _href + interfacelist.news,//"热门.json",
 		    			async:true,
-		    			data:{'page': n},
+		    			xhrFields: {withCredentials: true},
+		    			data:{
+		    				'page': n
+		    			},
 		    			success: function(e){
 		    				console.log(e);
 		    				e.forEach(function(e,i){

@@ -17,8 +17,9 @@ $(function() {
 			type: "get",
 			url: _href+interfacelist.feed,
 			async: true,
+			xhrFields: {withCredentials: true},
 			data:{
-				token:localStorage.token,
+				token:token,
 				page:n,
 				limit:10
 			},

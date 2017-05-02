@@ -29,10 +29,6 @@ dataDesc.loadDatas(_href,u.id);
 var containerWidth = $('#data_show').find('.container').width();
 $('#echarts_main').width(containerWidth);
 
-if(localStorage.token){
-	
-}
-
 // 鼠标移到导航列表上显示收藏按钮
 $(document).on("mouseenter",".data_nav_lists",function(){
 	$(this).find(".btn_collect").show();

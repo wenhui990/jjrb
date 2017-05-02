@@ -50,7 +50,7 @@
 								<p id="wechat_tag">
 									<!--<a href="javascript:void(0)" data-toggle="modal" data-target="#PhoneCode" class="phone_code">手机验证码登录<span class="glyphicon glyphicon-play"></span></a>-->
 									<a href="javascript:void(0)" data-toggle="modal" data-target="#Phone" class="phone_no fg_hide">手机号登录<span class="glyphicon glyphicon-play"></span></a>
-									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="">微信登录<span class="glyphicon glyphicon-play"></span></a>
+									<a href="javascript:void(0)" data-toggle="modal" data-target="#WeChat" id="aaa" class="login_wechat">微信登录<span class="glyphicon glyphicon-play"></span></a>
 								</p>
 							</form>
 						</div>
@@ -62,7 +62,7 @@
 				<div class="modal-dialog modal_style">
 					<div class="modal-content">
 						<div class="modal-body">
-							<p class="modal_style_title">扫码登录</p>
+							<!--<p class="modal_style_title">扫码登录</p>-->
 							<form role="form">
 								<div class="form-group" id="wx">
 									<img src="images/erweima.png" alt="微信扫码" />
@@ -92,6 +92,10 @@
 		<script src="js/echarts.min.js" type="text/javascript"></script>
 		<script src="js/infographic.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/walden.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 微信 -->
+		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+		<!-- cookie -->
+		<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 			$("header").load("header.html");
@@ -124,7 +128,7 @@
 					scorllajax(u_url,u_data);
 				} else{
 					u_url = _href+interfacelist.feed;
-					u_data = {token:localStorage.token,page:n};
+					u_data = {token:token,page:n};
 					scorllajax(u_url,u_data);
 				}
 				
@@ -135,6 +139,7 @@
 						type: "get",
 						url: url,
 						async: true,
+						xhrFields: {withCredentials: true},
 						data:data,
 						success: function(data) {
 							if(data.length > 0) {
@@ -201,7 +206,7 @@
 									scorllajax(u_url,u_data);
 								} else{
 //									u_url = _href+interfacelist.feed;
-									u_data = {token:localStorage.token,page:n};
+									u_data = {token:token,page:n};
 									scorllajax(u_url,u_data);
 								}
 //								scorllajax(u_url,u_data);

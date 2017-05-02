@@ -11,6 +11,19 @@ body {
 	display: inline-block;
 }
 
+#wx>iframe{
+	width:100%;
+}
+#wx .info{
+	width:100% !important;
+}
+#wx img{
+	width:100% !important;
+}
+#wx .title{
+	display: none !important;
+}
+
 
 /*字体  lixukexingshu9be11a22f18900*/
 
@@ -32,7 +45,7 @@ body {
 }
 
 #logo_img {
-	width: 50px;
+	/*width: 50px;*/
 	height: 50px;
 }
 
@@ -101,11 +114,19 @@ body {
 
 .modal_style {
 	/*margin-top: 300px;*/
-	width: 300px;
+	min-width: 320px;
+	max-width: 400px;
+	font-size: 14px;
+}
+.modal_style1 {
+	min-width: 60%;
 	font-size: 14px;
 }
 
 .modal_style .modal-body {
+	padding: 30px;
+}
+.modal_style1 .modal-body {
 	padding: 30px;
 }
 
@@ -114,8 +135,17 @@ body {
 	text-align: center;
 	font-size: 16px;
 }
+.modal_style1 .modal_style_title {
+	font-weight: bold;
+	text-align: center;
+	font-size: 16px;
+}
 
 .modal_style form .form-group {
+	margin-bottom: 35px;
+	text-align: center;
+}
+.modal_style1 form .form-group {
 	margin-bottom: 35px;
 	text-align: center;
 }
@@ -126,22 +156,41 @@ body {
 	font-size: 12px;
 	text-align: center;
 }
+.modal_style1 form #wechat_tag {
+	margin-top: 20px;
+	color: #000;
+	font-size: 12px;
+	text-align: center;
+}
 
 .modal_style form #wechat_tag a {
+	color: #000;
+	font-size: 12px;
+}
+.modal_style1 form #wechat_tag a {
 	color: #000;
 	font-size: 12px;
 }
 
 .modal_style form .modal_style_btn {
 	border-radius: 0;
-	/*background-color: #999;height: 25px;width: 100%;text-shadow: none;padding: 0;line-height: 25px;color: #fff;border-radius: 0;font-size: 12px;*/
+}
+.modal_style1 form .modal_style_btn {
+	border-radius: 0;
 }
 
 .modal_style .modal-content {
 	border-radius: 0;
 }
+.modal_style1 .modal-content {
+	border-radius: 0;
+}
 
 .modal_style .modal-content input#input_Phone {
+	border-radius: 0;
+	border: 1px solid #000;
+}
+.modal_style1 .modal-content input#input_Phone {
 	border-radius: 0;
 	border: 1px solid #000;
 }

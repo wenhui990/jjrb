@@ -14,10 +14,11 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 		select_country: "/data2/country/k/", //查询国家/data/country/k/{val}
 		indicator_list: '/data2/group?type=1&with_indicator=1',
 		indicator_stat: '/data2/stat?indicator=NY.GDP.MKTP.CD',
-		feed: "/feed/t/3/"
+		feed: "/feed/t/3/",
+		user: "/user/"
 
 	};
-
+var token = localStorage.token || getCookie('token');
 
 
 $(function() {
@@ -32,12 +33,12 @@ $(function() {
 			$('#publicDialog').modal('show');
 		}
 		$(".active a").css("color", "#3b5998;");
-		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-180)+"px");
+		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-300)+"px");
 		
 		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
 			$('.login_none').show();
 		}else{
-			if(!localStorage.token) {
+			if(!token) {
 				
 				$('#publicDialog').find('.modal-dialog').css('top',($(window).height()/2-150)+'px');
 				$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
@@ -52,7 +53,7 @@ $(function() {
 				ifExpert();// 判断用户是专家还是普通用户
 			}
 		}
-		if(localStorage.token){
+		if(token){
 			$('.login_none').hide();
 			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
 			ifExpert();
@@ -126,29 +127,13 @@ $(function() {
 			if(clas == ".login_wechat" || a == "#WeChat") {
 				var obj = new WxLogin({
 					id: "wx",
-					appid: "wx1bbe2aa6dfb5768b",
-					
-					redirect_uri: encodeURIComponent(_href + interfacelist.wx),
+					appid: "wxf7eec57ef58d6a4b",
+					redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f='+location.href),
 					state: Math.ceil(Math.random() * 1000),
 					scope: 'snsapi_login',
 					style: "",
 					href: ""
 				});
-//				$.ajax({
-//					type: "post",
-//					url: _href + interfacelist.wx,
-//					data: {
-//						expire_in: 1,
-//						open_id: 'wx1bbe2aa6dfb5768b',
-//						token: localStorage.token,
-//						refresh_token: "343"
-//					},
-//					async: true,
-//					success: function(e) {
-//						console.log(e);
-//					}
-//				});
-				//				$("#wx").find("img").attr("src","");
 			}
 			$("#input_Phone").focus();
 		});
@@ -159,12 +144,24 @@ $(function() {
 	$('[data-target="#WeChat"]').click(function() {
 		$("#WeChat").show();
 		$("#phone").hide();
-		//		toggle_login(".login_wechat", "#WeChat", "#phone");
+		var obj = new WxLogin({
+			id: "wx",
+			appid: "wxf7eec57ef58d6a4b",
+			redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f='+location.href),
+			state: Math.ceil(Math.random() * 1000),
+			scope: 'snsapi_login',
+			style: "",
+			href: ""
+		});
+		$.ajax({
+			type:"get",
+			url:_href+interfacelist.user,
+			async:true
+		});
 	})
 	$('[data-target="#Phone"]').click(function() {
 		$("#WeChat").hide();
 		$("#phone").show();
-		//		toggle_login(".login_phone", "#phone", "#WeChat");
 	})
 	//点击验证码登录
 	$(".phone_code").on("click", function() {
@@ -304,6 +301,8 @@ $(function() {
 	// 退出登录
 	$(document).on('click','#exit',function(){
 		localStorage.clear();
+//		delCookie('token');
+		$.removeCookie('token');
 		window.location.reload();
 	});
 	
@@ -458,17 +457,22 @@ function timeF(time, mm) {
 
 }
 //获取cookie
-function getCookie(name) {
-	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-	if(arr = document.cookie.match(reg)) {
-		var aa = unescape(arr[2]);
-		if(aa.length > 2) {
-			aa = aa.substring(1, aa.length - 1)
-		}
-		return unescape(aa);
-	} else
-		return null;
+function getCookie(name){
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+	return unescape(arr[2]);
+	else
+	return null;
 }
+// 删除cookie
+function delCookie(name){
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval=getCookie(name);
+	if(cval!=null)
+	document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+
 //获取url中字段
 function getUrlParams() {
 	var params = {};
@@ -788,7 +792,7 @@ var dataDesc = {
 			type: "get",
 			url: url,
 			data: {
-				token: localStorage.token //'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
+				token: token //'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
 			},
 			async: true,
 			success: function(data) {
@@ -1257,7 +1261,7 @@ function newWin(url, id) {
 function onsize() {
 	var _left = $(".container").offset().left;
 	if(_left > 210) {
-		if(localStorage.token) {
+		if(token) {
 			$("#collects").show();
 		}
 		$("#collect").hide();
