@@ -161,11 +161,11 @@ $(function() {
 			style: "",
 			href: ""
 		});
-		$.ajax({
-			type:"get",
-			url:_href+interfacelist.user,
-			async:true
-		});
+//		$.ajax({
+//			type:"get",
+//			url:_href+interfacelist.user,
+//			async:true
+//		});
 	})
 	$('[data-target="#Phone"]').click(function() {
 		$("#WeChat").hide();
@@ -701,7 +701,7 @@ var dataDesc = {
 					s = {
 						name:val.country.name,
 			            type: 'line',
-			            stack: '总量',
+//			            stack: '总量',
 			            data: _d
 					}
 				}

@@ -163,41 +163,14 @@
 		<script type="text/javascript" src="js/echarts.min.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
-<<<<<<< HEAD
 			$("header").load("header.html");
 			$("footer").load("footer.html");
-			$(function() {
-				
-				setTimeout(function(){
-					$("#navs li").eq(1).addClass("active").siblings().removeClass("active");
-				},500);
-				//			alert(getUrlParams().id);
-				//接口
-				var _href = "http://api.jjrb.grsx.cc",
-					interfacelist = {
-						feed: "/feed",
-						comment_list: '/aggregator/391/5/entity', // 评论列表get
-//						comment_nums: '/aggregator/391/5', //评论数get
-						add_comment: '/aggregator/391/5/entity',  //发表评论post
-						zan: '/aggregator/391/1', //赞post
-						zan_numsPing: '/aggregator/391/', //赞数1get,评论数5
-						select_data: "/data2"
-=======
-			//			$("header").load("header.html");
-			//			$("footer").load("footer.html");
-			//			$(function() {
-			//				if (!localStorage.token) {
-			//					alert("请登录后进行操作！");
-			//					$("#phone").show();
-			//					return false;
-			//				}
-			//				
 			//检查手机端和pc
 			var system = {
-				win: false,
-				mac: false,
-				xll: false,
-				ipad: false
+				'win': false,
+				'mac': false,
+				'xll': false,
+				'ipad': false
 			};
 			//检测平台
 			var p = navigator.platform;
@@ -254,7 +227,6 @@
 					async: true,
 					data: {
 						token: localStorage.token
->>>>>>> origin/master
 					},
 					success: function(data) {
 						if(parseInt(data.id) != 0) {
@@ -265,7 +237,6 @@
 						}
 					}
 				});
-<<<<<<< HEAD
 				$(document).on('click','.c_img2',function(){
 					$.ajax({
 						type:"post",
@@ -282,7 +253,9 @@
 							}else{
 								alert("已经赞过了！");
 							}
-=======
+						}
+					})
+				});
 			});
 
 			// 点击查看更多评论
@@ -321,174 +294,59 @@
 							setTimeout(function() {
 								$('.txt_error').hide();
 							}, 2000);
->>>>>>> origin/master
 						}
 					}
 				});
 			}
 
 			// 取评论列表
-			function commentList(page) {
+			function commentList(page){
 				$.ajax({
-					type: "get",
+					type:"get",
 					url: _href + interfacelist.comment_list,
-					async: true,
-					data: {
-						page: page,
-						token: localStorage.token
+					async:true,
+					xhrFields: {withCredentials: true},
+					data:{
+						page:page,
+						token: token
 					},
-					success: function(data) {
+					success: function(data){
 						var _len;
-						$.each(data, function(i, e) {
+						$.each(data, function(i,e) {
 							_len = i;
-							var html = '<div class="row"><div class="col-md-1">' +
-								'<a href="javascript:;"><img src="' + (e.entity.head ? e.entity.head : headImg) + '" alt="头像" width="30" height="30" /></a></div>' +
-								'<div class="col-md-11 comments_name">' +
-								'	<span class="comments_author">' + e.entity.name + '</span>' +
-								'	<span class="source_time">' + timeF(e.created) + '</span>' +
-								'</div>' +
-								'<div class="col-md-11 comments_desc">' +
-								'	<p>' + e.descp + '</p>' +
+							var html = '<div class="row"><div class="col-md-1">'+
+								'<a href="javascript:;"><img src="'+(e.entity.head?e.entity.head:headImg)+'" alt="头像" width="30" height="30" /></a></div>'+
+								'<div class="col-md-11 comments_name">'+
+								'	<span class="comments_author">'+e.entity.name+'</span>'+
+								'	<span class="source_time">'+timeF(e.created)+'</span>'+
+								'</div>'+
+								'<div class="col-md-11 comments_desc">'+
+								'	<p>'+e.descp+'</p>'+
 								'</div></div>';
 							$('#more_comment').before(html);
 						});
-						(_len >= 20) ? $('#more_comment').show(): $('#more_comment').hide();
+						(_len>=20)?$('#more_comment').show():$('#more_comment').hide();
 					}
 				});
-<<<<<<< HEAD
-				
-				commentList(page); // 获取评论列表
-				pinglunZan(5);//评论数
-				pinglunZan(1);//赞数
-				
-				// 发布评论
-				function addComment(){
-					$.ajax({
-						type:"post",
-						url: _href + interfacelist.add_comment,
-						async:true,
-						xhrFields: {withCredentials: true},
-						data:{
-							token: token,
-							descp: $('#comment_content').val()
-						},
-						success: function(data){
-							if(parseInt(data.id)>0){
-								$('.txt_error').show().text('发表成功！').css('color','#24b701');
-								var html = '<div class="row"><div class="col-md-1">'+
-									'<a href="javascript:;"><img src="'+headImg+'" alt="头像" width="30" height="30" /></a></div>'+
-									'<div class="col-md-11 comments_name">'+
-									'	<span class="comments_author">'+localStorage.userName+'</span>'+
-									'	<span class="source_time">'+timeF(new Date())+'</span>'+
-									'</div>'+
-									'<div class="col-md-11 comments_desc">'+
-									'	<p>'+$('#comment_content').val()+'</p>'+
-									'</div></div>';
-								$('#more_comment').before(html);
-								setTimeout(function(){
-									$('.txt_error').hide();
-								},2000);
-							}
-						}
-					});
-				}				
-				
-				// 取评论列表
-				function commentList(page){
-					$.ajax({
-						type:"get",
-						url: _href + interfacelist.comment_list,
-						async:true,
-						xhrFields: {withCredentials: true},
-						data:{
-							page:page,
-							token: token
-						},
-						success: function(data){
-							var _len;
-							$.each(data, function(i,e) {
-								_len = i;
-								var html = '<div class="row"><div class="col-md-1">'+
-									'<a href="javascript:;"><img src="'+(e.entity.head?e.entity.head:headImg)+'" alt="头像" width="30" height="30" /></a></div>'+
-									'<div class="col-md-11 comments_name">'+
-									'	<span class="comments_author">'+e.entity.name+'</span>'+
-									'	<span class="source_time">'+timeF(e.created)+'</span>'+
-									'</div>'+
-									'<div class="col-md-11 comments_desc">'+
-									'	<p>'+e.descp+'</p>'+
-									'</div></div>';
-								$('#more_comment').before(html);
-							});
-							(_len>=20)?$('#more_comment').show():$('#more_comment').hide();
-						}
-					});
-				}
-				
-				
-				
-				// 取评论数和赞数
-				function pinglunZan(a){
-					$.ajax({
-						type:"get",
-						url: _href + interfacelist.zan_numsPing + a,
-						async:true,
-						xhrFields: {withCredentials: true},
-						success: function(data){
-							if(a===5){
-								$('.comment_num').text(data.num);
-							}else if(a===1){
-								$('.zan_num').text(data.rnum);
-							}
-						}
-					});
-				}
-				
-				// 获取观点内容
-=======
 			}
-
+			
+			
+			
 			// 取评论数和赞数
-			function pinglunZan(a) {
->>>>>>> origin/master
+			function pinglunZan(a){
 				$.ajax({
-					type: "get",
+					type:"get",
 					url: _href + interfacelist.zan_numsPing + a,
-					async: true,
-<<<<<<< HEAD
+					async:true,
 					xhrFields: {withCredentials: true},
-					data:{token:token},
-=======
->>>>>>> origin/master
-					success: function(data) {
-						if(a === 5) {
+					success: function(data){
+						if(a===5){
 							$('.comment_num').text(data.num);
-						} else if(a === 1) {
+						}else if(a===1){
 							$('.zan_num').text(data.rnum);
 						}
 					}
 				});
-<<<<<<< HEAD
-				$(document).on("click",".next_comment",function(){
-					var _id = parseInt(getUrlParams().id);
-					var _href = $(".next_comment").attr("href");
-					$(".next_comment").attr("href",_href + (_id+1));
-				});
-				
-				nextViewpoint();
-				// 获取下一篇内容的信息
-				function nextViewpoint(){
-					$.ajax({
-						type: "get",
-						url: next_url,
-						async: true,
-						xhrFields: {withCredentials: true},
-						data:{token:token},
-						success: function(data) {
-							$('.comment_footer .c_f_style').find('img').attr('src',data.owner.head);
-							$('.comment_footer .c_f_style').find('span').text(data.owner.name);
-							$('.comment_footer').find('p.c_f_style').text(data.title);
-							$('.source_time').text(timeF(data.created));
-=======
 			}
 
 			// 获取观点内容
@@ -535,7 +393,6 @@
 							descp += '<div id="' + _id + '" style="min-height:500px;"></div>'
 						} else {
 							descp = e.descp
->>>>>>> origin/master
 						}
 						
 					})
@@ -558,6 +415,7 @@
 					}
 				}
 			});
+			
 			$(document).on("click", ".next_comment", function() {
 				var _id = parseInt(getUrlParams().id);
 				var _href = $(".next_comment").attr("href");
@@ -582,7 +440,6 @@
 					}
 				});
 			}
-			//			});
 		</script>
 		<div id="aa" style="display: none;"></div>
 
