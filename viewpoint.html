@@ -181,14 +181,13 @@
 		<script src="js/bootstrap.min.js"></script>
 		<!-- 矢量图标 -->
 		<script src="http://at.alicdn.com/t/font_2xhjty9tubmd9529.js" type="text/javascript" charset="utf-8"></script>
+		<!-- cookie -->
+		<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<!-- 微信 -->
 		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript" src="js/viewpoint.js"></script>
-		<!-- 微信 -->
-		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
-		<!-- cookie -->
-		<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function() {
 				var page = 1,
@@ -229,16 +228,20 @@
 							token: token
 						},
 						success: function(data) {
-							$.each(data, function(i, e) {
-								var html = 	'<div class="media"><div class="media-left media-middle">' +
-									'<a href="my_viewpoint.html?id='+e.id+'" target="_blank"><img class="media-object role_img" src="'+e.head+'" width="40" height="40" alt="..." /></a></div>' +
-									'<div class="media-body">' +
-									'	<h4 class="media-heading">'+e.name+'</h4>' +
-									'	<small>'+e.sign+'</small>' +
-									'</div></div>';
-								$('.collects_content').append(html);
-							});
-							fl = true;
+							if (data.code !==10003 && data.msg !== '权限不够') {
+								$.each(data, function(i, e) {
+									var html = 	'<div class="media"><div class="media-left media-middle">' +
+										'<a href="my_viewpoint.html?id='+e.id+'" target="_blank"><img class="media-object role_img" src="'+e.head+'" width="40" height="40" alt="..." /></a></div>' +
+										'<div class="media-body">' +
+										'	<h4 class="media-heading">'+e.name+'</h4>' +
+										'	<small>'+e.sign+'</small>' +
+										'</div></div>';
+									$('.collects_content').append(html);
+								});
+								fl = true;
+							}else{
+								$('.collects_content').parent().hide();
+							}
 						}
 					});
 				}

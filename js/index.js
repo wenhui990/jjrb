@@ -18,7 +18,7 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 		user: "/user/"
 
 	};
-var token = localStorage.token || getCookie('token');
+var token = localStorage.token || $.cookie('token');
 
 
 $(function() {
@@ -35,7 +35,7 @@ $(function() {
 		$(".active a").css("color", "#3b5998;");
 		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-300)+"px");
 		
-		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0){
+		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0 || _uri.indexOf('viewpoint_desc.html')>0 || _uri.indexOf('viewpoint.html')>0){
 			$('.login_none').show();
 		}else{
 			if(!token) {
@@ -53,6 +53,14 @@ $(function() {
 				ifExpert();// 判断用户是专家还是普通用户
 			}
 		}
+		
+		if ($.cookie('token')) {
+			localStorage.token = $.cookie('token');
+			localStorage.userId = $.cookie('id');
+			localStorage.userName = $.cookie('name');
+			localStorage.head = $.cookie('head');
+		}
+		
 		if(token){
 			$('.login_none').hide();
 			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
@@ -73,7 +81,7 @@ $(function() {
 		//		console.log(imgSrc+'==='+imgSrc.replace(/[n.]/,'f'));
 		//		$(this).find('img').attr('src',imgSrc.replace(/^-n?.$/,'-f.'));
 		var _text = $(this).find('a').text();
-		if(_text.indexOf('中经热点') > -1) {
+		if(_text.indexOf('热点扫描') > -1) {
 			$(this).find('img').attr('src', 'images/tabbar-news-f.png');
 		} else if(_text.indexOf('专家论点') > -1) {
 			$(this).find('img').attr('src', 'images/tabbar-paper-f.png');
@@ -302,7 +310,7 @@ $(function() {
 	$(document).on('click','#exit',function(){
 		localStorage.clear();
 //		delCookie('token');
-		$.removeCookie('token');
+		$.cookie('token','',{'domain':'.jjrb.grsx.cc','expires':-1,'path':'/'})
 		window.location.reload();
 	});
 	
@@ -334,7 +342,7 @@ $(function() {
 			});
 		});
 		if(location.href.indexOf('hotspot_desc')>-1){$('header').hide();}
-		$('.hotspots_tit').css('font-size','20px');
+		$('.hotspots_tit,.viewpoint_title').css('font-size','20px');
 		$("#logo_img").css({
 			"width": "35px",
 			"height": "35px",
