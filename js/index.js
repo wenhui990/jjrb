@@ -594,9 +594,6 @@ var dataDesc = {
 		if(end && end !== 'undefined') {
 			url += "&end=" + end;
 		}
-		
-		window.history.pushState({},0,'?id='+indicator+'&name='+country)
-		
 //		console.log(url);
 		// 基于准备好的dom，初始化echarts图表
 		var myChart = echarts.init(document.getElementById(id), 'walden');
@@ -711,7 +708,7 @@ var dataDesc = {
 				ss.push(s);
 
 			});
-			window.csName = cs;
+
 			myChart.setOption({
 				title: {
 					text: indicator_name_cn 
@@ -1047,6 +1044,7 @@ var dataDesc = {
 			var _classname = $(this).attr("class"),
 				_id = $(this).attr("data-id"),
 				_name = $(this).attr("data-name");
+				window.history.pushState({},0,'?id='+_id+'&name='+_name)
 			var txt = $(this).html();
 			//					console.log(_classname)
 			if(_classname.indexOf("countrys_ls") >= 0) {
