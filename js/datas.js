@@ -13,7 +13,7 @@ var _href = "http://api.jjrb.grsx.cc",
 	year = "";
 // 设置初始值
 var u = getUrlParams(),
-	country = 'CN',
+	country = u.name || 'CN',
     indicator = u.id,
     start = u.start,
     end = u.end;
@@ -74,10 +74,33 @@ $(".form_year").change(function(){
 if (country && indicator) {
 	dataDesc.urlLoad("echarts_main",_url,country,indicator,start,end,echartType);
 //	$("#indicator").val(indicator_cn);
-	$("#countrys").val('中国');
-	var initHtml = "<div style='display:inline-block;margin-right:10px'>"+
-			"<p data-id='"+country+"' class='countrys_txt' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+$("#countrys").val()+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
-	$("#countrys_vals").append(initHtml);
+//	$("#countrys").val('中国');
+	
+	var countryTime = setInterval(function(){
+		var countryCh = window.csName;
+		if(countryCh){
+			if(country.indexOf(',')>-1){
+				var countryes = country.split(',');
+				var countryCh = window.csName;
+				
+				for(var i=0;i<countryes.length;i++){
+					var initHtml = "<div style='display:inline-block;margin-right:10px'>"+
+						"<p data-id='"+countryes[i]+"' class='countrys_txt' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+countryCh[i]+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
+					$("#countrys_vals").append(initHtml);
+				}
+				clearInterval(countryTime);
+			}else{
+				var initHtml = "<div style='display:inline-block;margin-right:10px'>"+
+						"<p data-id='"+country+"' class='countrys_txt' style='margin:0 3px;padding:0 15px;border:1px solid #666;position:relative;'>"+countryCh[0]+"<span class='glyphicon glyphicon-remove country_txt_close none' title='删除'></span></p></div>";
+				$("#countrys_vals").append(initHtml);
+				clearInterval(countryTime);
+			}
+		}
+			
+		
+		console.log(1);
+	},1000);
+		
 }else{
 	$(document).on("change",".form_country",function(){
 		var country = $(this).val();
