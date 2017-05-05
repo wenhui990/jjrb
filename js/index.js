@@ -595,7 +595,9 @@ var dataDesc = {
 			url += "&end=" + end;
 		}
 		
-		window.history.pushState({},0,'?id='+indicator+'&name='+country)
+		if((location.href.indexOf('data.html')>-1)){
+			window.history.pushState({},0,'?id='+indicator+'&name='+country);
+		}
 		
 //		console.log(url);
 		// 基于准备好的dom，初始化echarts图表
