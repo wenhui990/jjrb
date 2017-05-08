@@ -432,7 +432,11 @@
 				</div>
 			</div>
 		</div>
+		<div id="loadingDialog" class="none" style="position: absolute;top: 0;left: 0;text-align: center;width: 100%;background-color: rgba(255,255,255,1);height: 100%;">
+			<div class="loading" style="width: 100%;text-align: center;color: #000;position: relative;"><img src="images/loading.gif" width="250"  />发布中...</div>
+		</div>
 		<footer></footer>
+		
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<!-- 矢量图标 -->
@@ -513,9 +517,6 @@
 		<!--<script src="js/datas.js" type="text/javascript" charset="utf-8"></script>-->
 		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 		<script type="text/javascript">
-//			$("header").load("header.html");
-//			$("footer").load("footer.html");
-
 			$(function() {
 				if(!token) {
 					$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
@@ -918,6 +919,21 @@
 						resources = [],
 						pointHtm;
 					//					console.log($pointHtmls);
+					
+					if ($('#new_title').length==0||$('#new_title').val()=='') {
+						$('#publicDialog').find('.modal-body').html('请输入标题！');
+						$('#publicDialog').modal('show');
+						$('#publicDialog').on('hidden.bs.modal',function(){
+							$('#new_title').focus();
+						});
+						return false;
+					}
+					$('#loadingDialog').show();
+					var windowHeight = $(window).height();
+					var loginHeight = (windowHeight/2) - ($('#loadingDialog').find('.loading').height())/2;
+					$('#loadingDialog').find('.loading').css('top',loginHeight);
+//					return;
+					
 					$.each($pointHtmls, function(i, e) {
 						//						console.log($(e));
 						console.log(e);
@@ -951,7 +967,7 @@
 							resources.push(data);
 						}
 					});
-					console.log(resources);
+//					console.log(resources);
 
 					//					return;
 					var _title = $("#new_title").val(),
@@ -962,7 +978,10 @@
 							'resources': resources,
 							'title': _title,
 						}
-					console.log(data);
+//					console.log(data);
+					
+					
+					
 					$.ajax({
 						type: "post",
 						url: _href + interfacelist.feed,
@@ -973,13 +992,14 @@
 							'data': JSON.stringify(data)
 						},
 						success: function(e) {
+							$('#loadingDialog').hide();
 							$('#publicDialog').find('.modal-body').html('发布成功！');
 							$('#publicDialog').modal('show');
 							$('#publicDialog').on('hidden.bs.modal',function(){
 								window.location.href = 'http://m.jjrb.grsx.cc/my_viewpoint.html';
 							});
 							
-							console.log(e);
+//							console.log(e);
 						},
 						error: function() {
 							$('#publicDialog').find('.modal-body').html('发布失败！');

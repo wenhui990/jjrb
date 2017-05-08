@@ -25,6 +25,7 @@ window.onload = function(){
 				limit:10
 			},
 			success: function(data) {
+				$('.loading').hide();
 				if(data.length > 0) {
 					$.each(data,function(i, even) {
 						var descp='',echarts,type,echarts_data;

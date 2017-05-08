@@ -809,6 +809,7 @@ var dataDesc = {
 			},
 			async: true,
 			success: function(data) {
+				$('.loading').remove();
 				var html = '';
 //				console.time("列循环");
 				//原生态for循环

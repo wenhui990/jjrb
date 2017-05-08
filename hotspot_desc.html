@@ -115,7 +115,7 @@
 
 		<!-- 热点详情 -->
 		<div class="container" id="hotspot_desc">
-			
+			<div class="loading" style="width: 100%;text-align: center;background-color: #fff;"><img src="images/loading.gif" width="200"  />正在加载中...</div>
 			<div class="col-sm-12 col-md-12 col-xs-12 hotspots">
 				<!--<h2 class="hotspot_money"></h2>-->
 				<h2 class="hotspots_tit"><a href="#"></a></h2>
@@ -164,6 +164,7 @@
 					async:true,
 					xhrFields: {withCredentials: true},
 					success: function(data){
+						$('.loading').hide();
 //						console.log(data);
 //						$(".hotspot_money").text(data.sub_title);
 						$(".hotspots_tit>a").text(data.title);
