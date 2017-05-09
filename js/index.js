@@ -28,6 +28,7 @@ $(function() {
 		$('body').append(dialogHtml);
 		var _uri = window.location.href;
 		var explorer =navigator.userAgent;
+		var uid = localStorage.userId || $.cookie('id');
 		if ((!!window.ActiveXObject || "ActiveXObject" in window) && (_uri.indexOf('data.html')>-1||_uri.indexOf('add_viewpoint.html')>-1)) {
 			$('#publicDialog').find('.modal-body').html('您使用的浏览器版本太低！为了体验更好的效果，请使用<strong>非IE</strong>的浏览器打开页面，如谷歌浏览器（推荐），火狐浏览器，QQ浏览器，360浏览器（极速模式），搜狗浏览器（高速模式）！');
 			$('#publicDialog').modal('show');
@@ -50,7 +51,7 @@ $(function() {
 			}else {
 				$('.login_none').hide();
 				localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
-				ifExpert();// 判断用户是专家还是普通用户
+				ifExpert(uid);// 判断用户是专家还是普通用户
 			}
 		}
 		
@@ -64,7 +65,7 @@ $(function() {
 		if(token){
 			$('.login_none').hide();
 			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
-			ifExpert();
+			ifExpert(uid);
 		}
 		
 	}, 500);
@@ -1302,13 +1303,22 @@ function onsize() {
 }
 
 // 判断用户是专家还是普通用户
-function ifExpert(){
-	if(localStorage.role==='0'){
-		$("#my_menu").remove();
-		$(".label_name").text('普通用户');
-	}else if(localStorage.role==='1'){
-		$(".label_name").text('专家');
-	}else if(localStorage.role==='9'){
-		$(".label_name").text('管理员');
-	}
+function ifExpert(uid){
+	$.ajax({
+		type:"get",
+		url:_href + interfacelist.user + uid,
+		async:true,
+		success: function(data){
+			console.log(data.role);
+			if(data.role==0){
+				$("#my_menu li").not('#exitLi').remove();
+				$(".label_name").text('普通用户');
+			}else if(data.role==1){
+				$(".label_name").text('专家');
+			}else if(data.role==9){
+				$(".label_name").text('管理员');
+			}
+		}
+	});
+	
 }
