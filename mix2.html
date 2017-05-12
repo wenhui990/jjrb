@@ -113,7 +113,7 @@
                     range[i]['max']=Math.max(range[i]['max'],value);
                 })
             });
-//          console.log(series);
+            console.log(series);
 
             var itemStyle = {
                 normal: {
@@ -341,17 +341,19 @@
             // 鼠标移上去，获取高亮事件index，绑定到showtip中，显示数据，根据时间轴事件方法绑定
             // 鼠标移开后tip跟着一直走
             myChart.on('highlight', function (params) {
-		        var dataIndex = params.batch[0].dataIndex[0];
-		        obj={};
-		        obj.type='showTip';
-		        obj.seriesIndex='0';
-		        obj.dataIndex=dataIndex;
-		        timelineReplay(obj);
+		        console.log(params);
+		        var dataIndex = params.batch[0].dataIndex[0]
+		        // var seriesId = params.batch[0].seriesId
+		        obj={}
+		        obj.type='showTip'
+		        obj.seriesIndex='0'
+		        obj.dataIndex=dataIndex
+		        timelineReplay(obj)
 		    });
 		    
 		    function timelineReplay(obj){
 		        myChart.on('timelinechanged', function(params){
-		            myChart.dispatchAction(obj); 
+		            myChart.dispatchAction(obj)    
 		        })
 		    } 
               
