@@ -148,7 +148,7 @@
 					<img src="images/erweima.png" width="20" height="20" />
 					<span>没有了</span>
 				</div>
-				<p class="c_f_style">我是有底限的...</p>
+				<p class="c_f_style">没有更多观点了...</p>
 				<small style="color: #999999;">来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  2015年7月1日</span></small>
 			</div>
 		</div>
@@ -164,8 +164,8 @@
 		<script type="text/javascript" src="js/echarts.min.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
-			$("header").load("header.html");
-			$("footer").load("footer.html");
+//			$("header").load("header.html");
+//			$("footer").load("footer.html");
 			//检查手机端和pc
 			var system = {
 				'win': false,
@@ -193,7 +193,8 @@
 					add_comment: '/aggregator/391/5/entity', //发表评论post
 					zan: '/aggregator/391/1', //赞post
 					zan_numsPing: '/aggregator/391/', //赞数1get,评论数5
-					select_data: "/data2"
+					select_data: "/data2",
+					user: "/user/"
 				},
 				u = getUrlParams(),
 				urll = _href + interfacelist.feed + "/" + u.id,
@@ -217,10 +218,11 @@
 						$('.txt_error').hide();
 					}, 2000);
 				} else {
-					//						addComment();
+					addComment();
 				}
 
 			});
+			// 点赞
 			$(document).on('click', '.c_img2', function() {
 				$.ajax({
 					type: "post",
@@ -237,25 +239,6 @@
 							alert("已经赞过了！");
 						}
 					}
-				});
-				$(document).on('click','.c_img2',function(){
-					$.ajax({
-						type:"post",
-						url: _href + interfacelist.zan,
-						async:true,
-						xhrFields: {withCredentials: true},
-						data: {
-							token: token
-						},
-						success: function(data){
-							if(parseInt(data.id)!=0){
-								var num = parseInt($('.zan_num').text());
-								$('.zan_num').text(++num);
-							}else{
-								alert("已经赞过了！");
-							}
-						}
-					})
 				});
 			});
 
@@ -364,7 +347,6 @@
 					$("#viewpoint_desc .media-heading").html(data.owner.name);
 					$("#viewpoint_desc .media-body span").text(data.owner.sign);
 					$("#viewpoint_desc .media-left").prop("href", "my_viewpoint.html?id=" + data.owner.id);
-					$("#aa").append(data.resources[0].descp);
 					var otitle;
 					if($("#aa .otitle")) {
 						otitle = $("#aa .otitle").text().substring(6)
@@ -443,7 +425,6 @@
 				});
 			}
 		</script>
-		<div id="aa" style="display: none;"></div>
 
 	</body>
 

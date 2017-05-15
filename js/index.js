@@ -45,6 +45,7 @@ $(function() {
 				$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
 				$('#publicDialog').modal('show');
 				$('#publicDialog').on('hidden.bs.modal',function(){
+					ifExpert(uid);
 					$("#phone").show();
 				});
 				return false;
@@ -806,7 +807,7 @@ var dataDesc = {
 			type: "get",
 			url: url,
 			data: {
-				token: token //'w1N3dahtnIny9Vaty4WZskJiOcsICdazhzMrvdWadpNGbwu9FdaioTYny1WZt0gTOs3QWMc2czNa1QzdrhlTOdsIiZwi4WNay9Wbn9BAdt=oDM'
+				token: token
 			},
 			async: true,
 			success: function(data) {
@@ -1313,6 +1314,9 @@ function ifExpert(uid){
 			if(data.role==0){
 				$("#my_menu li").not('#exitLi').remove();
 				$(".label_name").text('普通用户');
+				if(location.href.indexOf('add_viewpoint.html')>-1){
+					location.href = 'index.html';
+				}
 			}else if(data.role==1){
 				$(".label_name").text('专家');
 			}else if(data.role==9){
