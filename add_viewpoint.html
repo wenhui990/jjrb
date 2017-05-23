@@ -432,7 +432,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="loadingDialog" class="none" style="position: absolute;top: 0;left: 0;text-align: center;width: 100%;background-color: rgba(255,255,255,1);height: 100%;">
+		<div id="loadingDialog" class="none" style="position: absolute;top: 0;left: 0;text-align: center;width: 100%;background-color: rgba(255,255,255,1);height: 100%;min-height: 2000px;">
 			<div class="loading" style="width: 100%;text-align: center;color: #000;position: relative;"><img src="images/loading.gif" width="250"  />发布中...</div>
 		</div>
 		<footer></footer>
@@ -929,6 +929,7 @@
 						return false;
 					}
 					$('#loadingDialog').show();
+					$(window).scrollTop(0);
 					var windowHeight = $(window).height();
 					var loginHeight = (windowHeight/2) - ($('#loadingDialog').find('.loading').height())/2;
 					$('#loadingDialog').find('.loading').css('top',loginHeight);

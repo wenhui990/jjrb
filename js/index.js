@@ -728,6 +728,8 @@ var dataDesc = {
 				},
 				toolbox: {
 					feature: {
+						showTitle:true,
+						dataView:{},
 						saveAsImage: {}
 					}
 				},

@@ -15,6 +15,7 @@
             height: 100%;
             overflow: hidden;
         }
+        .clear{clear: both;}
 
         #chart {
             padding: 0px;
@@ -23,15 +24,204 @@
             height: 95%;
             z-index: 0;
         }
+        .xyz{
+        	position: relative;
+        	float: left;
+        	/*width: 20%;*/
+        	margin-right: 10px;
+        	font-size: 16px;
+        	color: #eee;
+        }
+        /*.xyz .xyz_input{
+        	position: absolute;
+        }*/
+        .xyz .x_list,.y_list,.z_list{
+        	position: absolute;
+        	top: 30px;
+        	right: 0;
+        	display: none;
+        	background: #FFF;
+        	width: 80%;
+        	z-index: 25;
+        	max-height: 600px;
+        	overflow: auto;
+        	color: #333;
+        }
+        .xyz .x_lists,.y_lists,.z_lists{
+        	padding: 3px 5px;
+        	font-size:14px;
+        }
+        .x_lists:hover{
+        	background: #00B9E8;
+        	color: #FFF;
+        }
+        .y_lists:hover{
+        	background: #00B9E8;
+        	color: #FFF;
+        }
+        .z_lists:hover{
+        	background: #00B9E8;
+        	color: #FFF;
+        }
+        /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+		::-webkit-scrollbar  
+		{  
+		    width: 6px;    
+		    background-color: #F5F5F5;  
+		}  
+		  
+		/*定义滚动条轨道 内阴影+圆角*/  
+		::-webkit-scrollbar-track  
+		{  
+		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+		    border-radius: 10px;  
+		    background-color: #F5F5F5;  
+		}  
+		  
+		/*定义滑块 内阴影+圆角*/  
+		::-webkit-scrollbar-thumb  
+		{  
+		    border-radius: 10px;  
+		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+		    background-color: #555;  
+		}  
     </style>
 </head>
 <body>
-<h2 style="text-align: center;background: #404a59;margin: 0;height: 5%;">
-	<a href="inland_indicator_list.html" style="text-decoration: none;color: #fff;">各省收入消费对比</a>
-</h2>
+<div style="text-align: center;background: #404a59;margin: 0;line-height: 2;box-sizing: border-box;padding: 0 20px;">
+	<div class="xyz_right" style="float: right;">
+		<a href="inland_indicator_list.html" style="text-decoration: none;color: #fff;text-align: right;font-size: 12px;">返回国内数据首页</a>
+	</div>
+	<div class="xyz">
+		<div class="xyz_input">
+			横向指标：<input id="x_value" type="text" placeholder="请输入横向指标" />
+		</div>
+		<div class="x_list">
+		</div>
+	</div>
+	<div class="xyz">
+		<div class="xyz_input">
+			纵向指标：<input id="y_value" type="text" placeholder="请输入纵向指标" />
+		</div>
+		<div class="y_list">
+		</div>
+	</div>
+	<div class="xyz">
+		<div class="xyz_input">
+			对比指标：<input id="z_value" type="text" placeholder="请输入对比指标" />
+		</div>
+		<div class="z_list">
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
 <div id="chart" class="chart"></div>
 </body>
 <script type="text/javascript">
+	$(function(){
+		var _href = "http://api.jjrb.grsx.cc", 
+		interfacelist = {
+			phone_code: "/login", //"/api/login", //手机验证码get?phone=
+			phone_login: "/login", //"/api/login", //手机登录post  phone=&code=
+			wx: "/login/wx",
+			select_indicator: "/data2/indicator/k/", //查询indicator
+			select_data: "/data2", //查询数据   ?country=CN,US&indicator=NY.GDP.MKTP.CD&start=1990
+			host_indicator: "/data2/indicator/hot", //热门
+			select_country: "/data2/country/k/", //查询国家/data/country/k/{val}
+			indicator_list: '/data2/group?type=1&with_indicator=1',
+			indicator_stat: '/data2/stat?indicator=NY.GDP.MKTP.CD',
+			feed: "/feed/t/3/",
+			user: "/user/"
+	
+		};
+		var x = $.getUrlParam('x');
+	    var y = $.getUrlParam('y');
+	    var z = $.getUrlParam('z');
+	    var c = $.getUrlParam('c');
+	    var r = $.getUrlParam('r');
+	    
+	    // 搜索框键盘弹起事件-过滤导航列表
+		$("#x_value,#y_value,#z_value").on("keyup", function() {
+			var x_val = $(this).val();
+			var classname1 = $(this).parent().next()
+			classname1.show();
+			
+			var _src = _href + interfacelist.select_indicator + x_val+'?source=100';
+			var _idname = $(this).attr("id");
+			if(_idname.indexOf("x") >= 0) {
+				ci(_src,classname1.attr('class'));
+			} else if(_idname.indexOf("y") >= 0) {
+				ci(_src,classname1.attr('class'));
+			} else if(_idname.indexOf("z") >= 0) {
+				ci(_src,classname1.attr('class'));
+			}
+		});
+		
+		//国家，经济指标通用方法
+		function ci(src,classname) {
+			$('.'+classname).html('');
+			$.ajax({
+				type: "get",
+				url: src,
+				success: function(data) {
+					var d = data;
+					//console.log(d);
+					$(d).each(function(i, e) {
+						//console.log(e);
+						var _name, _id;
+						_id = e.iso2_code;
+						_name = e.name_zh;
+						_name_en = e.name_en;
+						$('.'+classname).append('<div class="' + classname + 's" data-id="' + _id + '" data-name="' + _name + '" title="' + e.id + '">' + _name + '</div>');
+					});
+				},
+				error: function(data) {
+					console.log(data.error().status);
+				}
+			});
+		}
+		
+		$(document).on('click','.x_lists,.y_lists,.z_lists',function(e){
+			e.stopPropagation();
+			$(this).parent().prev().find('input').val($(this).attr('data-name'));
+			var this_class = $(this).attr('class');
+			if (this_class.indexOf('x')>-1) {
+				x = $(this).attr('title');
+			} else if (this_class.indexOf('y')>-1){
+				y = $(this).attr('title');
+			} else if (this_class.indexOf('z')>-1){
+				z = $(this).attr('title');
+			}
+			window.history.pushState({},0,'?x='+x+'&y='+y+'&z='+z+'&c='+c+'&r='+r);
+			load(x, y, z, c, r);
+		});
+		
+		$('body').click(function(){
+			if($('.x_list,.y_list,.z_list').is(':visible')){
+				console.log(1)
+				$('.x_list,.y_list,.z_list').hide();
+			}
+		})
+		
+		
+		
+	    
+		$(document).on('change','#x',function(){
+			var x = $(this).val();
+			window.history.pushState({},0,'?x='+x+'&y='+y+'&z='+z+'&c='+c+'&r='+r);
+			location.reload();
+		});
+		$(document).on('change','#y',function(){
+			var y = $(this).val();
+			window.history.pushState({},0,'?x='+x+'&y='+y+'&z='+z+'&c='+c+'&r='+r);
+			location.reload();
+		});
+		$(document).on('change','#z',function(){
+			var z = $(this).val();
+			window.history.pushState({},0,'?x='+x+'&y='+y+'&z='+z+'&c='+c+'&r='+r);
+			location.reload();
+		});
+	});
     (function ($) {
         $.getUrlParam = function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

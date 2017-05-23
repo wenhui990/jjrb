@@ -13,7 +13,7 @@
             margin: 0px;
             border-width: 0px;
             height: 100%;
-            overflow: hidden;
+            /*overflow: hidden;*/
         }
 
         #chart {
@@ -29,7 +29,9 @@
 <h2 style="text-align: center;background: #404a59;margin: 0;height: 5%;">
 	<a href="inland_indicator_list.html" style="text-decoration: none;color: #fff;">各省收入消费对比</a>
 </h2>
-<div id="chart" class="chart"></div>
+<div id="chart" class="chart" style=""></div>
+<div id="pie_chart" class="chart" style="width:100%;height: 600px;"></div>
+<!--<p style="width: 100%;height: 500px;"><img src="" id="img" /></p>-->
 </body>
 <script type="text/javascript">
     (function ($) {
@@ -43,7 +45,7 @@
 
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('chart'), 'vintage');
-
+	/*,{devicePixelRatio:2,width:'500px',height:'500px'}*/
     var x = $.getUrlParam('x');
     var y = $.getUrlParam('y');
     var z = $.getUrlParam('z');
@@ -53,7 +55,7 @@
     load(x, y, z, c, r);
 
     function load(x, y, z, c, r) {
-        myChart.showLoading();
+        myChart.showLoading('default',{text:'正在加载中。。。',textColor:'red',maskColor: 'rgba(0, 0, 0, 0.1)'});
         // 异步加载数据
         var url = 'http://api.jjrb.grsx.cc/data2?';
         if(c){ url += 'country='+c}
@@ -139,6 +141,11 @@
 
             option = {
                 baseOption: {
+                	legend:{
+                		show:true,
+                		data: region2Array(regions),
+                		
+                	},
                     timeline: {
                         axisType: 'category',
                         orient: 'vertical',
@@ -216,8 +223,10 @@
                         }
                     },
                     grid: {
-                        left: '12%',
-                        right: '110'
+                        left: '10%',
+                        right: '110',
+                        show:true,
+                        containLabel:true
                     },
                     xAxis: {
                         type: 'log',
@@ -269,12 +278,12 @@
                     },
                     visualMap: [
                         {
-                            show: true,
                             dimension: 3,
                             categories: region2Array(regions),
                             calculable: true,
                             precision: 0.1,
-                            textGap: 30,
+                            textGap: 5,
+                            itemGap:5,
                             hoverLink:function(){alert(1)},
                             textStyle: {
                                 color: '#ccc'
@@ -284,8 +293,28 @@
                                     var colors = ['#bcd3bb', '#e88f70', '#edc1a5', '#9dc5c8', '#e1e8c8', '#7b7c68', '#e5b5b5', '#f0b489', '#928ea8', '#bda29a'];
                                     return colors.concat(colors).concat(colors).concat(colors);
                                 })()
-                            }
-        
+                            },
+        					
+                        },
+                        {
+                            left:20,
+                            top:0,
+                            dimension: 3,
+                            categories: region2Array(regions),
+                            precision: 0.1,
+                            textGap: 5,
+                            itemGap:5,
+                            hoverLink:function(){alert(1)},
+                            textStyle: {
+                                color: '#ccc'
+                            },
+                            inRange: {
+                                color: (function () {
+                                    var colors = ['#bcd3bb', '#e88f70', '#edc1a5', '#9dc5c8', '#e1e8c8', '#7b7c68', '#e5b5b5', '#f0b489', '#928ea8', '#bda29a'];
+                                    return colors.concat(colors).concat(colors).concat(colors);
+                                })()
+                            },
+        					
                         }
                     ],
                     series: [
@@ -299,7 +328,10 @@
                         }
                     ],
                     animationDurationUpdate: 1000,
-                    animationEasingUpdate: 'quinticInOut'
+                    animationEasingUpdate: 'quinticInOut',
+//                  legend:{
+//                  	show:false
+//                  }
                 },
                 options: []
             };
@@ -324,7 +356,9 @@
             }
 
             myChart.setOption(option);
-			
+            
+//          console.log(myChart.getOption());
+//			myChart.resize({width:1000,height:500})
 			
 			// 鼠标移上去，获取高亮事件index，绑定到showtip中，显示数据，计时器方法
 			// 鼠标移开后tip隐藏
@@ -340,24 +374,58 @@
             
             // 鼠标移上去，获取高亮事件index，绑定到showtip中，显示数据，根据时间轴事件方法绑定
             // 鼠标移开后tip跟着一直走
-            myChart.on('highlight', function (params) {
-		        console.log(params);
-		        var dataIndex = params.batch[0].dataIndex[0]
-		        // var seriesId = params.batch[0].seriesId
-		        obj={}
-		        obj.type='showTip'
-		        obj.seriesIndex='0'
-		        obj.dataIndex=dataIndex
-		        timelineReplay(obj)
-		    });
+//          myChart.on('highlight', function (params) {
+//		        console.log(params);
+//		        var dataIndex = params.batch[0].dataIndex[0]
+//		        // var seriesId = params.batch[0].seriesId
+//		        obj={}
+//		        obj.type='showTip'
+//		        obj.seriesIndex='0'
+//		        obj.dataIndex=dataIndex
+//		        timelineReplay(obj)
+//		    });
+//		    function timelineReplay(obj){
+//		        myChart.on('timelinechanged', function(params){
+//		            myChart.dispatchAction(obj)    
+//		        })
+//		    }
 		    
-		    function timelineReplay(obj){
-		        myChart.on('timelinechanged', function(params){
-		            myChart.dispatchAction(obj)    
-		        })
-		    } 
-              
         });
+        
+        	    
+//	    setInterval(function(){
+//	    	console.log('clear')
+////	    	myChart.clear();
+//	    },15000)
+//		    console.log(myChart.getDataURL());
+		myChart.on('timelineplaychanged',function(a){
+			console.log(a)
+			myChart.dispatchAction({
+				type: 'timelinechanged',
+				currentIndex:3
+			    // 可选，系列 index，可以是一个数组指定多个系列
+//			    seriesIndex: 0,
+	//		    // 可选，系列名称，可以是一个数组指定多个系列
+//			    seriesName: '2015',
+	//		    // 可选，数据的 index
+//			    dataIndex: a.dataIndex+1,
+	//		    // 可选，数据的 名称
+	//		    name?: string
+			});
+		});
+		/*myChart.dispatchAction({
+				type: 'timelinechanged',
+				currentIndex:4
+			    // 可选，系列 index，可以是一个数组指定多个系列
+//			    seriesIndex: 0,
+	//		    // 可选，系列名称，可以是一个数组指定多个系列
+//			    seriesName: '2015',
+	//		    // 可选，数据的 index
+//			    dataIndex: 11,
+	//		    // 可选，数据的 名称
+	//		    name?: string
+			});*/
+		
     }
 
     function uniqueSort(source, compareFn) {
@@ -397,6 +465,70 @@
         });
         return result;
     }
-
+    
+    
+    
+    
+    
+    // 饼形图
+    var pieChart = echarts.init(document.getElementById('pie_chart'));
+    pieChart.setOption({
+    	title : {
+	        text: '某站点用户访问来源',
+	        subtext: '纯属虚构',
+	        x:'center'
+	    },
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    },
+	    legend: {
+	        orient: 'vertical',
+	        left: 'left',
+	        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+	    },
+	    series : [
+	        {
+	            name: '访问来源',
+	            type: 'pie',
+	            radius : '55%',
+	            center: ['50%', '60%'],
+	            data:[
+	                {value:335, name:'直接访问'},
+	                {value:310, name:'邮件营销'},
+	                {value:234, name:'联盟广告'},
+	                {value:135, name:'视频广告'},
+	                {value:1548, name:'搜索引擎'}
+	            ],
+	            itemStyle: {
+	                emphasis: {
+	                    shadowBlur: 10,
+	                    shadowOffsetX: 0,
+	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                }
+	            }
+	        }
+	    ]
+    });
+    console.log(pieChart.getOption())
+    setTimeout(function(){
+    	
+    },2000)
+    
+	pieChart.on('legendselectchanged',function(a){
+		console.log(a)
+		pieChart.dispatchAction({
+		    type: 'pieSelect',
+		    // 可选，系列 index，可以是一个数组指定多个系列
+//		    seriesIndex: 0,
+		    // 可选，系列名称，可以是一个数组指定多个系列
+	//	    seriesName?: string|Array,
+		    // 数据的 index，如果不指定也可以通过 name 属性根据名称指定数据
+		    dataIndex: 4,
+		    // 可选，数据名称，在有 dataIndex 的时候忽略
+	//	    name?: string
+		})
+	});
+	
 </script>
 </html>

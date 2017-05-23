@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="echart" style="width: 900px;height: 100%;min-height: 600px;overflow: hidden;">
+			
+		</div>
+		<script src="js/jquery1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/echarts3.5.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/index.js" type="text/javascript" charset="utf-8"></script>-->
+		<script type="text/javascript">
+			function urlLoad(id, url, country, indicator, start, end, echartType) {
+		if(country) {
+			url += "&country=" + country;
+		}
+		if(indicator) {
+			url += "&indicator=" + indicator;
+		}
+		if(start) {
+			url += "&start=" + start;
+		}
+		if(end && end !== 'undefined') {
+			url += "&end=" + end;
+		}
+		
+		if((location.href.indexOf('data.html')>-1)){
+			window.history.pushState({},0,'?id='+indicator+'&name='+country);
+		}
+		
+//		console.log(url);
+		// 基于准备好的dom，初始化echarts图表
+		var myChart = echarts.init(document.getElementById(id), 'walden');
+		if(location.href.indexOf("add_viewpoint")) {
+			$("#" + id).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
+		}
+
+		var fla = true,
+			s = {};
+
+		myChart.showLoading();
+		//异步加载方法
+		$.get(url).done(function(data) {
+			myChart.hideLoading();
+			//			var d;
+//			console.log(data);
+
+			// 填入数据
+			var ds = []; //merge后时间数组
+			var vs = []; //数据二维字典
+			var ss = [];
+			var cs = [];
+			var indicator_name_cn;
+			//merge时间，获得x轴分类
+			$.each(data, function(key, val) {
+				var d = []; //时间数组
+				var v = []; //数据字典
+				$.each(val.data, function(i, obj) {
+					v[obj.date] = obj.value;
+					d.push(obj.date);
+				});
+				$.merge(ds, d);
+				vs[key] = v;
+//				console.log(val)
+				indicator_name_cn = val.indicator.name_zh;
+				if(val.indicator.unit){
+					indicator_name_cn += '(单位：' +val.indicator.unit+ ')'
+				}
+				if($("#show_indicator_list_name")){
+					$("#show_indicator_list_name").text(val.indicator.name_zh);
+				}
+				if($("#show_indicator_list_name")){
+					$("#show_indicator_list_name").text(val.indicator.name_zh);
+				}
+				if($("#indicator")){
+					$("#indicator").val(val.indicator.name_zh);
+				}
+			});
+			ds = uniqueSort(ds);
+
+			//计算series
+			$.each(data, function(key, val) {
+//				alert(val.country.name)
+				var s = {}; //series
+				var v = vs[key];
+				var _d = []; //data
+				$.each(ds, function(i, d) {
+					if(v[d]) {
+						_d.push(v[d]);
+					} else {
+						_d.push('');
+					}
+				});
+				cs.push(val.country.name);
+				//切换图表样式
+				if(!echartType || echartType == '' || echartType == undefined) {
+					echartType = 'line';
+					fla = false;
+				}
+				if(echartType === 'line' && echartType) {
+					fla = false;
+					s = {
+						name: val.country.name,
+						type: echartType,
+						smooth: true,
+						itemStyle: {
+							normal: {
+								areaStyle: {
+									type: 'default'
+								}
+							}
+						},
+						data: _d
+					}
+				} else if(echartType === 'bar' && echartType) {
+					fla = true;
+					s = {
+						name: val.country.name,
+						type: echartType,
+						itemStyle: {
+							normal: {
+								areaStyle: {
+									type: 'default'
+								}
+							}
+						},
+						data: _d
+					}
+				} else if(echartType === 'oneLine' && echartType){
+					s = {
+						name:val.country.name,
+			            type: 'line',
+//			            stack: '总量',
+			            data: _d
+					}
+				}
+				ss.push(s);
+
+			});
+			window.csName = cs;
+			myChart.setOption({
+				title: {
+					text: indicator_name_cn 
+				},
+				tooltip: {
+					trigger: 'axis',
+					show:true,
+					axisPointer:{
+						show:true,
+						type:'cross',
+						snap:true,
+						label:{
+							show:true,
+							precison:3,
+//							formatter: function(p){
+//								return p.value>1?'大于1='+p.value:'小于1='+p.value;
+//							},
+							margin:10,
+							padding:[5,10],
+							backgroundColor:'rgba(255,255,255,0.5)',
+							borderColor:'red',
+							borderWidth:1,
+							shadowBlue:15,
+							shadowColor:'blue',
+							shadowOffsetX:1,
+							shadowOffsetY:2,
+						},
+						lineStyle:{
+							width:2,
+							type:'dashed',
+							shadowBlue:15,
+							shadowColor:'blue',
+							shadowOffsetX:1,
+							shadowOffsetY:2,
+							opacity:1
+						},
+						shadowStyle:{
+							shadowBlue:15,
+							shadowColor:'blue',
+							shadowOffsetX:1,
+							shadowOffsetY:2,
+							opacity:1
+						},
+						crossStyle:{
+							width:2,
+							type:'dashed',
+							shadowBlue:15,
+							shadowColor:'blue',
+							shadowOffsetX:1,
+							shadowOffsetY:2,
+							opacity:1
+						}
+					},
+					showContent:true,
+					alwaysShowContent:true,
+					triggerOn:'mousemove|click',
+					showDelay:0,
+					hideDelay:100,
+					enterable:true,
+					confine:true,
+//					transitionDuration:0,
+					position: function (pos, params, dom, rect, size) {
+      // 鼠标在左侧时 tooltip 显示到右侧，鼠标在右侧时 tooltip 显示到左侧。
+      var obj = {top: 60};
+      obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
+      return obj;
+  },//['50%','50%']
+  					backgroundColor:'#000',
+  					borderColor:'#fff',
+  					borderWidth:2,
+  					padding:10,
+  					textStyle:{
+  						color:'red',
+  						fontStyle:'italic',
+  						fontWeight:600,
+  						fontFamily:'微软雅黑',
+  						fontSize:16
+  					},
+  					extraCssText:'box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);'
+//					formatter: '{a0}{b0}: {c0}<br />{a1}{b1}: {c1}'
+				},
+				legend: {
+					data: cs,
+					tooltip:{
+						show:true
+					}//["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
+				},
+				toolbox: {
+					show:true,
+					feature:{
+						magicType:{ type: ['line', 'bar', 'stack', 'tiled']},
+						dataView:{
+	            				show:true,
+	            		},
+            			saveAsImage: {},
+            			
+					}
+				},
+				dataZoom: [{
+					id: 'dataZoomX',
+					type: 'slider',
+					xAxisIndex: [0],
+					filterMode: 'filter'
+				}],
+				xAxis: [{
+					type: 'category',
+					boundaryGap: fla,
+					data: ds //["周一","周二","周三","周四","周五","周六","周日1312"]
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						inside: true,
+						formatter: function(value, index) {
+							var v = 0;
+							//                      console.log(value);
+							if(value >= 100000000) {
+								v = value / 100000000;
+								v += '亿';
+							} else {
+								v = value;
+							}
+							return v;
+						}
+					}
+				}],
+				series: ss,
+//				toolbox:{
+//					data: ['2002-01-01', '2003-01-01', '2004-01-01']
+//				}
+			});
+			
+			myChart.dispatchAction({
+			    type: 'restore',
+			    restore: {},
+//			    currentIndex:2
+			})
+//			myChart.on('legendselected',function(){
+//			    type: 'legendselected',
+//  // 选中的图例名称
+//  name: string
+//  // 所有图例的选中状态表
+//  selected: Object
+//			})
+			
+			console.log(myChart.getOption())
+			
+			
+			
+			
+			
+			
+			
+		});
+
+	}
+			//去重排序
+function uniqueSort(source, compareFn) {
+    var result = [];
+    if ('function' != typeof compareFn) {
+        compareFn = function (item1, item2) {
+            return parseInt(item1) - parseInt(item2);
+        };
+    }
+    $.each(source, function (i, v) {
+        if (i == 0) {
+            result.push(v);
+        } else {
+            //从最后开始
+            for (var j = result.length - 1; j >= 0; j--) {
+                var compare = compareFn(v, result[j]);
+                if (compare == 0){
+                    break;
+                }else if (compare > 0) {
+                    result.splice(j + 1, 0, v);
+                    break;
+                }
+                if (j == 0) {
+                    //到0还是小
+                    result.splice(0, 0, v);
+                }
+            }
+        }
+    });
+    return result;
+}
+			urlLoad('echart','http://api.jjrb.grsx.cc/data2/?','CN,US','TM.TAX.MANF.SR.ZS')
+		</script>
+	</body>
+</html>
