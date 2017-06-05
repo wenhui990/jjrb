@@ -278,6 +278,17 @@ body {
 	display: none;
 }
 
+#viewpoint .media {
+	background-color: #fff;
+	padding: 20px 30px;
+}
+
+#viewpoint .media img {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+}
+
 #viewpoint_desc .media {
 	background-color: #fff;
 	padding: 20px 30px;
@@ -287,6 +298,10 @@ body {
 	width: 45px;
 	height: 45px;
 	border-radius: 50%;
+}
+
+#viewpoint .media{
+	margin-bottom: 30px;
 }
 
 
@@ -522,49 +537,49 @@ footer {
 
 /* 收藏列表与专家列表滚动条样式 */
 
-#collects::scrollbar-track {
+.collects_content::scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 	background-color: #F5F5F5;
 }
-#collects::-webkit-scrollbar-track {
+.collects_content::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 	background-color: #F5F5F5;
 }
-#collects::-moz-scrollbar-track {
+.collects_content::-moz-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 	background-color: #F5F5F5;
 }
-#collects::-ms-scrollbar-track {
+.collects_content::-ms-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 	background-color: #F5F5F5;
 }
-#collects::-o-scrollbar-track {
+.collects_content::-o-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 	background-color: #F5F5F5;
 }
 
-#collects::scrollbar {
+.collects_content::scrollbar {
 	width: 5px;
 	background-color: #F5F5F5;
 }
-#collects::-webkit-scrollbar {
+.collects_content::-webkit-scrollbar {
 	width: 5px;
 	background-color: #F5F5F5;
 }
-#collects::-moz-scrollbar {
+.collects_content::-moz-scrollbar {
 	width: 5px;
 	background-color: #F5F5F5;
 }
-#collects::-ms-scrollbar {
+.collects_content::-ms-scrollbar {
 	width: 5px;
 	background-color: #F5F5F5;
 }
-#collects::-o-scrollbar {
+.collects_content::-o-scrollbar {
 	width: 5px;
 	background-color: #F5F5F5;
 }
@@ -574,22 +589,22 @@ footer {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	background-color: #c5c4c4;
 }
-#collects::-webkit-scrollbar-thumb {
+.collects_content::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	background-color: #c5c4c4;
 }
-#collects::-moz-scrollbar-thumb {
+.collects_content::-moz-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	background-color: #c5c4c4;
 }
-#collects::-ms-scrollbar-thumb {
+.collects_content::-ms-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	background-color: #c5c4c4;
 }
-#collects::-o-scrollbar-thumb {
+.collects_content::-o-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	background-color: #c5c4c4;

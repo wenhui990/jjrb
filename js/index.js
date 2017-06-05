@@ -1328,3 +1328,17 @@ function ifExpert(uid){
 	});
 	
 }
+
+// 键盘延迟事件只执行最后一次方法
+var _timer = {};
+function delay_till_last(id, fn, wait) {
+    if (_timer[id]) {
+        window.clearTimeout(_timer[id]);
+        delete _timer[id];
+    }
+
+    return _timer[id] = window.setTimeout(function() {
+        fn();
+        delete _timer[id];
+    }, wait);
+}

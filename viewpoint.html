@@ -53,12 +53,26 @@
 				background: #fff;
 				width: 260px;
 				padding: 20px;
-				overflow: auto;
 				border: 1px solid #e1e4e8;
 			}
 			
 			#collects .collects_title {
 				display: inline-block;
+				line-height: 20px;
+				position: relative;
+			}
+			
+			#collects .collects_title .delete_text {
+				position: absolute;
+				right: 5px;
+				top: 5px;
+				display: none;
+				color: #E0E0E0;
+			}
+			
+			#collects .collects_title .delete_text:hover {
+				color: orangered;
+				cursor: pointer;
 			}
 			
 			#collects .collects_title_left {
@@ -92,8 +106,8 @@
 				border-radius: 50%;
 			}
 			
-			.collects_content>.media{
-				/*border-bottom: 1px solid #eee;*/
+			.collects_content{
+				overflow: auto;
 			}
 			
 		</style>
@@ -166,7 +180,11 @@
 			</div>
 			<div id="collects" class="none">
 				<div class="collects_titles">
-					<h5 class="collects_title_left collects_title">专家列表</h5>
+					<h5 class="collects_title_left collects_title">
+						<span style="vertical-align: middle;">专家列表</span>
+						<input type="text" name="search_expert" id="search_expert" value="" placeholder="输入要搜索的专家" style="width: 70%;float: right;" />
+						<span class="glyphicon glyphicon-remove delete_text"></span>
+					</h5>
 					<a href="javascript:void(0)" class="collects_title_right collects_title"></a>
 				</div>
 				<div id="scrollbar"></div>
@@ -191,36 +209,48 @@
 		<script type="text/javascript">
 			$(function() {
 				var page = 1,
-					fl = true;
+					fl = false,
+					searchUrl;
 				rolesList(page);
+				
 
 				// 滚动事件
-				$('#collects').on("scroll", function() {
-					var boxheight = $('#collects').height();
-					var scorlltop = $('#collects').scrollTop();
-					var viewheight = $('.collects_content').height();
+				$('.collects_content').on("scroll", function() {
+					var boxheight = $('.collects_content').height();
+					var scorlltop = $('.collects_content').scrollTop();
+					var viewheight = $('.collects_content').get(0).scrollHeight;
 //					console.log(scorlltop + "====" + boxheight + '++++' + viewheight)
 					if((scorlltop + boxheight) >= viewheight) {
 						if(fl) {
 							page++;
-							rolesList(page);
+							if (searchUrl.indexOf('w')>-1) {
+								rolesList(page,$('#search_expert').val());
+							} else{
+								rolesList(page);
+							}
 						}
 						fl = false;
 					}
 				});
 
 				// 设置专家列表的高度
-				var collectstop = $('#collects').offset().top;
+				var collectstop = $('#data_collect').offset().top;
 				var winHeight = $(window).height();
-				$('#collects').css("maxHeight", (winHeight - collectstop - 180) + 'px');
+				var footertop = $('footer').offset().top;
+				$('.collects_content').css("maxHeight", (footertop - collectstop -180 ) + 'px');
 				window.onresize = onsize;
 				onsize();
 
 				// 右侧专家列表
-				function rolesList(page) {
+				function rolesList(page,search) {
+					if(search){
+						searchUrl = "http://api.jjrb.grsx.cc/user/w/"+search;
+					}else{
+						searchUrl = "http://api.jjrb.grsx.cc/user/list/1";
+					}
 					$.ajax({
 						type: "get",
-						url: "http://api.jjrb.grsx.cc/user/list/1",
+						url: searchUrl,
 						async: true,
 						xhrFields: {withCredentials: true},
 						data: {
@@ -228,6 +258,7 @@
 							token: token
 						},
 						success: function(data) {
+							
 							if (data.code !==10003 && data.msg !== '权限不够') {
 								$.each(data, function(i, e) {
 									var html = 	'<div class="media"><div class="media-left media-middle">' +
@@ -245,6 +276,33 @@
 						}
 					});
 				}
+				
+				// 搜索专家
+				$(document).on('keydown','#search_expert',function(){
+					page = 1;
+					$('.collects_content').html('');
+					delay_till_last('search_expert',function(){
+						if ($('#search_expert').val() == ''){
+								console.log(2)
+								$('.delete_text').hide();
+								rolesList(page);
+						} else{
+								console.log(1)
+								$('.delete_text').show();
+								rolesList(page,$('#search_expert').val());
+						}
+					},500)
+					
+				})
+				
+				// 删除搜索框的文字
+				$('.delete_text').click(function(){
+					page = 1;
+					$('.collects_content').html('');
+					$('#search_expert').val('');
+					$('.delete_text').hide();
+					rolesList(page);
+				});
 			});
 		</script>
 	</body>
