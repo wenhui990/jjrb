@@ -154,6 +154,7 @@
 						phone_code: "/login",
 						phone_login: "/login", 
 						wx: "/login/wx",
+						user: "/user/"
 					};
 				var u = getUrlParams(),
 					id = u.id,
@@ -170,7 +171,7 @@
 						$(".hotspots_tit>a").text(data.title);
 						$(".source").text(data.owner.name);
 						$(".source_time").text(" "+timeF(data.created));
-						descp += '<div style="margin:10px auto;" id="header_img"><img src="'+data.cover+'" alt="热点图" class="hotspot_img" /></div>';
+//						descp += '<div style="margin:10px auto;" id="header_img"><img src="'+data.cover+'" alt="热点图" class="hotspot_img" /></div>';
 						var a = $("<div></div>");
 						data.resources.forEach(function(res,inx){
 //							console.log(res);

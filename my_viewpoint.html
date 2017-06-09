@@ -135,7 +135,8 @@
 				var _href = "http://api.jjrb.grsx.cc",
 					interfacelist = {
 						feed: "/feed/u/",
-						select_data: "/data2"
+						select_data: "/data2",
+						user: "/user/"
 					},
 					u_id, u_url, u_data, n = 1,
 					fl = true,
@@ -175,13 +176,21 @@
 							$('.loading').hide();
 							if (data.length) {
 								$("#viewpoint .media-left img").attr("src", data[0].owner.head);
-								$("#viewpoint .media-heading").html(data[0].owner.name);
+								$("#viewpoint .media-heading").html('<a href="my_viewpoint.html?id="' + data[0].owner.id + '>' + data[0].owner.name + '</a>');
 								$("#viewpoint .media-body span").text(data[0].owner.sign);
 								$("#viewpoint .media-left").prop("href", "my_viewpoint.html?id=" + data[0].owner.id);
 							} else{
-								$("#viewpoint .media-left img").attr("src", $.cookie('head'));
-								$("#viewpoint .media-heading").html($.cookie('name'));
-								$("#viewpoint .media-left").prop("href", "my_viewpoint.html?id=" + $.cookie('id'));
+								$.ajax({
+									type:"get",
+									url: _href + interfacelist.user + u_id,
+									async:true,
+									success:function(d){
+										$("#viewpoint .media-left img").attr("src", d.head);
+										$("#viewpoint .media-heading").html('<a href="my_viewpoint.html?id=' + d.id + '">' + d.name + '</a>');
+										$("#viewpoint .media-left").prop("href", "my_viewpoint.html?id=" + d.id);
+										$("#viewpoint .media-body span").text(d.sign);
+									}
+								});
 							}
 							
 							if(data.length > 0) {

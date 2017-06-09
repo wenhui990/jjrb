@@ -64,6 +64,7 @@ $(function() {
 		}
 		
 		if(token){
+			$('#exitLi').show();
 			$('.login_none').hide();
 			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
 			ifExpert(uid);
