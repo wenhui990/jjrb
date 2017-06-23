@@ -20,61 +20,70 @@ var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
 	};
 var token = localStorage.token || $.cookie('token');
 
-
 $(function() {
 	var dialogHtml = '<div class="modal fade bs-example-modal-sm" id="publicDialog" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog"><div class="modal-dialog modal-sm" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">提示信息</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">确定</button></div></div></div></div>';
-	
+
 	setTimeout(function() {
 		$('body').append(dialogHtml);
 		var _uri = window.location.href;
-		var explorer =navigator.userAgent;
+		var explorer = navigator.userAgent;
 		var uid = localStorage.userId || $.cookie('id');
-		if ((!!window.ActiveXObject || "ActiveXObject" in window) && (_uri.indexOf('data.html')>-1||_uri.indexOf('add_viewpoint.html')>-1)) {
+		if((!!window.ActiveXObject || "ActiveXObject" in window) && (_uri.indexOf('data.html') > -1 || _uri.indexOf('add_viewpoint.html') > -1)) {
 			$('#publicDialog').find('.modal-body').html('您使用的浏览器版本太低！为了体验更好的效果，请使用<strong>非IE</strong>的浏览器打开页面，如谷歌浏览器（推荐），火狐浏览器，QQ浏览器，360浏览器（极速模式），搜狗浏览器（高速模式）！');
 			$('#publicDialog').modal('show');
 		}
 		$(".active a").css("color", "#3b5998;");
-		$("#WeChat,#phone").find(".modal_style").css("top",($(window).height()/2-300)+"px");
-		
-		if(_uri.indexOf('index.html')>0 || _uri.indexOf('hotspot_desc.html')>0 || _uri.indexOf('viewpoint_desc.html')>0 || _uri.indexOf('viewpoint.html')>0){
+		$("#WeChat,#phone").find(".modal_style").css("top", ($(window).height() / 2 - 300) + "px");
+
+		if(_uri.indexOf('index.html') > 0 || _uri.indexOf('hotspot_desc.html') > 0 || _uri.indexOf('viewpoint_desc.html') > 0 || _uri.indexOf('viewpoint.html') > 0) {
 			$('.login_none').show();
-		}else{
+		} else {
 			if(!token) {
-				
-				$('#publicDialog').find('.modal-dialog').css('top',($(window).height()/2-150)+'px');
+
+				$('#publicDialog').find('.modal-dialog').css('top', ($(window).height() / 2 - 150) + 'px');
 				$('#publicDialog').find('.modal-body').html('请登录后进行操作！');
 				$('#publicDialog').modal('show');
-				$('#publicDialog').on('hidden.bs.modal',function(){
+				$('#publicDialog').on('hidden.bs.modal', function() {
 					ifExpert(uid);
 					$("#phone").show();
 				});
 				return false;
-			}else {
+			} else {
 				$('.login_none').hide();
-				localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
-				ifExpert(uid);// 判断用户是专家还是普通用户
+				localStorage.head ? $("#user_img").attr({
+					'src': localStorage.head,
+					'style': 'width:24px;border-radius:50%;'
+				}) : $("#user_img").attr({
+					'src': 'images/tabbar-profile-f.png'
+				});
+				ifExpert(uid); // 判断用户是专家还是普通用户
 			}
 		}
-		
-		if ($.cookie('token')) {
+
+		if($.cookie('token')) {
 			localStorage.token = $.cookie('token');
 			localStorage.userId = $.cookie('id');
 			localStorage.userName = $.cookie('name');
 			localStorage.head = $.cookie('head');
 		}
-		
-		if(token){
+
+		if(token) {
 			$('#exitLi').show();
 			$('.login_none').hide();
-			localStorage.head ? $("#user_img").attr({'src': localStorage.head,'style':'width:24px;border-radius:50%;'}) : $("#user_img").attr({'src':'images/tabbar-profile-f.png'});
+			localStorage.head ? $("#user_img").attr({
+				'src': localStorage.head,
+				'style': 'width:24px;border-radius:50%;'
+			}) : $("#user_img").attr({
+				'src': 'images/tabbar-profile-f.png'
+			});
 			ifExpert(uid);
 		}
-		
+
 	}, 500);
 	var n = 0;
 	//初始化弹出框
 	$('[data-toggle="popover"]').popover();
-	
+
 	//头部导航鼠标移入
 	var imgSrc;
 	$(document).on("mouseover", ".nav>li", function() {
@@ -113,13 +122,13 @@ $(function() {
 			//			$('.data_header_img').attr('src','images/tabbar-numbers-n.png');
 		}
 	});
-//	$("body").click(function() {
-//		$("#phone").hide();
-//		$("#WeChat").hide();
-//		$(document.body).css({
-//			"overflow": "auto"
-//		});
-//	});
+	//	$("body").click(function() {
+	//		$("#phone").hide();
+	//		$("#WeChat").hide();
+	//		$(document.body).css({
+	//			"overflow": "auto"
+	//		});
+	//	});
 
 	//点击登录区域阻止冒泡
 	$("#phone div,#WeChat div").on("click", function(e) {
@@ -139,7 +148,7 @@ $(function() {
 				var obj = new WxLogin({
 					id: "wx",
 					appid: "wxf7eec57ef58d6a4b",
-					redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f='+location.href),
+					redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f=' + location.href),
 					state: Math.ceil(Math.random() * 1000),
 					scope: 'snsapi_login',
 					style: "",
@@ -158,17 +167,17 @@ $(function() {
 		var obj = new WxLogin({
 			id: "wx",
 			appid: "wxf7eec57ef58d6a4b",
-			redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f='+location.href),
+			redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f=' + location.href),
 			state: Math.ceil(Math.random() * 1000),
 			scope: 'snsapi_login',
 			style: "",
 			href: ""
 		});
-//		$.ajax({
-//			type:"get",
-//			url:_href+interfacelist.user,
-//			async:true
-//		});
+		//		$.ajax({
+		//			type:"get",
+		//			url:_href+interfacelist.user,
+		//			async:true
+		//		});
 	})
 	$('[data-target="#Phone"]').click(function() {
 		$("#WeChat").hide();
@@ -205,7 +214,7 @@ $(function() {
 				$('#publicDialog').find('.modal-body').html('发送成功！');
 				$('#publicDialog').modal('show');
 			},
-			error: function(){
+			error: function() {
 				$('#publicDialog').find('.modal-body').html('发送失败！');
 				$('#publicDialog').modal('show');
 			}
@@ -277,7 +286,7 @@ $(function() {
 				$("#input_Phone_code").focus();
 				return false;
 			}
-			
+
 			console.log(_code);
 			$.ajax({
 				type: "post",
@@ -310,13 +319,16 @@ $(function() {
 		}
 	});
 	// 退出登录
-	$(document).on('click','#exit',function(){
+	$(document).on('click', '#exit', function() {
 		localStorage.clear();
-//		delCookie('token');
-		$.cookie('token','',{'domain':'.jjrb.grsx.cc','expires':-1,'path':'/'})
+		//		delCookie('token');
+		$.cookie('token', '', {
+			'domain': '.jjrb.grsx.cc',
+			'expires': -1,
+			'path': '/'
+		})
 		window.location.reload();
 	});
-	
 
 	//检查手机端和pc
 	var system = {
@@ -336,7 +348,7 @@ $(function() {
 		console.log("电脑");
 	} else {
 		console.log("手持设备");
-		$('.modal_style').css('margin','50px auto');
+		$('.modal_style').css('margin', '50px auto');
 		$(document).on("load", "#logo_img", function() {
 			$(this).css({
 				"width": "35px",
@@ -344,8 +356,10 @@ $(function() {
 				"margin-top": "-8px"
 			});
 		});
-		if(location.href.indexOf('hotspot_desc')>-1){$('header').hide();}
-		$('.hotspots_tit,.viewpoint_title').css('font-size','20px');
+		if(location.href.indexOf('hotspot_desc') > -1) {
+			$('header').hide();
+		}
+		$('.hotspots_tit,.viewpoint_title').css('font-size', '20px');
 		$("#logo_img").css({
 			"width": "35px",
 			"height": "35px",
@@ -438,10 +452,10 @@ function code_time() {
 	var time = setInterval(function() {
 		code_num--;
 		//		console.log(code_num);
-		$("#code_num i").html(code_num+'S');
+		$("#code_num i").html(code_num + 'S');
 		if(code_num <= 0) {
 			code_num = 60;
-			$("#code_num i").html(code_num+'S');
+			$("#code_num i").html(code_num + 'S');
 			clearInterval(time);
 			$("#code_btn1").hide();
 			$("#code_btn").show();
@@ -468,20 +482,20 @@ function timeF(time, mm) {
 
 }
 //获取cookie
-function getCookie(name){
-	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-	if(arr=document.cookie.match(reg))
-	return unescape(arr[2]);
+function getCookie(name) {
+	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+	if(arr = document.cookie.match(reg))
+		return unescape(arr[2]);
 	else
-	return null;
+		return null;
 }
 // 删除cookie
-function delCookie(name){
+function delCookie(name) {
 	var exp = new Date();
 	exp.setTime(exp.getTime() - 1);
-	var cval=getCookie(name);
-	if(cval!=null)
-	document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+	var cval = getCookie(name);
+	if(cval != null)
+		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
 
 //获取url中字段
@@ -514,33 +528,33 @@ Array.prototype.unique3 = function() {
 
 //去重排序
 function uniqueSort(source, compareFn) {
-    var result = [];
-    if ('function' != typeof compareFn) {
-        compareFn = function (item1, item2) {
-            return parseInt(item1) - parseInt(item2);
-        };
-    }
-    $.each(source, function (i, v) {
-        if (i == 0) {
-            result.push(v);
-        } else {
-            //从最后开始
-            for (var j = result.length - 1; j >= 0; j--) {
-                var compare = compareFn(v, result[j]);
-                if (compare == 0){
-                    break;
-                }else if (compare > 0) {
-                    result.splice(j + 1, 0, v);
-                    break;
-                }
-                if (j == 0) {
-                    //到0还是小
-                    result.splice(0, 0, v);
-                }
-            }
-        }
-    });
-    return result;
+	var result = [];
+	if('function' != typeof compareFn) {
+		compareFn = function(item1, item2) {
+			return parseInt(item1) - parseInt(item2);
+		};
+	}
+	$.each(source, function(i, v) {
+		if(i == 0) {
+			result.push(v);
+		} else {
+			//从最后开始
+			for(var j = result.length - 1; j >= 0; j--) {
+				var compare = compareFn(v, result[j]);
+				if(compare == 0) {
+					break;
+				} else if(compare > 0) {
+					result.splice(j + 1, 0, v);
+					break;
+				}
+				if(j == 0) {
+					//到0还是小
+					result.splice(0, 0, v);
+				}
+			}
+		}
+	});
+	return result;
 }
 
 //国家，经济指标通用方法
@@ -597,12 +611,12 @@ var dataDesc = {
 		if(end && end !== 'undefined') {
 			url += "&end=" + end;
 		}
-		
-		if((location.href.indexOf('data.html')>-1)){
-			window.history.pushState({},0,'?id='+indicator+'&name='+country);
+
+		if((location.href.indexOf('data.html') > -1)) {
+			window.history.pushState({}, 0, '?id=' + indicator + '&name=' + country);
 		}
-		
-//		console.log(url);
+
+		//		console.log(url);
 		// 基于准备好的dom，初始化echarts图表
 		var myChart = echarts.init(document.getElementById(id), 'walden');
 		if(location.href.indexOf("add_viewpoint")) {
@@ -617,7 +631,7 @@ var dataDesc = {
 		$.get(url).done(function(data) {
 			myChart.hideLoading();
 			//			var d;
-//			console.log(data);
+			//			console.log(data);
 
 			// 填入数据
 			var ds = []; //merge后时间数组
@@ -635,18 +649,18 @@ var dataDesc = {
 				});
 				$.merge(ds, d);
 				vs[key] = v;
-//				console.log(val)
+				//				console.log(val)
 				indicator_name_cn = val.indicator.name_zh;
-				if(val.indicator.unit){
-					indicator_name_cn += '(单位：' +val.indicator.unit+ ')'
+				if(val.indicator.unit) {
+					indicator_name_cn += '(单位：' + val.indicator.unit + ')'
 				}
-				if($("#show_indicator_list_name")){
+				if($("#show_indicator_list_name")) {
 					$("#show_indicator_list_name").text(val.indicator.name_zh);
 				}
-				if($("#show_indicator_list_name")){
+				if($("#show_indicator_list_name")) {
 					$("#show_indicator_list_name").text(val.indicator.name_zh);
 				}
-				if($("#indicator")){
+				if($("#indicator")) {
 					$("#indicator").val(val.indicator.name_zh);
 				}
 			});
@@ -654,7 +668,7 @@ var dataDesc = {
 
 			//计算series
 			$.each(data, function(key, val) {
-//				alert(val.country.name)
+				//				alert(val.country.name)
 				var s = {}; //series
 				var v = vs[key];
 				var _d = []; //data
@@ -705,12 +719,12 @@ var dataDesc = {
 						},
 						data: _d
 					}
-				} else if(echartType === 'oneLine' && echartType){
+				} else if(echartType === 'oneLine' && echartType) {
 					s = {
-						name:val.country.name,
-			            type: 'line',
-//			            stack: '总量',
-			            data: _d
+						name: val.country.name,
+						type: 'line',
+						//			            stack: '总量',
+						data: _d
 					}
 				}
 				ss.push(s);
@@ -719,7 +733,7 @@ var dataDesc = {
 			window.csName = cs;
 			myChart.setOption({
 				title: {
-					text: indicator_name_cn 
+					text: indicator_name_cn
 				},
 				tooltip: {
 					trigger: 'axis'
@@ -729,8 +743,8 @@ var dataDesc = {
 				},
 				toolbox: {
 					feature: {
-						showTitle:true,
-						dataView:{},
+						showTitle: true,
+						dataView: {},
 						saveAsImage: {}
 					}
 				},
@@ -804,7 +818,7 @@ var dataDesc = {
 			$(".nav_txt").append(filter_html);
 		}
 		var urlPage;
-				window.location.href.indexOf('inland') > -1 ? urlPage = 'inland_data.html' : urlPage = 'data.html';
+		window.location.href.indexOf('inland') > -1 ? urlPage = 'inland_data.html' : urlPage = 'data.html';
 		console.log(urlPage);
 		$.ajax({
 			type: "get",
@@ -816,12 +830,12 @@ var dataDesc = {
 			success: function(data) {
 				$('.loading').remove();
 				var html = '';
-//				console.time("列循环");
+				//				console.time("列循环");
 				//原生态for循环
 				var html = '',
 					listHtml = '',
 					hrf = window.location.href;
-					
+
 				//				return;
 				for(var i = 0, len = data.length; i < len; i++) {
 					var a = data[i];
@@ -834,7 +848,7 @@ var dataDesc = {
 						//									console.log(a.indicators[j]);
 						html += '<dd class="data_nav_lists"><a href="' + urlPage + '?id=' + a.indicators[j].id + '" data-id="' + a.indicators[j].id + '" class="data_nav_click" title="' + a.indicators[j].name_zh + '" >' + a.indicators[j].name_zh + '</a><span class="glyphicon glyphicon-star-empty btn_collect none" title="收藏" ></span></dd>';
 						if(hrf.indexOf("data.html")) {
-							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="'+urlPage+'?id=' + a.indicators[j].id + '" data-id="' + a.indicators[j].id + '" title="' + a.indicators[j].name_zh + '"><span class="glyphicon glyphicon-triangle-right"></span>' + a.indicators[j].name_zh + '</a></li>'
+							listHtml += '<li class="list-group-item"><a class="menu-item-left data_nav_click" href="' + urlPage + '?id=' + a.indicators[j].id + '" data-id="' + a.indicators[j].id + '" title="' + a.indicators[j].name_zh + '"><span class="glyphicon glyphicon-triangle-right"></span>' + a.indicators[j].name_zh + '</a></li>'
 						}
 					}
 					html += '</dl>';
@@ -853,7 +867,7 @@ var dataDesc = {
 					columnWidth: pbl_width / 3
 				});
 				$("#inputSearch").removeProp("readonly");
-//				console.timeEnd("列循环");
+				//				console.timeEnd("列循环");
 				//点击最近过滤文字
 				$(document).on("click", ".data_nav_filter_txt", function() {
 					var val = $(this).text();
@@ -867,12 +881,13 @@ var dataDesc = {
 	loadDatas: function(_href, indicator) {
 		console.log(_href);
 		$("#data_table").find("tbody").html('');
-		var _uri = window.location.href,_url,_name;
+		var _uri = window.location.href,
+			_url, _name;
 		console.log(_uri);
-		if (_uri.indexOf('inland')>-1) {
+		if(_uri.indexOf('inland') > -1) {
 			_url = _href + "/data2/stat/CN?indicator=";
-			
-		}else{
+
+		} else {
 			_url = _href + "/data2/stat?indicator="
 		}
 		$.ajax({
@@ -881,13 +896,13 @@ var dataDesc = {
 			async: true,
 			success: function(data) {
 				//							console.log(data);
-//				console.time("表格数据：");
-				
+				//				console.time("表格数据：");
+
 				$.each(data, function(i, e) {
 					//								console.log(e);
-					if (_uri.indexOf('inland')>-1) {
+					if(_uri.indexOf('inland') > -1) {
 						_name = e.region_name
-					}else{
+					} else {
 						_name = e.country_name
 					}
 					var table_icon_style = '',
@@ -897,7 +912,7 @@ var dataDesc = {
 					} else {
 						table_icon_style = 'glyphicon-arrow-down red';
 					}
-					if((e.previous - e.val) == 0){
+					if((e.previous - e.val) == 0) {
 						table_icon_style = '';
 					}
 					html += '<td>' + _name + '</td>' +
@@ -909,7 +924,7 @@ var dataDesc = {
 					html += '</tr>';
 					$("#data_table").find("tbody").append(html);
 				});
-//				console.timeEnd("表格数据：");
+				//				console.timeEnd("表格数据：");
 			}
 		});
 	},
@@ -1307,39 +1322,47 @@ function onsize() {
 }
 
 // 判断用户是专家还是普通用户
-function ifExpert(uid){
+function ifExpert(uid) {
 	$.ajax({
-		type:"get",
-		url:_href + interfacelist.user + uid,
-		async:true,
-		success: function(data){
+		type: "get",
+		url: _href + interfacelist.user + uid,
+		async: true,
+		success: function(data) {
 			console.log(data.role);
-			if(data.role==0){
+			if(data.role == 0) {
 				$("#my_menu li").not('#exitLi').remove();
 				$(".label_name").text('普通用户');
-				if(location.href.indexOf('add_viewpoint.html')>-1){
+				if(location.href.indexOf('add_viewpoint.html') > -1) {
 					location.href = 'index.html';
 				}
-			}else if(data.role==1){
+			} else if(data.role == 1) {
 				$(".label_name").text('专家');
-			}else if(data.role==9){
+			} else if(data.role == 9) {
 				$(".label_name").text('管理员');
 			}
 		}
 	});
-	
+
 }
 
 // 键盘延迟事件只执行最后一次方法
 var _timer = {};
-function delay_till_last(id, fn, wait) {
-    if (_timer[id]) {
-        window.clearTimeout(_timer[id]);
-        delete _timer[id];
-    }
 
-    return _timer[id] = window.setTimeout(function() {
-        fn();
-        delete _timer[id];
-    }, wait);
+function delay_till_last(id, fn, wait) {
+	if(_timer[id]) {
+		window.clearTimeout(_timer[id]);
+		delete _timer[id];
+	}
+
+	return _timer[id] = window.setTimeout(function() {
+		fn();
+		delete _timer[id];
+	}, wait);
 }
+
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?4a0701445bef90dcfe658d43b60edbea";
+	var s = document.getElementsByTagName("script")[0];
+	s.parentNode.insertBefore(hm, s);
+})();
