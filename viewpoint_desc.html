@@ -28,86 +28,6 @@
 			.new_txt {
 				display: none;
 			}
-			
-			#data_collect {
-				position: fixed;
-				right: 0;
-				top: 100px;
-				z-index: 20;
-			}
-			
-			#collect {
-				background: #fff;
-				padding: 6px;
-			}
-			
-			#collect a {
-				text-decoration: none;
-			}
-			
-			#collects {
-				position: relative;
-				top: 32px;
-				right: 0;
-				background: #fff;
-				width: 260px;
-				padding: 20px;
-				border: 1px solid #e1e4e8;
-			}
-			
-			#collects .collects_title {
-				display: inline-block;
-				line-height: 20px;
-				position: relative;
-			}
-			
-			#collects .collects_title .delete_text {
-				position: absolute;
-				right: 5px;
-				top: 5px;
-				display: none;
-				color: #E0E0E0;
-			}
-			
-			#collects .collects_title .delete_text:hover {
-				color: orangered;
-				cursor: pointer;
-			}
-			
-			#collects .collects_title_left {
-				float: left;
-			}
-			
-			#collects .collects_title_right {
-				float: right;
-			}
-			
-			#collects .collects_titles {
-				margin-bottom: 20px;
-				border-bottom: 1px solid #999;
-			}
-			
-			#collects .collects_titles a {
-				color: #000;
-			}
-			
-			#collects p a {
-				color: #3b5998;
-			}
-			
-			#collects .collects_titles::after {
-				display: block;
-				content: "";
-				clear: both;
-			}
-			
-			.role_img {
-				border-radius: 50%;
-			}
-			
-			.collects_content {
-				overflow: auto;
-			}
 		</style>
 	</head>
 
@@ -176,8 +96,23 @@
 					<span></span>
 				</div>
 			</div>
+			<!--<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">
+			<h2 class="viewpoint_title"><a href="#">股票期权鼓励制度法规政策研究</a></h2>
+			<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  2015年7月1日</span></small>
+            <div class="viewpoint_txt">
+                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器
+                </p>
+                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。
+                </p>
+                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器
+                </p>
+                <p>
+                	*经济日报
+                </p>
+            </div> 
+		</div>-->
 			<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">
-				<div class="loading" style="width: 100%;text-align: center;"><img src="images/loading.gif" width="200" />正在加载中...</div>
+				<div class="loading" style="width: 100%;text-align: center;"><img src="images/loading.gif" width="200"  />正在加载中...</div>
 			</div>
 			<!-- 评论区域 -->
 			<div id="comment">
@@ -217,146 +152,6 @@
 				<small style="color: #999999;">来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  2015年7月1日</span></small>
 			</div>
 		</div>
-
-		<!-- 关键词列表 -->
-		<div id="data_collect" class="none1">
-			<div id="collect">
-				<a href="javascript:void(0)">经<br />济<br />关<br />键<br />词</a>
-			</div>
-			<div id="collects" class="none">
-				<div class="collects_titles">
-					<h5 class="collects_title_left collects_title">
-						<span style="vertical-align: middle;">关键词列表</span>
-						<!--<input type="text" name="search_expert" id="search_expert" value="" placeholder="输入要搜索的专家" style="width: 70%;float: right;" />-->
-						<span class="glyphicon glyphicon-remove delete_text"></span>
-					</h5>
-					<a href="javascript:void(0)" class="collects_title_right collects_title"></a>
-				</div>
-				<div id="scrollbar"></div>
-				<div class="collects_content">
-
-				</div>
-			</div>
-		</div>
-		<style type="text/css">
-			.echartsection {
-				position: absolute;
-				top: 111px;
-				display: block;
-				margin: 0px 50px;
-				width: 266.5px;
-				
-			}
-			
-			.echartsection::after {
-				display: block;
-				content: '';
-				clear: both;
-			}
-			
-			.echartitem {
-				float: left;
-				border: 1px solid #FFFFFF;
-				width: 266.5px;
-				height: 266.5px;
-				margin: 10px 0px;
-				padding: 20px;
-				color: #000;
-				background: #fff;
-			}
-			
-			.chartbg {
-				width: 226.5px;
-				height: 226.5px;
-				display: inline-block;
-				background-image: url(images/echart_bg.png);
-				background-size: cover;
-				position: absolute;
-			}
-			
-			.association_bg {
-				background-position: -230px 0;
-			}
-			
-			.subject_bg {
-				background-position: -460px 0;
-			}
-			
-			.academician_bg {
-				background-position: -675px 0;
-			}
-			
-			.organization_bg {
-				background-position: -904px 0;
-			}
-			
-			.chartinfo {
-				width: 226.5px;
-				height: 206.5px;
-				top: 69.25px;
-				display: block;
-				position: relative;
-				text-align: center;
-				vertical-align: middle;
-			}
-			
-			#echartdesc{
-				background: rgba(0,0,0,0.8);
-				width: 100%;
-				height: 100%;
-				position: fixed;
-				top: 0;
-				left: 0;
-				z-index: 21;
-			}
-			#echarts{
-				margin: 2% auto;
-				background: #eee;
-				width: 80%;
-				min-height: 90%;
-				padding: 20px;
-				
-			}
-			#echartsBar{
-				text-align: right;
-				font-size: 20px;
-				color: #666;
-			}
-			#echartsBar span{margin-left: 20px;}
-			
-		</style>
-		<!-- 左侧经济趋势分析 -->
-		<div class="echartsection" style="display: block;">
-			<div class="echartsection_0">
-				<div class="echartinit_wr">
-					<a href="javascript:;" class="echartitem" data-type="trend">
-						<span class="chartbg trend_bg"></span>
-						<span class="chartinfo"><h3>研究走势</h3><p>从1978到2016</p></span>
-					</a>
-					<a href="javascript:;" class="echartitem" data-type="association"><span class="chartbg association_bg"></span><span class="chartinfo"><h3>关联研究</h3><span>10-3144</span></span>
-					</a>
-					<a href="javascript:;" class="echartitem" data-type="subject"><span class="chartbg subject_bg"></span><span class="chartinfo"><h3>学科渗透</h3><span>6-36-22</span></span>
-					</a>
-					<a href="javascript:;" class="echartitem" data-type="academician"><span class="chartbg academician_bg"></span><span class="chartinfo"><h3>相关学者</h3><span>14个深度研究学者</span></span>
-					</a>
-					<a href="javascript:;" class="echartitem" data-type="organization"><span class="chartbg organization_bg"></span><span class="chartinfo"><h3>相关机构</h3><span>10个高发文量机构</span></span>
-					</a>
-				</div>
-			</div>
-		</div>
-		<div id="echartdesc">
-			<div id="echarts">
-				<div id="echartsBar">
-					<span class="glyphicon glyphicon-arrow-left"></span>
-					<span class="glyphicon glyphicon-arrow-right"></span>
-					<span class="glyphicon glyphicon-remove closeEchart" style="margin-left: 30px;font-size: 25px;color: #999;"></span>
-				</div>
-				<div class="echartslists">
-					
-				</div>
-			</div>
-		</div>
-
 		<footer></footer>
 		<script src="js/jquery1.9.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -369,6 +164,8 @@
 		<script type="text/javascript" src="js/echarts.min.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
+//			$("header").load("header.html");
+//			$("footer").load("footer.html");
 			//检查手机端和pc
 			var system = {
 				'win': false,
@@ -382,7 +179,7 @@
 			system.mac = p.indexOf("Mac") == 0;
 			system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
 			system.ipad = (navigator.userAgent.match(/iPad/i) != null) ? true : false;
-
+			
 			setTimeout(function() {
 				$("#navs li").eq(1).addClass("active").siblings().removeClass("active");
 			}, 500);
@@ -487,51 +284,49 @@
 			}
 
 			// 取评论列表
-			function commentList(page) {
+			function commentList(page){
 				$.ajax({
-					type: "get",
+					type:"get",
 					url: _href + interfacelist.comment_list,
-					async: true,
-					xhrFields: {
-						withCredentials: true
-					},
-					data: {
-						page: page,
+					async:true,
+					xhrFields: {withCredentials: true},
+					data:{
+						page:page,
 						token: token
 					},
-					success: function(data) {
+					success: function(data){
 						var _len;
-						$.each(data, function(i, e) {
+						$.each(data, function(i,e) {
 							_len = i;
-							var html = '<div class="row"><div class="col-md-1">' +
-								'<a href="javascript:;"><img src="' + (e.entity.head ? e.entity.head : headImg) + '" alt="头像" width="30" height="30" /></a></div>' +
-								'<div class="col-md-11 comments_name">' +
-								'	<span class="comments_author">' + e.entity.name + '</span>' +
-								'	<span class="source_time">' + timeF(e.created) + '</span>' +
-								'</div>' +
-								'<div class="col-md-11 comments_desc">' +
-								'	<p>' + e.descp + '</p>' +
+							var html = '<div class="row"><div class="col-md-1">'+
+								'<a href="javascript:;"><img src="'+(e.entity.head?e.entity.head:headImg)+'" alt="头像" width="30" height="30" /></a></div>'+
+								'<div class="col-md-11 comments_name">'+
+								'	<span class="comments_author">'+e.entity.name+'</span>'+
+								'	<span class="source_time">'+timeF(e.created)+'</span>'+
+								'</div>'+
+								'<div class="col-md-11 comments_desc">'+
+								'	<p>'+e.descp+'</p>'+
 								'</div></div>';
 							$('#more_comment').before(html);
 						});
-						(_len >= 20) ? $('#more_comment').show(): $('#more_comment').hide();
+						(_len>=20)?$('#more_comment').show():$('#more_comment').hide();
 					}
 				});
 			}
-
+			
+			
+			
 			// 取评论数和赞数
-			function pinglunZan(a) {
+			function pinglunZan(a){
 				$.ajax({
-					type: "get",
+					type:"get",
 					url: _href + interfacelist.zan_numsPing + a,
-					async: true,
-					xhrFields: {
-						withCredentials: true
-					},
-					success: function(data) {
-						if(a === 5) {
+					async:true,
+					xhrFields: {withCredentials: true},
+					success: function(data){
+						if(a===5){
 							$('.comment_num').text(data.num);
-						} else if(a === 1) {
+						}else if(a===1){
 							$('.zan_num').text(data.rnum);
 						}
 					}
@@ -583,9 +378,9 @@
 						} else {
 							descp = e.descp
 						}
-
+						
 					})
-					//					console.log(descp);
+//					console.log(descp);
 					var htm = '<h2 class="viewpoint_title"><a href="#">' + data.title + '</a></h2>' +
 						'<small>来源： <span class="source">' + data.owner.name + '</span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
 						'<div class="viewpoint_txt">' + descp + '<p>*经济日报</p></div> ';
@@ -600,17 +395,18 @@
 					}
 					nextViewpoint();
 					if(echarts_data) {
-						dataDesc.urlLoad(echarts_data.id_val, _url, echarts_data.country, echarts_data.indicator, echarts_data.start, echarts_data.end, echarts_data.echartType);
+						dataDesc.urlLoad(echarts_data.id_val, _url, echarts_data.country, echarts_data.indicator, echarts_data.start, echarts_data.end,echarts_data.echartType);
 					}
 				}
 			});
-
+			
 			$(document).on("click", ".next_comment", function() {
 				var _id = parseInt(getUrlParams().id);
 				var _href = $(".next_comment").attr("href");
 				$(".next_comment").attr("href", _href + (_id + 1));
 			});
 
+			
 			// 获取下一篇内容的信息
 			function nextViewpoint() {
 				$.ajax({
@@ -625,79 +421,6 @@
 						$('.comment_footer .c_f_style').find('span').text(data.owner.name);
 						$('.comment_footer').find('p.c_f_style').text(data.title);
 						$('.source_time').text(timeF(data.created));
-					}
-				});
-			}
-
-			rolesList(page)
-
-			// 设置左侧趋势分析
-			$(function() {
-				//				$('.echartsection').css({'top':$('#viewpoint_desc').offset().top});
-				//				$('#collects').css({'top':$('#viewpoint_desc').offset().top+'px'});
-				var echartWidth = $('#viewpoint_desc').offset().left - 100;
-				//				$('.echartsection').css({
-				//					'margin': '0 50px',
-				//					'width': echartWidth
-				//				});
-				//				$('.echartitem').css({
-				//					'width': echartWidth,
-				//					'height': echartWidth,
-				//					'margin': '10px 0',
-				//					'padding': '20px'
-				//				});
-				//				$('.chartbg').css({
-				//					'width': echartWidth - 40,
-				//					'height': echartWidth - 40
-				//				});
-				//				$('.chartinfo').css({
-				//					'width': echartWidth - 40,
-				//					'height': echartWidth - 60,
-				//					'top': (echartWidth - 128) / 2
-				//				});
-			});
-			// 设置关键词列表的高度
-			var collectstop = $('#data_collect').offset().top;
-			var winHeight = $(window).height();
-			var footertop = $('footer').offset().top;
-			$('.collects_content').css("maxHeight", (footertop - collectstop - 180) + 'px');
-			window.onresize = onsize;
-			onsize();
-
-			// 右侧关键词列表
-			function rolesList(page, search) {
-				if(search) {
-					searchUrl = "http://api.jjrb.grsx.cc/user/w/" + search;
-				} else {
-					searchUrl = "http://api.jjrb.grsx.cc/user/list/1";
-				}
-				$.ajax({
-					type: "get",
-					url: searchUrl,
-					async: true,
-					xhrFields: {
-						withCredentials: true
-					},
-					data: {
-						page: page,
-						token: token,
-						role: 1
-					},
-					success: function(data) {
-
-						if(data.code !== 10003 && data.msg !== '权限不够') {
-							$.each(data, function(i, e) {
-								var html = '<div class="media"><div class="media-left media-middle">' +
-									'<div class="media-body">' +
-									'	<h4 class="media-heading"><a href="my_viewpoint.html?id=' + e.id + '" target="_blank" style="color:#000;">' + e.name + '</a></h4>' +
-									//									'	<small>' + e.sign + '</small>' +
-									'</div></div>';
-								$('.collects_content').append(html);
-							});
-							fl = true;
-						} else {
-							$('.collects_content').parent().hide();
-						}
 					}
 				});
 			}
