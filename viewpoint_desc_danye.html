@@ -1,0 +1,2399 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>观点详情</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+		<style type="text/css">
+			p {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.imgs img {
+				width: 100%;
+			}
+			
+			.viewpoint_txt img {
+				width: 100%;
+			}
+			
+			.viewpoint_txt p {
+				line-height: 2;
+			}
+			
+			.new_txt {
+				display: none;
+			}
+			
+			#data_collect {
+				position: fixed;
+				right: 0;
+				top: 100px;
+				z-index: 20;
+			}
+			
+			#collect {
+				background: #fff;
+				padding: 6px;
+			}
+			
+			#collect a {
+				text-decoration: none;
+			}
+			
+			#collects {
+				position: relative;
+				top: 32px;
+				right: 0;
+				background: #fff;
+				width: 260px;
+				padding: 20px;
+				border: 1px solid #e1e4e8;
+			}
+			
+			#collects .collects_title {
+				display: inline-block;
+				line-height: 20px;
+				position: relative;
+			}
+			
+			#collects .collects_title .delete_text {
+				position: absolute;
+				right: 5px;
+				top: 5px;
+				display: none;
+				color: #E0E0E0;
+			}
+			
+			#collects .collects_title .delete_text:hover {
+				color: orangered;
+				cursor: pointer;
+			}
+			
+			#collects .collects_title_left {
+				float: left;
+			}
+			
+			#collects .collects_title_right {
+				float: right;
+			}
+			
+			#collects .collects_titles {
+				margin-bottom: 20px;
+				border-bottom: 1px solid #999;
+			}
+			
+			#collects .collects_titles a {
+				color: #000;
+			}
+			
+			#collects p a {
+				color: #3b5998;
+			}
+			
+			#collects .collects_titles::after {
+				display: block;
+				content: "";
+				clear: both;
+			}
+			
+			.role_img {
+				border-radius: 50%;
+			}
+			
+			.collects_content {
+				overflow: auto;
+			}
+			
+			.jingdutiao {
+				display: inline-block;
+				height: 12px;
+				background: #4969ab;;
+				margin-left: 5px;
+			}
+			.gjc{
+				background: dodgerblue;
+				border: 1px solid blue;
+				color: #F0F0F0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部导航 -->
+		<header style="height: 0;">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navs">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+						<a class="navbar-brand" href="indicator_list.html" style="height: 100%;padding: 0 0 0 15px;vertical-align: middle;line-height: 80px;"><img src="images/logo.png" width="" height="" alt="logo" id="logo_img" style="margin-top: 15px;"></a>
+					</div>
+					<div class="collapse navbar-collapse" id="navs">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown" style="color: rgb(153, 153, 153);">
+								<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown"><span title="曲线图" class="echarts_style glyphicon li_active">
+					<!--<svg class="icon header_data_icon" aria-hidden="true">
+						<use xlink:href="#icon-zhexiantu"></use>
+					</svg>-->
+					<img src="images/tabbar-numbers-n.png" class="data_header_img">
+				</span>数据立方 <span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu" style="width: 100%;">
+									<li class="dropdown-header active">数据立方</li>
+									<li class="dl_style">
+										<a href="indicator_list.html" class="">国际数据</a>
+									</li>
+									<li class="dl_style">
+										<a href="inland_indicator_list.html" class="">国内数据</a>
+									</li>
+								</ul>
+							</li>
+							<li style="color: rgb(153, 153, 153);">
+								<a href="index.html" class="nav_a"><span class="glyphicon li_active">
+						<!--<svg class="icon header_data_icon1" aria-hidden="true">
+							<use xlink:href="#icon-re1"></use>
+						</svg>-->
+						<img src="images/tabbar-news-n.png" class="hot_header_img">
+					</span>热点扫描</a>
+							</li>
+							<li id="gd" class="active" style="color: rgb(59, 89, 152);">
+								<a href="viewpoint.html" class="nav_a"><span class="glyphicon li_active"><img src="images/tabbar-paper-f.png" class="viewpoint_header_img"></span>专家论点</a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle nav_a" data-toggle="dropdown" style="color: rgb(153, 153, 153);"><span class="glyphicon"><img src="http://head.static.wantscart.com/mmopen/U7ktg9m61cL6t6UmDn0Tt9vjvxHavibv6V6RjX6aruUgwznibqFIWpxlYsq4LrL8A2g2aqc9KxLWStfkL7lZEfddXdU8DT39Fk/0" id="user_img" width="19" height="24" style="width:24px;border-radius:50%;"></span>我的 <span class="caret"></span></a>
+								<ul class="dropdown-menu" id="my_menu" role="menu" style="width: 100%;">
+									<li class="dropdown-header login_none" style="display: none;">登录</li>
+									<li class="dl_style login_none" style="display: none;">
+										<a href="javascript:void(0);" class="login_wechat" style="color: rgb(153, 153, 153);">微信扫码</a>
+									</li>
+									<li class="dl_style login_none" style="display: none;">
+										<a href="javascript:void(0);" class="login_phone" style="color: rgb(153, 153, 153);">手机号</a>
+									</li>
+									<li>
+										<a href="add_viewpoint.html" style="color: rgb(153, 153, 153);">发布观点
+											<!--<i class="label label-default label_name">专家</i>--></a>
+									</li>
+									<li>
+										<a href="my_viewpoint.html" style="color: rgb(153, 153, 153);">我的观点
+											<!--<i class="label label-default label_name">专家</i>--></a>
+									</li>
+									<li id="exitLi" style="">
+										<a href="javascript:void(0)" id="exit" style="color: rgb(153, 153, 153);">退出登录</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<!-- 头部导航结束  -->
+
+		<!-- 观点详情 -->
+		<div class="container" id="viewpoint_desc">
+			<div class="media">
+				<a class="media-left" href="my_viewpoint.html?id=72">
+					<img src="http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281638078812110078714.jpg" alt="...">
+				</a>
+				<div class="media-body">
+					<h4 class="media-heading">李义平</h4>
+					<span>中国人民大学经济学教授、博士生导师</span>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">
+				<div class="loading" style="width: 100%; text-align: center; display: none;"><img src="images/loading.gif" width="200">正在加载中...</div>
+				<h2 class="viewpoint_title"><a href="#">有效的结构调整才能谷底重生――尊重逻辑，闯过关口</a></h2><small>来源： <span class="source">李义平</span> <span class="source_time">2017年03月09日</span></small>
+				<div class="viewpoint_txt">
+					<p class="tc"></p>
+					<div class="otitle">
+						原标题：尊重逻辑，闯过关口
+					</div>
+					<p> </p>
+					<p> 　　核心观点</p>
+					<p> 　　●需求饱和的只是既有的产品和服务，但提升了的产业结构和服务是可以在更高的层次上打开一片新的需求天地的</p>
+					<p> 　　●结构不能有效调整的经济学意义就是社会的稀缺资源被投放在无效产业上的白白浪费，整个经济缺少进一步前进的支撑点</p>
+					<p> 　　●政府工作的重点就是创造有利于创新、有利于结构调整的环境</p>
+					<p> 　　刚刚结束的中央经济工作会议认为，认识新常态、适应新常态、引领新常态，是当前和今后一个时期我国经济发展的大逻辑，这是我们综合分析<strong class="gjc">世界经济长周期</strong>和我国发展阶段性特征及其相互作用作出的重大判断。我们必须统一思想、深化认识，必须克服困难、闯过关口，并把化解产能过剩作为明年经济工作的五大任务之首。</p>
+					<p> <strong>　　结构效应是没有尽头的，因为调整结构可以创新出新的需求，调整结构是发挥经济结构效应的前提和条件</strong></p>
+					<p> 　　化解产能过剩就是调整结构。经济发展可以分作水平效应和结构效应。水平效应是在给定技术条件、产业结构、产品结构不变的情况下，片面地扩展和重复既有的产业结构和产品结构，重在经济规模。结构效应是通过创新，提升产业、产品结构而获得更高层次的经济发展。结构效应更着重于经济发展的质量和效益。水平效应是有边界的，一种产业产能总有饱和的时候。结构效应是没有尽头的，因为调整结构可以创新出新的需求，人们的需求是永远没有尽头的。需求饱和的只是既有的产品和服务，但提升了的产业结构和服务是可以在更高的层次上打开一片新的需求天地的。例如，在传统手机饱和的同时，苹果公司及时地推出了智能手机，开辟了一个新的、巨大的市场。</p>
+					<p> 　　产业、产品结构的层次和水平，给定了发展的层次和规模，产业结构的固化会导致一国经济的长期徘徊不前，典型的案例就是农业和家庭手工业的结合的经济结构曾使中国经济几乎处于停滞状态。发达国家经济所以能不断发展，就是其产业结构会通过充满活力的经济机制，自动地提升、调整、吐故纳新。这种调整和提升是内生的，通常是某一企业在竞争规律的作用之下，率先创新，探寻未来的新兴产业以及新的技术走向和市场走向，产业结构由此得以提升。与此同时，其它企业纷纷跟进，经济发展就会进入一个新的历史时期。新技术的出现，也可能会使所有的企业排序重新洗牌，并由此强制地淘汰落后产能。经济萧条本身就是激励创新和淘汰落后产能的机制。马克思曾经形容为“就像房屋倒在人的头上时重力定律强制为自己开辟道路一样。”</p>
+					<p> <strong>　　中国经济如果不进行有效的结构调整，就难以谷底重生</strong></p>
+					<p> 　　当前，支撑中国经济发展的两个支柱行业，即传统制造业和房地产的产能已经严重过剩。这两个行业产能所以严重过剩，与中国经济曾经的发展阶段和发展模式紧密相关。改革开放之初的承接外来产业转移使我们成为世界工厂，世界工厂的经济状况与世界经济形势紧密相关，严重依赖于世界市场对其产品的需求。其次，发展之初的基础建设，以及地方政府对房地产业的情有独钟，催生了与之相关的钢材、水泥、煤、电产能的快速发展。这是一个阶段性的辉煌。当基础设施已经有了相当规模、房地产业相对过剩的时候，这些产能随之过剩，于是经济就在一个低点上徘徊。本来可以在产能过剩初见端倪的时候微调，但由于市场机制不健全，缺少兼并、破产、重组、主动转换的机制和渠道，也由于地方政府的各种保护，因为涉及到GDP的增长，税收和就业。更由于宏观政策遇经济下行实行刺激性政策，宽松的货币政策扭曲了价格，传达了错误的价格信号，使得资源更加便宜，于是产能过剩问题更加严重。例如，刺激政策中汽车补贴、家电补贴，使得长项更长，短项更短。</p>
+					<p> 　　中国经济如果不进行有效的结构调整，就难以谷底重生。结构不能有效调整，从经济学来看就是社会的稀缺资源被投放在无效产业上白白浪费，整个经济缺少进一步前进的支撑点。结构调整包括产业结构的调整，既包括产业的提升，即新产业的出现，又包括落后过剩产能的退出，即有进有退，吐故纳新。在产品层次上的结构调整，则指在那些还有必要存在的产业上，由产业链的低端上升到产业链的高端。对于我们而言，落后产能的淘汰是一个重要方面，只有淘汰了落后产能才能轻装上阵。企业不要期盼政府出手援助，政府也不应出手大规模救助，刺激政策常常使问题更加严重。经济运行的历史证明，诸如产能过剩形成的经济徘徊，只有让它自己治愈自己才是可取的，任何人为地恢复都会令那些在萧条中未能解决的剩余问题更加严重，从而又会产生出新的问题，再造成另一次更严重的商业威胁。</p>
+					<p> <strong>　　供给管理是有效结构调整，创新和调结构的主体应当是微观层面、企业层面的</strong></p>
+					<p> 　　相对于更着重于速度、规模和数量的需求管理，供给管理则有利于结构调整。发达国家的市场经济并非开始就奉行的是供给管理，古典经济学认为生产是第一位的，供给会自动地创造需求。后来有了1929年的经济危机，凯恩斯认为是有效需求不足，于是有了政府干预和宽松的刺激性政策。这种刺激性政策短时间似乎可以人为地制造繁荣，但由于人们的理性预期，长期实行的结果却出现了滞涨，于是有了供给学派，即通过减税，让企业更有创造力，让消费者更敢于消费。一句话，通过供给制造出新的需求。调整了的结构是更高层次发展的开始。在调整攻坚阶段，必须从压力中发掘动力，从挑战中发现符合经济发展内生规律的商机，正如经济学原理所揭示的：“如果把产品的质量改进和数量增加称为经济进步，并且把这个标尺用于商业循环的各个阶段，我们其实应当把市场的忽然光明称为退步，把萧条称为进步。市场光明乃通过错误投资浪费了稀缺的生产要素，同时通过过度消费而减少投资的存量。相反，萧条是个折返点，它走向所有的生产要素都用于使消费者最迫切的欲望得到最大的满足的境界。”供给管理着重于从微观层面、从市场层面解决问题，这是符合经济学的逻辑的，因为经济发展说到底是微观层面的事。</p>
+					<p> 　　供给管理应从企业层面发力，在健全的市场环境中寻求结构调整的突破点，政府工作的重点就是创造有利于创新、有利于结构调整的环境。结构调整或者说创新的方向既有技术上的不确定性，又有市场上的不确定性。技术上的不确定性是创新者判断的技术发展方向是不是准确，预期的难关是不是能够攻破。即便技术上成功了，市场能不能接受则还是个问题。市场遵循的是投入和产出的规律，没有经济效益的创新只能被束之高阁。正是基于创新的这些特点，创新和调结构的主体应当是微观层面、企业层面的。</p>
+					<p> 　　总之，只有认清我国经济发展的大逻辑，锐意改革、大胆创新、调整结构，才能闯过关口，谷底重生。</p>
+					<p> 　　（作者系中国人民大学经济学教授、博士生导师）</p>
+					<p>*经济日报</p>
+				</div>
+			</div>
+			<!-- 评论区域 -->
+			<div id="comment">
+				<div id="comment_title">
+					<span class="comment_img c_img1">
+					<span class="badge pull-left num comment_num">1</span>
+					</span>
+
+					<span class="comment_img c_img2" unselectable="on" onselectstart="return false;" style="-moz-user-select:none;">
+					<span class="badge pull-left num zan_num">0</span>
+					</span>
+					<div class="pull-right" style="line-height: 25px;">
+						<span class="comment_img c_img1 comment_add_icon"></span>
+						<a href="javascript:void(0);" class="comment_add">添加评论</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="comments">
+
+					<div class="row">
+						<div class="col-md-1">
+							<a href="javascript:;"><img src="http://head.static.wantscart.com/mmopen/U7ktg9m61cL6t6UmDn0Tt9vjvxHavibv6V6RjX6aruUgwznibqFIWpxlYsq4LrL8A2g2aqc9KxLWStfkL7lZEfddXdU8DT39Fk/0" alt="头像" width="30" height="30"></a>
+						</div>
+						<div class="col-md-11 comments_name"> <span class="comments_author">……省略一百字</span> <span class="source_time">2017年03月09日</span></div>
+						<div class="col-md-11 comments_desc">
+							<p>好</p>
+						</div>
+					</div>
+					<div id="more_comment" class="" style="text-align: center; margin: 20px auto; display: none;">
+						<a href="javascript:void(0)">查看更多评论</a>
+					</div>
+					<div class="row comment none">
+						<textarea name="" rows="2" placeholder="请输入要评论的内容" style="width: 100%;" id="comment_content"></textarea>
+						<span class="txt_error pull-left none">请输入评论内容，不能为空！</span>
+						<button class="btn btn-success btn-sm pull-right comment_ok">发表评论</button>
+					</div>
+				</div>
+			</div>
+			<div class="comment_footer">
+				<a class="next_comment" href="http://m.jjrb.grsx.cc/viewpoint_desc.html?id=">下一篇</a>
+				<div class="c_f_style">
+					<img src="http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281638078812110078714.jpg" width="20" height="20">
+					<span>李义平</span>
+				</div>
+				<p class="c_f_style">李义平：尊重逻辑，闯过关口</p>
+				<small style="color: #999999;">来源： <span class="source"> 经济日报  </span> <span class="source_time">2017年03月09日</span></small>
+			</div>
+		</div>
+
+		<!-- 关键词列表 -->
+		<div id="data_collect" class="none1">
+			<div id="collect">
+				<a href="javascript:void(0)">经<br>济<br>关<br>键<br>词</a>
+			</div>
+			<div id="collects" class="none" style="display: none;">
+				<div class="collects_titles">
+					<h5 class="collects_title_left collects_title">
+						<span style="vertical-align: middle;">关键词列表</span>
+						<!--<input type="text" name="search_expert" id="search_expert" value="" placeholder="输入要搜索的专家" style="width: 70%;float: right;" />-->
+						<span class="glyphicon glyphicon-remove delete_text"></span>
+					</h5>
+					<a href="javascript:void(0)" class="collects_title_right collects_title"></a>
+				</div>
+				<div id="scrollbar"></div>
+				<div class="collects_content" style="max-height: 643px;">
+
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">生活资源 <span class="jingdutiao" data-num='999'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">供热管理 <span class="jingdutiao" data-num='888'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">供气质量 <span class="jingdutiao" data-num='777'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">生活用水管理<span class="jingdutiao" data-num='688'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">一次供水问题  <span class="jingdutiao" data-num='588'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">交通运输  <span class="jingdutiao" data-num='516'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">城市交通  <span class="jingdutiao" data-num='515'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">房地产管理 <span class="jingdutiao" data-num='462'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">城乡建设 <span class="jingdutiao" data-num='449'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">社会保障与福利 <span class="jingdutiao" data-num='429'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">社会保障 <span class="jingdutiao" data-num='407'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">文体与教育管理 <span class="jingdutiao" data-num='406'></span>  </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">出租车运营管理  <span class="jingdutiao" data-num='385'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">自然资源管理  <span class="jingdutiao" data-num='355'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">土地资源管理 <span class="jingdutiao" data-num='304'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">物业服务管理  <span class="jingdutiao" data-num='304'></span></a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">医疗卫生 <span class="jingdutiao" data-num='284'></span> </a></h4></div>
+						</div>
+					</div>
+
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">煤炭灰管理 <span class="jingdutiao" data-num='284'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">生活噪音 <span class="jingdutiao" data-num='253'></span> </a></h4></div>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left media-middle">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="javascript:;" target="_blank" style="color:#000;">农村土地规划  <span class="jingdutiao" data-num='254'></span></a></h4></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<style type="text/css">
+			.echartsection {
+				position: absolute;
+				top: 111px;
+				display: block;
+				margin: 0px 50px;
+				width: 266.5px;
+			}
+			
+			.echartsection::after {
+				display: block;
+				content: '';
+				clear: both;
+			}
+			
+			.echartitem {
+				float: left;
+				border: 1px solid #FFFFFF;
+				width: 266.5px;
+				height: 266.5px;
+				margin: 10px 0px;
+				padding: 20px;
+				color: #000;
+				background: #fff;
+			}
+			
+			.chartbg {
+				width: 226.5px;
+				height: 226.5px;
+				display: inline-block;
+				background-image: url(images/echart_bg.png);
+				background-size: cover;
+				position: absolute;
+			}
+			
+			.association_bg {
+				background-position: -230px 0;
+			}
+			
+			.subject_bg {
+				background-position: -460px 0;
+			}
+			
+			.academician_bg {
+				background-position: -675px 0;
+			}
+			
+			.organization_bg {
+				background-position: -904px 0;
+			}
+			
+			.chartinfo {
+				width: 226.5px;
+				height: 206.5px;
+				top: 69.25px;
+				display: block;
+				position: relative;
+				text-align: center;
+				vertical-align: middle;
+			}
+			
+			#echartdesc {
+				background: rgba(0, 0, 0, 0.8);
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: -10000px;
+				z-index: 21;
+			}
+			
+			#echarts {
+				margin: 3% auto;
+				background: #eee;
+				width: 80%;
+				min-height: 90%;
+				padding: 20px;
+			}
+			
+			#echartsBar {
+				text-align: right;
+				font-size: 20px;
+				color: #666;
+			}
+			
+			#echartsBar span {
+				margin-left: 20px;
+			}
+			
+			.echartslists {
+				width: 100%;
+				height: 100%;
+				margin: 0 auto;
+				background: #eee;
+				overflow: hidden;
+			}
+			
+			.echartlist {
+				width: 100%;
+				height: 100%;
+				background: #999;
+				margin-top: 30px;
+				padding: 10px;
+			}
+		</style>
+		<!-- 左侧经济趋势分析 -->
+		<div class="echartsection" style="display: block; width: 90px; margin-left: 5px;">
+			<div class="echartsection_0">
+				<div class="echartinit_wr">
+					<a href="javascript:;" class="echartitem" data-type="trend" style="width: 90px; height: 100%; padding: 5px 10px; text-align: center;">
+						<span class="chartbg trend_bg" style="display: none;"></span>
+						<span class="chartinfo" style="display: none;"><h3>研究走势</h3><p>从1978到2016</p></span>
+					</a>
+					<a href="javascript:;" class="echartitem" data-type="association" style="width: 90px; height: 100%; padding: 5px 10px; text-align: center;"><span class="chartbg association_bg" style="display: none;"></span><span class="chartinfo" style="display: none;"><h3>关联研究</h3><span style="display: none;">10-3144</span></span>
+					</a>
+					<a href="javascript:;" class="echartitem" data-type="subject" style="width: 90px; height: 100%; padding: 5px 10px; text-align: center;"><span class="chartbg subject_bg" style="display: none;"></span><span class="chartinfo" style="display: none;"><h3>学科渗透</h3><span style="display: none;">6-36-22</span></span>
+					</a>
+					<a href="javascript:;" class="echartitem" data-type="academician" style="width: 90px; height: 100%; padding: 5px 10px; text-align: center;"><span class="chartbg academician_bg" style="display: none;"></span><span class="chartinfo" style="display: none;"><h3>相关学者</h3><span style="display: none;">14个深度研究学者</span></span>
+					</a>
+					<a href="javascript:;" class="echartitem" data-type="organization" style="width: 90px; height: 100%; padding: 5px 10px; text-align: center;"><span class="chartbg organization_bg" style="display: none;"></span><span class="chartinfo" style="display: none;"><h3>相关机构</h3><span style="display: none;">10个高发文量机构</span></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div id="echartdesc" class="" style="left: 0px; display: none;">
+			<div id="echarts">
+				<div id="echartsBar">
+					<span class="bar_text" style="float: left;"></span>
+					<span class="glyphicon glyphicon-arrow-left echart_prev"></span>
+					<span class="glyphicon glyphicon-arrow-right echart_next"></span>
+					<span class="glyphicon glyphicon-remove closeEchart" style="margin-left: 30px;font-size: 25px;color: #999;"></span>
+				</div>
+				<div class="echartslists" style="height: 736px;">
+					<div class="echartlist trend" id="trend" _echarts_instance_="ec_1498457283651" style="height: 756px; width: 1016px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent; display: block;">
+						<div style="position: relative; overflow: hidden; width: 996px; height: 736px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas width="996" height="736" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 996px; height: 736px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><span class="glyphicon glyphicon-remove new_close none"></span>
+						<div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1), top 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; font-family: &quot;Microsoft YaHei&quot;; line-height: 21px; padding: 5px; left: 686.4px; top: 486px;">2015<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#c23531"></span>中国 : 1.44255538382248</div>
+					</div>
+					<div class="echartlist association none" id="association">
+						<h3>关联研究</h3>
+						
+					</div>
+					<div class="echartlist academician none" id="academician" _echarts_instance_="ec_1498457283653" style="height: 756px; width: 1016px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent; display: none;">
+						<div style="position: relative; overflow: hidden; width: 996px; height: 736px; padding: 0px; margin: 0px; border-width: 0px;"><canvas width="996" height="736" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 996px; height: 736px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div>
+						<div></div>
+					</div>
+					<div class="echartlist subject none" id="subject" _echarts_instance_="ec_1498457283652" style="height: 756px; width: 1016px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent; display: none;">
+						<div style="position: relative; overflow: hidden; width: 996px; height: 736px; padding: 0px; margin: 0px; border-width: 0px;"><canvas width="996" height="736" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 996px; height: 736px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div>
+						<div></div>
+					</div>
+
+					<div class="echartlist organization none" id="organization" _echarts_instance_="ec_1498457283654" style="height: 756px; width: 1016px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent; display: none;">
+						<div style="position: relative; overflow: hidden; width: 996px; height: 736px; padding: 0px; margin: 0px; border-width: 0px;"><canvas width="996" height="736" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 996px; height: 736px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div>
+						<div></div>
+					</div>
+					<div class="echartlist organization none" id="yuncitu" style="height: 756px; width: 1016px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent; display: none;">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer>
+			<div id="footer_" class="container">
+				版权©&nbsp;2017&nbsp;
+				<p id="back_top"><img src="images/top.png"></p>
+			</div>
+		</footer>
+		<script src="http://m.jjrb.grsx.cc/js/jquery1.9.1.min.js"></script>
+		<script src="http://m.jjrb.grsx.cc/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://m.jjrb.grsx.cc/js/echarts.min.js"></script>
+		<script src="http://data-visual.cn/datav/src/js/echarts/extension/echarts-wordcloud.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//检查手机端和pc
+			var system = {
+				'win': false,
+				'mac': false,
+				'xll': false,
+				'ipad': false
+			};
+			//检测平台
+			var p = navigator.platform;
+			system.win = p.indexOf("Win") == 0;
+			system.mac = p.indexOf("Mac") == 0;
+			system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+			system.ipad = (navigator.userAgent.match(/iPad/i) != null) ? true : false;
+
+			setTimeout(function() {
+				$("#navs li").eq(1).addClass("active").siblings().removeClass("active");
+			}, 500);
+			//			alert(getUrlParams().id);
+			//接口
+			var _href = "http://api.jjrb.grsx.cc",
+				interfacelist = {
+					feed: "/feed",
+					comment_list: '/aggregator/391/5/entity', // 评论列表get
+					//						comment_nums: '/aggregator/391/5', //评论数get
+					add_comment: '/aggregator/391/5/entity', //发表评论post
+					zan: '/aggregator/391/1', //赞post
+					zan_numsPing: '/aggregator/391/', //赞数1get,评论数5
+					select_data: "/data2",
+					user: "/user/"
+				},
+				u = getUrlParams(),
+				urll = _href + interfacelist.feed + "/" + u.id,
+				next_url = _href + interfacelist.feed + "/" + (parseInt(u.id) + 1),
+				_url = _href + interfacelist.select_data + "?";
+			var headImg = localStorage.head ? localStorage.head : 'images/Group Copy 4.png';
+			var page = 1;
+
+			$(document).on("click", ".next_comment", function() {
+				var _id = parseInt(getUrlParams().id);
+				var _href = $(".next_comment").attr("href");
+				$(".next_comment").attr("href", _href + (_id + 1));
+			});
+
+			// 获取下一篇内容的信息
+			function nextViewpoint() {
+				$.ajax({
+					type: "get",
+					url: next_url,
+					async: true,
+					data: {
+						token: localStorage.token
+					},
+					success: function(data) {
+						$('.comment_footer .c_f_style').find('img').attr('src', data.owner.head);
+						$('.comment_footer .c_f_style').find('span').text(data.owner.name);
+						$('.comment_footer').find('p.c_f_style').text(data.title);
+						$('.source_time').text(timeF(data.created));
+					}
+				});
+			}
+
+			// 设置左侧趋势分析
+			$(function() {
+				var count = 0;
+				var echartWidth = $('#viewpoint_desc').offset().left - 100;
+				$('.echartslists').height($('#echarts').height() - 100);
+				$('.closeEchart').click(function() {
+					$(this).parents('#echartdesc').hide();
+				})
+				$('.echart_next').click(function() {
+					count++;
+					if(count > 5) {
+						count = 0;
+					}
+					//					echartShow();
+					$('.echartlist').eq(count).show().siblings().hide();
+				});
+				$('.echart_prev').click(function() {
+					count--;
+					if(count < 0) {
+						count = 5;
+					}
+					//					echartShow();
+					$('.echartlist').eq(count).show().siblings().hide();
+				})
+				$('.echartitem').on('click', function() {
+					$('#echartdesc').show();
+					var index = $(this).index();
+					var echartitem_name = $(this).attr('data-type');
+					count = index;
+					$('.echartlist').eq(count).show().siblings().hide();
+					echartShow();
+				});
+
+				function echartShow() {
+					$('#echartdesc').css('left', '0')
+					$('.echartlist').height($('#echartdesc').height() - 200);
+					$('.echartlist').width($('#echarts').width());
+					$('.echartslists').height($('#echartdesc').height() - 200);
+					
+					
+					
+					association();
+					trend();
+					subject();
+					academician();
+					organization();
+					yunCiTu();
+				}
+
+				$('.collects_content').find('a').click(function() {
+					$('#echartdesc').show();
+					$('.echartlist').eq(5).show().siblings().hide();
+					echartShow();
+				})
+
+				// 曲线图
+				function trend() {
+					var myEchart = echarts.init(document.getElementById('trend'));
+					var base = +new Date(1968, 9, 3);
+					var oneDay = 24 * 3600 * 1000;
+					var date = [];
+
+					var data = [Math.random() * 300];
+
+					for(var i = 1; i < 20000; i++) {
+						var now = new Date(base += oneDay);
+						date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+						data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+					}
+
+					option = {
+						tooltip: {
+							trigger: 'axis',
+							position: function(pt) {
+								return [pt[0], '10%'];
+							}
+						},
+						title: {
+							left: 'center',
+							text: '研究走势',
+						},
+						legend: {
+							top: 'bottom',
+							data: ['意向']
+						},
+						toolbox: {
+							feature: {
+								dataZoom: {
+									yAxisIndex: 'none'
+								},
+								restore: {},
+								saveAsImage: {}
+							}
+						},
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,
+							data: date
+						},
+						yAxis: {
+							type: 'value',
+							boundaryGap: [0, '100%']
+						},
+						dataZoom: [{
+							type: 'inside',
+							start: 0,
+							end: 10
+						}, {
+							start: 0,
+							end: 10,
+							handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+							handleSize: '80%',
+							handleStyle: {
+								color: '#fff',
+								shadowBlur: 3,
+								shadowColor: 'rgba(0, 0, 0, 0.6)',
+								shadowOffsetX: 2,
+								shadowOffsetY: 2
+							}
+						}],
+						series: [{
+							name: '模拟数据',
+							type: 'line',
+							smooth: true,
+							symbol: 'none',
+							sampling: 'average',
+							itemStyle: {
+								normal: {
+									color: 'rgb(255, 70, 131)'
+								}
+							},
+							areaStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+										offset: 0,
+										color: 'rgb(255, 158, 68)'
+									}, {
+										offset: 1,
+										color: 'rgb(255, 70, 131)'
+									}])
+								}
+							},
+							data: data
+						}]
+					};
+					myEchart.setOption(option);
+
+				}
+				//单轴散点
+				function association() {
+					var myEchart = echarts.init(document.getElementById('association'));
+					var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
+						'7a', '8a', '9a', '10a', '11a',
+						'12p', '1p', '2p', '3p', '4p', '5p',
+						'6p', '7p', '8p', '9p', '10p', '11p'
+					];
+					var days = ['Saturday', 'Friday', 'Thursday',
+						'Wednesday', 'Tuesday', 'Monday', 'Sunday'
+					];
+
+					var data = [
+						[0, 0, 5],
+						[0, 1, 1],
+						[0, 2, 0],
+						[0, 3, 0],
+						[0, 4, 0],
+						[0, 5, 0],
+						[0, 6, 0],
+						[0, 7, 0],
+						[0, 8, 0],
+						[0, 9, 0],
+						[0, 10, 0],
+						[0, 11, 2],
+						[0, 12, 4],
+						[0, 13, 1],
+						[0, 14, 1],
+						[0, 15, 3],
+						[0, 16, 4],
+						[0, 17, 6],
+						[0, 18, 4],
+						[0, 19, 4],
+						[0, 20, 3],
+						[0, 21, 3],
+						[0, 22, 2],
+						[0, 23, 5],
+						[1, 0, 7],
+						[1, 1, 0],
+						[1, 2, 0],
+						[1, 3, 0],
+						[1, 4, 0],
+						[1, 5, 0],
+						[1, 6, 0],
+						[1, 7, 0],
+						[1, 8, 0],
+						[1, 9, 0],
+						[1, 10, 5],
+						[1, 11, 2],
+						[1, 12, 2],
+						[1, 13, 6],
+						[1, 14, 9],
+						[1, 15, 11],
+						[1, 16, 6],
+						[1, 17, 7],
+						[1, 18, 8],
+						[1, 19, 12],
+						[1, 20, 5],
+						[1, 21, 5],
+						[1, 22, 7],
+						[1, 23, 2],
+						[2, 0, 1],
+						[2, 1, 1],
+						[2, 2, 0],
+						[2, 3, 0],
+						[2, 4, 0],
+						[2, 5, 0],
+						[2, 6, 0],
+						[2, 7, 0],
+						[2, 8, 0],
+						[2, 9, 0],
+						[2, 10, 3],
+						[2, 11, 2],
+						[2, 12, 1],
+						[2, 13, 9],
+						[2, 14, 8],
+						[2, 15, 10],
+						[2, 16, 6],
+						[2, 17, 5],
+						[2, 18, 5],
+						[2, 19, 5],
+						[2, 20, 7],
+						[2, 21, 4],
+						[2, 22, 2],
+						[2, 23, 4],
+						[3, 0, 7],
+						[3, 1, 3],
+						[3, 2, 0],
+						[3, 3, 0],
+						[3, 4, 0],
+						[3, 5, 0],
+						[3, 6, 0],
+						[3, 7, 0],
+						[3, 8, 1],
+						[3, 9, 0],
+						[3, 10, 5],
+						[3, 11, 4],
+						[3, 12, 7],
+						[3, 13, 14],
+						[3, 14, 13],
+						[3, 15, 12],
+						[3, 16, 9],
+						[3, 17, 5],
+						[3, 18, 5],
+						[3, 19, 10],
+						[3, 20, 6],
+						[3, 21, 4],
+						[3, 22, 4],
+						[3, 23, 1],
+						[4, 0, 1],
+						[4, 1, 3],
+						[4, 2, 0],
+						[4, 3, 0],
+						[4, 4, 0],
+						[4, 5, 1],
+						[4, 6, 0],
+						[4, 7, 0],
+						[4, 8, 0],
+						[4, 9, 2],
+						[4, 10, 4],
+						[4, 11, 4],
+						[4, 12, 2],
+						[4, 13, 4],
+						[4, 14, 4],
+						[4, 15, 14],
+						[4, 16, 12],
+						[4, 17, 1],
+						[4, 18, 8],
+						[4, 19, 5],
+						[4, 20, 3],
+						[4, 21, 7],
+						[4, 22, 3],
+						[4, 23, 0],
+						[5, 0, 2],
+						[5, 1, 1],
+						[5, 2, 0],
+						[5, 3, 3],
+						[5, 4, 0],
+						[5, 5, 0],
+						[5, 6, 0],
+						[5, 7, 0],
+						[5, 8, 2],
+						[5, 9, 0],
+						[5, 10, 4],
+						[5, 11, 1],
+						[5, 12, 5],
+						[5, 13, 10],
+						[5, 14, 5],
+						[5, 15, 7],
+						[5, 16, 11],
+						[5, 17, 6],
+						[5, 18, 0],
+						[5, 19, 5],
+						[5, 20, 3],
+						[5, 21, 4],
+						[5, 22, 2],
+						[5, 23, 0],
+						[6, 0, 1],
+						[6, 1, 0],
+						[6, 2, 0],
+						[6, 3, 0],
+						[6, 4, 0],
+						[6, 5, 0],
+						[6, 6, 0],
+						[6, 7, 0],
+						[6, 8, 0],
+						[6, 9, 0],
+						[6, 10, 1],
+						[6, 11, 0],
+						[6, 12, 2],
+						[6, 13, 1],
+						[6, 14, 3],
+						[6, 15, 4],
+						[6, 16, 0],
+						[6, 17, 0],
+						[6, 18, 0],
+						[6, 19, 0],
+						[6, 20, 1],
+						[6, 21, 2],
+						[6, 22, 2],
+						[6, 23, 6]
+					];
+
+					option = {
+						tooltip: {
+							position: 'top'
+						},
+						title: [],
+						singleAxis: [],
+						series: []
+					};
+
+					echarts.util.each(days, function(day, idx) {
+						option.title.push({
+							textBaseline: 'middle',
+							top: (idx + 0.5) * 100 / 7 + '%',
+							text: day
+						});
+						option.singleAxis.push({
+							left: 150,
+							type: 'category',
+							boundaryGap: false,
+							data: hours,
+							top: (idx * 100 / 7 + 5) + '%',
+							height: (100 / 7 - 10) + '%',
+							axisLabel: {
+								interval: 2
+							}
+						});
+						option.series.push({
+							singleAxisIndex: idx,
+							coordinateSystem: 'singleAxis',
+							type: 'scatter',
+							data: [],
+							symbolSize: function(dataItem) {
+								return dataItem[1] * 4;
+							}
+						});
+					});
+
+					echarts.util.each(data, function(dataItem) {
+						option.series[dataItem[0]].data.push([dataItem[1], dataItem[2]]);
+					});
+
+					myEchart.setOption(option)
+				}
+
+				function subject() {
+					var myEchart = echarts.init(document.getElementById('subject'));
+					option = {
+						title: {
+							text: '相关学者关系',
+							link: ''
+						},
+						tooltip: {},
+						animationDurationUpdate: 1500,
+						animationEasingUpdate: 'quinticInOut',
+						label: {
+							normal: {
+								show: true,
+								textStyle: {
+									fontSize: 14
+								},
+							}
+						},
+						series: [
+
+							{
+								type: 'graph',
+								layout: 'force',
+								symbolSize: 50,
+								focusNodeAdjacency: true,
+								roam: true,
+								categories: [{
+										name: '三皇五帝'
+									}, {
+										name: '夏'
+									}, {
+										name: '商'
+									}, {
+										name: '周'
+									},
+									{
+										name: '春秋战国'
+									},
+									{
+										name: '秦汉'
+									}
+								],
+								label: {
+									normal: {
+										show: true,
+										textStyle: {
+											fontSize: 14
+										},
+									}
+								},
+								force: {
+									repulsion: 800
+								},
+								//edgeSymbol: ['pin'],
+								//edgeSymbolSize: [1, 10],
+								edgeLabel: {
+									normal: {
+										show: true,
+										textStyle: {
+											fontSize: 12
+										},
+										formatter: "{c}"
+									}
+								},
+								data: [{
+										name: '林朝木',
+										category: 0,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0829/MAIN201308291418220888552198787.jpg'
+									},
+									{
+										name: '夏斌',
+										category: 0,
+										symbol: 'image://http://static-01.jjrb.grsx.cc/f1494242283249'
+									},
+									{
+										name: '李韬葵',
+										category: 0,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281638078812110078714.jpg'
+									},
+									{
+										name: '刘淑成',
+										category: 0,
+										//symbolSize: [250, 250],
+										symbol: 'image://http://www.sinaimg.cn/zhuanlan/author/tangjianwei/idx/2017/0306/U12164P1493T24D3422F364DT20170306155644.jpg',
+									},
+
+									{
+										name: '颛顼',
+										category: 0,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281520248727034299488.jpg'
+									},
+									{
+										name: '樊纲',
+										category: 0,
+										draggable: true,
+										symbol: 'image://http://static-01.jjrb.grsx.cc/f1494255836335'
+									},
+									{
+										name: '杨一夫',
+										category: 0,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281349292799562286053.jpg'
+									},
+
+									{
+										name: '邹东涛',
+										category: 0,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281051096156985081436.jpg'
+									},
+									{
+										name: '程恩富',
+										category: 1,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281038590298469454646.jpg'
+									},
+
+									{
+										name: '夏桀',
+										category: 1,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0808/MAIN201308081503338562350967959.jpg'
+									},
+									{
+										name: '张宇',
+										category: 2,
+										draggable: true,
+										symbol: 'http://theory.people.com.cn/NMediaFile/2013/0828/MAIN201308281013423267769994141.jpg'
+									},
+									{
+										name: '张卓元',
+										category: 2,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0827/MAIN201308271639583443726819210.jpg'
+									},
+									{
+										name: '卫兴华',
+										category: 2,
+										draggable: true,
+										symbol: 'image://http://static-01.jjrb.grsx.cc/f1494256118428'
+									},
+									{
+										name: '李一平',
+										category: 3,
+										draggable: true,
+										symbol: 'image://http://theory.people.com.cn/NMediaFile/2013/0827/MAIN201308271639583443726819210.jpg'
+									},
+									{
+										name: '顾海良',
+										category: 3,
+										draggable: true,
+										symbol: 'image://http://www.sinaimg.cn/zhuanlan/author/guizefa/idx/2017/0208/U12138P1493T24D3412F364DT20170208150041.jpg'
+									},
+									{
+										name: '李银宁',
+										category: 3,
+										draggable: true,
+										symbol: 'image://http://www.sinaimg.cn/zhuanlan/author/wangpeilin/idx/2016/0511/U12164P1493T24D3276F364DT20160511132319.jpg'
+									},
+
+								],
+								links: [{
+										source: '刘淑成',
+										target: '颛顼',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+											}
+										}
+
+									},
+									{
+										source: '刘淑成',
+										target: '樊纲',
+										value: ''
+									},
+									{
+										source: '颛顼',
+										target: '程恩富',
+										value: ''
+									},
+									{
+										source: '颛顼',
+										target: '邹东涛',
+										value: ''
+									},
+									{
+										source: '颛顼',
+										target: '樊纲',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+												type: 'dotted'
+											}
+										}
+									},
+									{
+										source: '樊纲',
+										target: '杨一夫',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+											}
+										}
+									},
+									{
+										source: '杨一夫',
+										target: '邹东涛',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+												type: 'dotted'
+											}
+										}
+									},
+									{
+										source: '邹东涛',
+										target: '程恩富',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+												type: 'dotted'
+											}
+										}
+									},
+									{
+										source: '程恩富',
+										target: '夏桀',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red'
+											}
+										}
+									},
+									{
+										source: '张卓元',
+										target: '夏桀',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+												type: 'dotted'
+											}
+										}
+									},
+									{
+										source: '张卓元',
+										target: '卫兴华',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red'
+											}
+										}
+									},
+									{
+										source: '李一平',
+										target: '卫兴华',
+										value: '',
+										lineStyle: {
+											normal: {
+												color: 'red',
+												type: 'dotted'
+											}
+										}
+									},
+									{
+										source: '樊纲',
+										target: '李银宁',
+										value: ','
+									},
+									{
+										source: '李银宁',
+										target: '顾海良',
+										value: ','
+									},
+									{
+										source: '顾海良',
+										target: '李一平',
+										value: ''
+									},
+
+									{
+										source: '刘淑成',
+										target: '林朝木',
+										value: ''
+									},
+									{
+										source: '刘淑成',
+										target: '李韬葵',
+										value: ''
+									},
+									{
+										source: '刘淑成',
+										target: '夏斌',
+										value: ''
+									},
+									{
+										source: '樊纲',
+										target: '张宇',
+										value: ''
+									},
+									{
+										source: '张宇',
+										target: '张卓元',
+										value: ''
+									},
+								],
+								lineStyle: {
+									normal: {
+										opacity: 0.7,
+										width: 1,
+										curveness: 0.1
+									}
+								}
+							}
+						]
+					};
+					myEchart.setOption(option);
+				}
+
+				function academician() {
+					var myEchart = echarts.init(document.getElementById('academician'));
+					var data = ['文艺', '人文社科', '经管', '励志',
+						'科技', '生活'
+					];
+					var c = [];
+					var m = [];
+					var n = [];
+					var l = [800, 700, 750, 850, 1000, 1200];
+					var a = ["星星上的人", "心无挂碍", "解忧杂货店", "小王子", "次第花开", "老人与海", "影响力", "金字塔原理", "阿米巴经营", "断舍离", "非暴力沟通", "人性的弱点营", "时间重生", "虚空：宇宙源起何处", "无限之书：从宇宙边", "太空之眼 : 哈勃", "肌肉健美训练图解", "如果可以去流浪", "孤独星球", "最好的时光在路上"];
+					var d = [280, 220, 300, 200, 240, 260, 300, 200, 250, 300, 200, 350, 300, 200, 180, 320, 320, 350, 250, 280];
+					for(var i = 0; i < data.length; i++) {
+						c.push({
+							"name": data[i],
+							"value": l[i],
+							"symbolSize": 9,
+							"category": data[i],
+							"draggable": "true"
+						});
+						m.push({
+							"source": "借阅频次高的书类进行排名",
+							"target": data[i]
+						});
+						n.push({
+							'name': data[i]
+						});
+					}
+					for(var k = 0; k < a.length; k++) {
+						if(k < 3) {
+							c.push({
+								"name": a[k],
+								"value": d[k],
+								"symbolSize": 18,
+								"category": "文艺",
+								"draggable": "true"
+							});
+							m.push({
+								"source": "文艺",
+								"target": a[k]
+							})
+						} else if(k < 6) {
+							c.push({
+								"name": a[k],
+								"value": d[k],
+								"symbolSize": 18,
+								"category": "人文社科",
+								"draggable": "true"
+							});
+							m.push({
+								"source": "人文社科",
+								"target": a[k]
+							})
+						} else if(k < 9) {
+							c.push({
+								"name": a[k],
+								"value": d[k],
+								"symbolSize": 18,
+								"category": "经管",
+								"draggable": "true"
+							});
+							m.push({
+								"source": "经管",
+								"target": a[k]
+							})
+						} else if(k < 12) {
+							c.push({
+								"name": a[k],
+								"value": d[k],
+								"symbolSize": 18,
+								"category": "励志",
+								"draggable": "true"
+							});
+							m.push({
+								"source": "励志",
+								"target": a[k]
+							})
+						} else if(k < 16) {
+							c.push({
+								"name": a[k],
+								"value": d[k],
+								"symbolSize": 18,
+								"category": "科技",
+								"draggable": "true"
+							});
+							m.push({
+								"source": "科技",
+								"target": a[k]
+							})
+						} else if(k < 20) {
+							c.push({
+								"name": a[k],
+								"value": d[k],
+								"symbolSize": 18,
+								"category": "生活",
+								"draggable": "true"
+							});
+							m.push({
+								"source": "生活",
+								"target": a[k]
+							})
+						}
+					}
+					c.push({
+						"name": "借阅频次高的书类进行排名",
+						"symbolSize": 3,
+						"category": "借阅频次高的书类进行排名",
+						"draggable": "true",
+						"value": []
+					});
+					/*   d.push( {
+					       "source": "人文学院",
+					       "target": "汉语言文学(应用语言学)"
+					   });*/
+					option = {
+						backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+							offset: 0,
+							color: '#f7f8fa'
+						}, {
+							offset: 1,
+							color: '#cdd0d5'
+						}]),
+						title: {
+							text: "学科渗透",
+						},
+						tooltip: {},
+						legend: [{
+							formatter: function(name) {
+								return echarts.format.truncateText(name, 40, '14px Microsoft Yahei', '…');
+							},
+							tooltip: {
+								show: true
+							},
+							selectedMode: 'false',
+							bottom: 20,
+							data: ['文艺', '人文社科', '经管', '励志',
+								'科技', '生活', '音像'
+							]
+						}],
+						toolbox: {
+							show: true,
+							feature: {
+								dataView: {
+									show: true,
+									readOnly: true
+								},
+								restore: {
+									show: true
+								},
+								saveAsImage: {
+									show: true
+								}
+							}
+						},
+						animationDuration: 3000,
+						animationEasingUpdate: 'quinticInOut',
+						series: [{
+							name: '借阅频次高的书类进行排名',
+							type: 'graph',
+							layout: 'force',
+
+							force: {
+								repulsion: 200
+							},
+							data: c,
+							links: m,
+							categories: n,
+							focusNodeAdjacency: true,
+							roam: true,
+							label: {
+								normal: {
+
+									show: true,
+									position: 'top',
+
+								}
+							},
+							lineStyle: {
+								normal: {
+									color: 'source',
+									curveness: 0,
+									type: "solid"
+								}
+							}
+						}]
+					};
+					myEchart.setOption(option);
+				}
+
+				function organization() {
+					var myEchart = echarts.init(document.getElementById('organization'));
+					option = {
+						title: {
+							text: '相关机构分布点',
+							subtext: 'By 经济日报'
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							},
+							formatter: "{a} <br/>{b} : {c}%"
+						},
+						legend: {
+							data: ['2016年']
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis: {
+							type: 'value',
+							boundaryGap: [0, 0.01],
+							"axisLabel": {
+								"interval": 0,
+								formatter: '{value}%',
+							}
+						},
+						yAxis: {
+							type: 'category',
+							data: ['康体健身与休闲娱乐',
+								'酒店IT与安防设备',
+								'酒店建筑',
+								'酒店布草及纺织用品',
+								'酒店家具',
+								'酒店工程',
+								'酒店设计',
+								'葡萄酒与烈酒',
+								'客房易耗品及电器',
+								'桌面用品',
+								'酒店与清洁',
+							]
+						},
+						series: [{
+							name: '2016年占比',
+							type: 'bar',
+							data: [2.00, 3.00, 5.00, 5.50, 6.50, 6.50, 7.50, 8.50, 8.50, 9.50, 10.0]
+						}]
+					};
+					myEchart.setOption(option);
+				}
+
+			});
+
+			// 设置关键词列表的高度
+			var collectstop = $('#data_collect').offset().top;
+			var winHeight = $(window).height();
+			var footertop = $('footer').offset().top;
+			$('.collects_content').css("maxHeight", (footertop - collectstop - 180) + 'px');
+			window.onresize = onsize;
+			onsize();
+
+			// 判断收藏菜单
+			function onsize() {
+				var _left = $(".container").offset().left;
+				var echartsection = $('.echartsection').attr('style');
+				var echartitem = $('.echartitem').attr('style');
+				if(_left > 210) {
+					$("#collects").show();
+					$("#collect").hide();
+					$("#collects").css({
+						"width": _left - 100 + "px",
+						"margin": "0 45px"
+					});
+					$(document).on("mouseleave", "#collects", function() {
+						$("#collect").hide();
+						$("#collects").show();
+					});
+					// 左侧趋势图表样式
+					$('.echartsection').attr('style', 'position: absolute;top: 111px;display: block;margin: 0px 50px;width: 266.5px;');
+					$('.echartitem').attr('style', 'float: left;border: 1px solid #FFFFFF;width: 266.5px;height: 266.5px;margin: 10px 0px;padding: 20px;color: #000;background: #fff;');
+					$('.echartitem').each(function(i, e) {
+						$(e).find('span').show();
+						$(e).find('p.tempP').hide();
+					});
+				} else {
+					$("#collects").hide();
+					$("#collect").show();
+					// 收藏
+					$(document).on("mousemove", "#collect", function() {
+						$("#collects").show();
+						$("#collect").hide();
+					});
+					$(document).on("mouseleave", "#collects", function() {
+						$("#collects").hide();
+						$("#collect").show();
+					});
+					// 左侧趋势图表样式
+					$('.echartsection').css({
+						'width': '90px',
+						'margin-left': '5px'
+					});
+					$('.echartitem').css({
+						'width': '90px',
+						'height': '100%',
+						'padding': '5px 10px',
+						'text-align': 'center'
+					});
+					$('.echartitem').each(function(i, e) {
+						$(e).find('span').hide();
+						$(e).append('<p class="tempP">' + $(e).find('h3').text() + '</p>');
+					});
+				}
+			}
+			//获取url中字段
+			function getUrlParams() {
+				var params = {};
+				var url = window.location.href;
+				var idx = url.indexOf("?");
+				if(idx > 0) {
+					var queryStr = url.substring(idx + 1);
+					var args = queryStr.split("&");
+					for(var i = 0, a, nv; a = args[i]; i++) {
+						nv = args[i] = a.split("=");
+						params[nv[0]] = nv.length > 1 ? nv[1] : true;
+					}
+				}
+				return params;
+			};
+			
+			// 曲线图柱状图
+			function urlLoad(id, url, country, indicator, start, end, echartType) {
+				if(country) {
+					url += "&country=" + country;
+				}
+				if(indicator) {
+					url += "&indicator=" + indicator;
+				}
+				if(start) {
+					url += "&start=" + start;
+				}
+				if(end && end !== 'undefined') {
+					url += "&end=" + end;
+				}
+
+				if((location.href.indexOf('data.html') > -1)) {
+					window.history.pushState({}, 0, '?id=' + indicator + '&name=' + country);
+				}
+
+				//		console.log(url);
+				// 基于准备好的dom，初始化echarts图表
+				var myChart = echarts.init(document.getElementById(id), 'walden');
+				if(location.href.indexOf("add_viewpoint")) {
+					$("#" + id).append("<span class='glyphicon glyphicon-remove new_close none'></span>");
+				}
+
+				var fla = true,
+					s = {};
+
+				myChart.showLoading();
+				//异步加载方法
+				$.get(url).done(function(data) {
+					myChart.hideLoading();
+					//			var d;
+					//			console.log(data);
+
+					// 填入数据
+					var ds = []; //merge后时间数组
+					var vs = []; //数据二维字典
+					var ss = [];
+					var cs = [];
+					var indicator_name_cn;
+					//merge时间，获得x轴分类
+					$.each(data, function(key, val) {
+						var d = []; //时间数组
+						var v = []; //数据字典
+						$.each(val.data, function(i, obj) {
+							v[obj.date] = obj.value;
+							d.push(obj.date);
+						});
+						$.merge(ds, d);
+						vs[key] = v;
+						//				console.log(val)
+						indicator_name_cn = val.indicator.name_zh;
+						if(val.indicator.unit) {
+							indicator_name_cn += '(单位：' + val.indicator.unit + ')'
+						}
+						if($("#show_indicator_list_name")) {
+							$("#show_indicator_list_name").text(val.indicator.name_zh);
+						}
+						if($("#show_indicator_list_name")) {
+							$("#show_indicator_list_name").text(val.indicator.name_zh);
+						}
+						if($("#indicator")) {
+							$("#indicator").val(val.indicator.name_zh);
+						}
+					});
+					ds = uniqueSort(ds);
+
+					//计算series
+					$.each(data, function(key, val) {
+						//				alert(val.country.name)
+						var s = {}; //series
+						var v = vs[key];
+						var _d = []; //data
+						$.each(ds, function(i, d) {
+							if(v[d]) {
+								_d.push(v[d]);
+							} else {
+								_d.push('');
+							}
+						});
+						//              s.type = 'line';
+						//              s.name = key;
+						//              s.areaStyle = {normal: {}};
+						//              s.data = _d;
+						//              ss.push(s);
+						cs.push(val.country.name);
+						//切换图表样式
+						if(!echartType || echartType == '' || echartType == undefined) {
+							echartType = 'line';
+							fla = false;
+						}
+						if(echartType === 'line' && echartType) {
+							fla = false;
+							s = {
+								name: val.country.name,
+								type: echartType,
+								smooth: true,
+								itemStyle: {
+									normal: {
+										areaStyle: {
+											type: 'default'
+										}
+									}
+								},
+								data: _d
+							}
+						} else if(echartType === 'bar' && echartType) {
+							fla = true;
+							s = {
+								name: val.country.name,
+								type: echartType,
+								itemStyle: {
+									normal: {
+										areaStyle: {
+											type: 'default'
+										}
+									}
+								},
+								data: _d
+							}
+						} else if(echartType === 'oneLine' && echartType) {
+							s = {
+								name: val.country.name,
+								type: 'line',
+								//			            stack: '总量',
+								data: _d
+							}
+						}
+						ss.push(s);
+
+					});
+					window.csName = cs;
+					myChart.setOption({
+						title: {
+							text: indicator_name_cn
+						},
+						tooltip: {
+							trigger: 'axis'
+						},
+						legend: {
+							data: cs //["邮件营销","联盟广告","视频广告","直接访问","搜索引擎"]
+						},
+						toolbox: {
+							feature: {
+								showTitle: true,
+								dataView: {},
+								saveAsImage: {}
+							}
+						},
+						dataZoom: [{
+							id: 'dataZoomX',
+							type: 'slider',
+							xAxisIndex: [0],
+							filterMode: 'filter'
+						}],
+						//			grid: {
+						//				left: '3%',
+						//				right: '4%',
+						//				bottom: '3%',
+						//				containLabel: true
+						//			},
+						xAxis: [{
+							type: 'category',
+							boundaryGap: fla,
+							data: ds //["周一","周二","周三","周四","周五","周六","周日1312"]
+						}],
+						yAxis: [{
+							type: 'value',
+							axisLabel: {
+								inside: true,
+								formatter: function(value, index) {
+									var v = 0;
+									//                      console.log(value);
+									if(value >= 100000000) {
+										v = value / 100000000;
+										v += '亿';
+									} else {
+										v = value;
+									}
+									return v;
+								}
+							}
+						}],
+						series: ss
+					});
+					if(window.location.href.indexOf('inland_data') >= 0) {
+						myChart.on('click', function(params) {
+							console.log(params);
+							newWin('map.html?indicator=' + indicator + '&country=CN&d=' + encodeURIComponent(params.name), 'map_on');
+						});
+					}
+				});
+
+			}
+
+			// 云词图
+			function yunCiTu() {
+				var myEchart = echarts.init(document.getElementById('yuncitu'));
+				option = {
+					title: {
+						text: '热点关键词分析',
+						link: 'https://www.baidu.com/s?wd=' + encodeURIComponent('ECharts'),
+						x: 'center',
+						textStyle: {
+							fontSize: 23
+						}
+
+					},
+					backgroundColor: '#F7F7F7',
+					tooltip: {
+						show: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {
+								iconStyle: {
+									normal: {
+										color: '#FFFFFF'
+									}
+								}
+							}
+						}
+					},
+					series: [{
+						name: '热点分析',
+						type: 'wordCloud',
+						//size: ['9%', '99%'],
+						sizeRange: [6, 66],
+						//textRotation: [0, 45, 90, -45],
+						rotationRange: [-45, 90],
+						//shape: 'circle',
+						textPadding: 0,
+						autoSize: {
+							enable: true,
+							minSize: 6
+						},
+						textStyle: {
+							normal: {
+								color: function() {
+									return 'rgb(' + [
+										Math.round(Math.random() * 160),
+										Math.round(Math.random() * 160),
+										Math.round(Math.random() * 160)
+									].join(',') + ')';
+								}
+							},
+							emphasis: {
+								shadowBlur: 10,
+								shadowColor: '#333'
+							}
+						},
+						data: [{
+							name: "Jayfee",
+							value: 666
+						}, {
+							name: "Nancy",
+							value: 520
+						}]
+					}]
+				};
+
+				var JosnList = [];
+
+				JosnList.push({
+					name: "Jayfee",
+					value: 666
+				}, {
+					name: "Nancy",
+					value: 520
+				}, {
+					name: "生活资源",
+					value: "999"
+				}, {
+					name: "供热管理",
+					value: "888"
+				}, {
+					name: "供气质量",
+					value: "777"
+				}, {
+					name: "生活用水管理",
+					value: "688"
+				}, {
+					name: "一次供水问题",
+					value: "588"
+				}, {
+					name: "交通运输",
+					value: "516"
+				}, {
+					name: "城市交通",
+					value: "515"
+				}, {
+					name: "环境保护",
+					value: "483"
+				}, {
+					name: "房地产管理",
+					value: "462"
+				}, {
+					name: "城乡建设",
+					value: "449"
+				}, {
+					name: "社会保障与福利",
+					value: "429"
+				}, {
+					name: "社会保障",
+					value: "407"
+				}, {
+					name: "文体与教育管理",
+					value: "406"
+				}, {
+					name: "公共安全",
+					value: "406"
+				}, {
+					name: "公交运输管理",
+					value: "386"
+				}, {
+					name: "出租车运营管理",
+					value: "385"
+				}, {
+					name: "供热管理",
+					value: "375"
+				}, {
+					name: "市容环卫",
+					value: "355"
+				}, {
+					name: "自然资源管理",
+					value: "355"
+				}, {
+					name: "粉尘污染",
+					value: "335"
+				}, {
+					name: "噪声污染",
+					value: "324"
+				}, {
+					name: "土地资源管理",
+					value: "304"
+				}, {
+					name: "物业服务与管理",
+					value: "304"
+				}, {
+					name: "医疗卫生",
+					value: "284"
+				}, {
+					name: "粉煤灰污染",
+					value: "284"
+				}, {
+					name: "占道",
+					value: "284"
+				}, {
+					name: "供热发展",
+					value: "254"
+				}, {
+					name: "农村土地规划管理",
+					value: "254"
+				}, {
+					name: "生活噪音",
+					value: "253"
+				}, {
+					name: "供热单位影响",
+					value: "253"
+				}, {
+					name: "城市供电",
+					value: "223"
+				}, {
+					name: "房屋质量与安全",
+					value: "223"
+				}, {
+					name: "大气污染",
+					value: "223"
+				}, {
+					name: "房屋安全",
+					value: "223"
+				}, {
+					name: "文化活动",
+					value: "223"
+				}, {
+					name: "拆迁管理",
+					value: "223"
+				}, {
+					name: "公共设施",
+					value: "223"
+				}, {
+					name: "供气质量",
+					value: "223"
+				}, {
+					name: "供电管理",
+					value: "223"
+				}, {
+					name: "燃气管理",
+					value: "152"
+				}, {
+					name: "教育管理",
+					value: "152"
+				}, {
+					name: "医疗纠纷",
+					value: "152"
+				}, {
+					name: "执法监督",
+					value: "152"
+				}, {
+					name: "设备安全",
+					value: "152"
+				}, {
+					name: "政务建设",
+					value: "152"
+				}, {
+					name: "县区、开发区",
+					value: "152"
+				}, {
+					name: "宏观经济",
+					value: "152"
+				}, {
+					name: "教育管理",
+					value: "112"
+				}, {
+					name: "社会保障",
+					value: "112"
+				}, {
+					name: "生活用水管理",
+					value: "112"
+				}, {
+					name: "物业服务与管理",
+					value: "112"
+				}, {
+					name: "分类列表",
+					value: "112"
+				}, {
+					name: "农业生产",
+					value: "112"
+				}, {
+					name: "二次供水问题",
+					value: "112"
+				}, {
+					name: "城市公共设施",
+					value: "92"
+				}, {
+					name: "拆迁政策咨询",
+					value: "92"
+				}, {
+					name: "物业服务",
+					value: "92"
+				}, {
+					name: "物业管理",
+					value: "92"
+				}, {
+					name: "社会保障保险管理",
+					value: "92"
+				}, {
+					name: "低保管理",
+					value: "92"
+				}, {
+					name: "文娱市场管理",
+					value: "72"
+				}, {
+					name: "城市交通秩序管理",
+					value: "72"
+				}, {
+					name: "执法争议",
+					value: "72"
+				}, {
+					name: "商业烟尘污染",
+					value: "72"
+				}, {
+					name: "占道堆放",
+					value: "71"
+				}, {
+					name: "地上设施",
+					value: "71"
+				}, {
+					name: "水质",
+					value: "71"
+				}, {
+					name: "无水",
+					value: "71"
+				}, {
+					name: "供热单位影响",
+					value: "71"
+				}, {
+					name: "人行道管理",
+					value: "71"
+				}, {
+					name: "主网原因",
+					value: "71"
+				}, {
+					name: "集中供热",
+					value: "71"
+				}, {
+					name: "客运管理",
+					value: "71"
+				}, {
+					name: "国有公交（大巴）管理",
+					value: "71"
+				}, {
+					name: "工业粉尘污染",
+					value: "71"
+				}, {
+					name: "治安案件",
+					value: "71"
+				}, {
+					name: "压力容器安全",
+					value: "71"
+				}, {
+					name: "身份证管理",
+					value: "71"
+				}, {
+					name: "群众健身",
+					value: "41"
+				}, {
+					name: "工业排放污染",
+					value: "41"
+				}, {
+					name: "破坏森林资源",
+					value: "41"
+				}, {
+					name: "市场收费",
+					value: "41"
+				}, {
+					name: "生产资金",
+					value: "41"
+				}, {
+					name: "生产噪声",
+					value: "41"
+				}, {
+					name: "农村低保",
+					value: "41"
+				}, {
+					name: "劳动争议",
+					value: "41"
+				}, {
+					name: "劳动合同争议",
+					value: "41"
+				}, {
+					name: "劳动报酬与福利",
+					value: "41"
+				}, {
+					name: "医疗事故",
+					value: "21"
+				}, {
+					name: "停供",
+					value: "21"
+				}, {
+					name: "基础教育",
+					value: "21"
+				}, {
+					name: "职业教育",
+					value: "21"
+				}, {
+					name: "物业资质管理",
+					value: "21"
+				}, {
+					name: "拆迁补偿",
+					value: "21"
+				}, {
+					name: "设施维护",
+					value: "21"
+				}, {
+					name: "市场外溢",
+					value: "11"
+				}, {
+					name: "占道经营",
+					value: "11"
+				}, {
+					name: "树木管理",
+					value: "11"
+				}, {
+					name: "农村基础设施",
+					value: "11"
+				}, {
+					name: "无水",
+					value: "11"
+				}, {
+					name: "供气质量",
+					value: "11"
+				}, {
+					name: "停气",
+					value: "11"
+				}, {
+					name: "市政府工作部门（含部门管理机构、直属单位）",
+					value: "11"
+				}, {
+					name: "燃气管理",
+					value: "11"
+				}, {
+					name: "市容环卫",
+					value: "11"
+				}, {
+					name: "新闻传媒",
+					value: "11"
+				}, {
+					name: "人才招聘",
+					value: "11"
+				}, {
+					name: "市场环境",
+					value: "11"
+				}, {
+					name: "行政事业收费",
+					value: "11"
+				}, {
+					name: "食品安全与卫生",
+					value: "11"
+				}, {
+					name: "城市交通",
+					value: "11"
+				}, {
+					name: "房地产开发",
+					value: "11"
+				}, {
+					name: "房屋配套问题",
+					value: "11"
+				}, {
+					name: "物业服务",
+					value: "11"
+				}, {
+					name: "物业管理",
+					value: "11"
+				}, {
+					name: "占道",
+					value: "11"
+				}, {
+					name: "园林绿化",
+					value: "11"
+				}, {
+					name: "户籍管理及身份证",
+					value: "11"
+				}, {
+					name: "公交运输管理",
+					value: "11"
+				}, {
+					name: "公路（水路）交通",
+					value: "11"
+				}, {
+					name: "房屋与图纸不符",
+					value: "11"
+				}, {
+					name: "有线电视",
+					value: "11"
+				}, {
+					name: "社会治安",
+					value: "11"
+				}, {
+					name: "林业资源",
+					value: "11"
+				}, {
+					name: "其他行政事业收费",
+					value: "11"
+				}, {
+					name: "经营性收费",
+					value: "11"
+				}, {
+					name: "食品安全与卫生",
+					value: "11"
+				}, {
+					name: "体育活动",
+					value: "11"
+				}, {
+					name: "有线电视安装及调试维护",
+					value: "11"
+				}, {
+					name: "低保管理",
+					value: "11"
+				}, {
+					name: "劳动争议",
+					value: "11"
+				}, {
+					name: "社会福利及事务",
+					value: "11"
+				}, {
+					name: "一次供水问题",
+					value: "11"
+				});
+
+				option.series[0].data = JosnList;
+
+				myEchart.setOption(option);
+				myEchart.on('click', function(params) {
+					window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+				});
+
+			}
+			
+			// 关键词排名条
+			$('.jingdutiao').each(function(i,e){
+				var w = $(e).attr('data-num')/10;
+				$(e).width(w);
+			});
+			// 关键词鼠标悬浮样式
+			$('.gjc').mousemove(function(){
+				$(this).css({'position':'relative'}).append('<img src="images/testImg.png" width="200" height="180" class="gjc_img" />');
+				$('.gjc_img').show().css({'position':'absolute','top':'15px','left':'-5px','width':'200px','height':'160px'});
+			});
+			$('.gjc').mouseout(function(){
+				$('.gjc_img').hide();
+			});
+			
+		</script>
+
+		<div class="modal fade bs-example-modal-sm" id="publicDialog" tabindex="-1" aria-hidden="true" data-backdrop="static" role="dialog">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">提示信息</h4></div>
+					<div class="modal-body"></div>
+					<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">确定</button></div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

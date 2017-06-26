@@ -1305,7 +1305,14 @@ function onsize() {
 		$(document).on("mouseleave", "#collects", function() {
 			$("#collect").hide();
 			$("#collects").show();
-		})
+		});
+//		// 左侧趋势图表样式
+//		$('.echartsection').attr('style','position: absolute;top: 111px;display: block;margin: 0px 50px;width: 266.5px;');
+//		$('.echartitem').attr('style','float: left;border: 1px solid #FFFFFF;width: 266.5px;height: 266.5px;margin: 10px 0px;padding: 20px;color: #000;background: #fff;');
+//		$('.echartitem').each(function(i,e){
+//			$(e).find('span').show();
+//			$(e).find('p.tempP').hide();
+//		});
 	} else {
 		$("#collects").hide();
 		$("#collect").show();
@@ -1313,11 +1320,18 @@ function onsize() {
 		$(document).on("mousemove", "#collect", function() {
 			$("#collects").show();
 			$("#collect").hide();
-		})
+		});
 		$(document).on("mouseleave", "#collects", function() {
 			$("#collects").hide();
 			$("#collect").show();
-		})
+		});
+//		// 左侧趋势图表样式
+//		$('.echartsection').css({'width':'90px','margin-left':'5px'});
+//		$('.echartitem').css({'width':'90px','height':'100%','padding':'5px 10px','text-align':'center'});
+//		$('.echartitem').each(function(i,e){
+//			$(e).find('span').hide();
+//			$(e).append('<p class="tempP">'+$(e).find('h3').text()+'</p>');
+//		});
 	}
 }
 
