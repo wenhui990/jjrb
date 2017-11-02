@@ -18,7 +18,10 @@
 			}
 			
 			.viewpoint_txt img {
-				width: 100%;
+				margin: 10px auto;display: block !important;max-width: 100%;
+			}
+			.viewpoint_title{
+				margin-bottom: 20px;
 			}
 			
 			.viewpoint_txt p {
@@ -27,6 +30,10 @@
 			
 			.new_txt {
 				display: none;
+			}
+			.viewpoint p{
+				font-size: 16px !important;
+				line-height: 1.5;
 			}
 		</style>
 	</head>
@@ -96,21 +103,6 @@
 					<span></span>
 				</div>
 			</div>
-			<!--<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">
-			<h2 class="viewpoint_title"><a href="#">股票期权鼓励制度法规政策研究</a></h2>
-			<small>来源： <span class="source"> 经济日报  </span> <span class="source_time">&nbsp;  2015年7月1日</span></small>
-            <div class="viewpoint_txt">
-                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器
-                </p>
-                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。
-                </p>
-                <p>Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器
-                </p>
-                <p>
-                	*经济日报
-                </p>
-            </div> 
-		</div>-->
 			<div class="col-sm-12 col-md-12 col-xs-12 viewpoint">
 				<div class="loading" style="width: 100%;text-align: center;"><img src="images/loading.gif" width="200"  />正在加载中...</div>
 			</div>
@@ -185,7 +177,7 @@
 			}, 500);
 			//			alert(getUrlParams().id);
 			//接口
-			var _href = "http://api.jjrb.grsx.cc",
+			var _href = "http://api.zjqs.jjrbs.cn",
 				interfacelist = {
 					feed: "/feed",
 					comment_list: '/aggregator/391/5/entity', // 评论列表get
@@ -382,8 +374,8 @@
 					})
 //					console.log(descp);
 					var htm = '<h2 class="viewpoint_title"><a href="#">' + data.title + '</a></h2>' +
-						'<small>来源： <span class="source">' + data.owner.name + '</span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
-						'<div class="viewpoint_txt">' + descp + '<p>*经济日报</p></div> ';
+						'<small style="margin-bottom: 20px;font-size: 14px;">来源： <span class="source">' + data.owner.name + ' </span><span class="glyphicon glyphicon-time"></span> <span class="source_time">&nbsp;  ' + timeF(data.created) + '</span></small>' +
+						'<hr style="border-top: 1px solid #999;" /> <div class="viewpoint_txt">' + descp + '</div> ';
 					$(".viewpoint").append(htm);
 					$('.viewpoint_txt img').show();
 					if(system.win || system.mac || system.xll || system.ipad) {

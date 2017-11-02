@@ -3,7 +3,7 @@ $("footer").load("footer.html");
 // 导入logo字体css
 $("head").append("<link href='http://cdn.webfont.youziku.com/webfonts/nomal/100608/45807/58db5e4cf629da0960bba0dc.css' rel='stylesheet' type='text/css' />");
 //接口
-var _href = "http://api.jjrb.grsx.cc", //"http://test.api.wantscart.com",
+var _href = "http://api.zjqs.jjrbs.cn", //"http://test.api.wantscart.com",
 	interfacelist = {
 		phone_code: "/login", //"/api/login", //手机验证码get?phone=
 		phone_login: "/login", //"/api/login", //手机登录post  phone=&code=
@@ -148,7 +148,7 @@ $(function() {
 				var obj = new WxLogin({
 					id: "wx",
 					appid: "wxf7eec57ef58d6a4b",
-					redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f=' + location.href),
+					redirect_uri: encodeURIComponent('http://api.zjqs.jjrbs.cn/login/wx?f=' + location.href),
 					state: Math.ceil(Math.random() * 1000),
 					scope: 'snsapi_login',
 					style: "",
@@ -167,7 +167,7 @@ $(function() {
 		var obj = new WxLogin({
 			id: "wx",
 			appid: "wxf7eec57ef58d6a4b",
-			redirect_uri: encodeURIComponent('http://api.jjrb.grsx.cc/login/wx?f=' + location.href),
+			redirect_uri: encodeURIComponent('http://api.zjqs.jjrbs.cn/login/wx?f=' + location.href),
 			state: Math.ceil(Math.random() * 1000),
 			scope: 'snsapi_login',
 			style: "",
@@ -375,7 +375,8 @@ $(function() {
 		});
 	}
 
-	//返回顶部
+});
+function backTop(){
 	var client = document.documentElement.clientHeight;
 	var timer = null;
 	var isTop = true;
@@ -397,7 +398,7 @@ $(function() {
 		}
 		isTop = false;
 	}
-});
+}
 
 //验证表单信息
 function forms(p, c) {

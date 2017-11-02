@@ -5,7 +5,7 @@ window.onload = function(){
 		$('.viewpoint_header_img').attr('src','images/tabbar-paper-f.png');
 	},500);
 	//接口  resource type 11，12，13，14/视频、图片、文本、html片段
-	var _href = "http://api.jjrb.grsx.cc",
+	var _href = "http://api.zjqs.jjrbs.cn",
 //		interfacelist = interfacelist(),
 		n = 1,fl = true,_url = _href + interfacelist.select_data+"?";
 		

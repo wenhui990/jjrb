@@ -526,7 +526,7 @@
 				}
 				$("#author").val(localStorage.userName);
 				//接口
-				var _href = "http://api.jjrb.grsx.cc",
+				var _href = "http://api.zjqs.jjrbs.cn",
 					interfacelist = {
 						select_indicator: "/data2/indicator/k/",
 						select_data: "/data2",
@@ -650,7 +650,7 @@
 						formData.append('file', $(fileId)[0].files[0]);
 						console.log(formData);
 						$.ajax({
-							url: 'http://api.jjrb.grsx.cc/upload',
+							url: 'http://api.zjqs.jjrbs.cn/upload',
 							type: 'POST',
 							cache: false,
 							data: formData,
@@ -997,7 +997,7 @@
 							$('#publicDialog').find('.modal-body').html('发布成功！');
 							$('#publicDialog').modal('show');
 							$('#publicDialog').on('hidden.bs.modal',function(){
-								window.location.href = 'http://m.jjrb.grsx.cc/my_viewpoint.html';
+								window.location.href = 'my_viewpoint.html';
 							});
 							
 //							console.log(e);

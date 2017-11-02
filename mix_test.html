@@ -119,7 +119,7 @@
 </body>
 <script type="text/javascript">
 	$(function(){
-		var _href = "http://api.jjrb.grsx.cc", 
+		var _href = "http://api.zjqs.jjrbs.cn", 
 		interfacelist = {
 			phone_code: "/login", //"/api/login", //手机验证码get?phone=
 			phone_login: "/login", //"/api/login", //手机登录post  phone=&code=
@@ -245,7 +245,7 @@
     function load(x, y, z, c, r) {
         myChart.showLoading();
         // 异步加载数据
-        var url = 'http://api.jjrb.grsx.cc/data2?';
+        var url = 'http://api.zjqs.jjrbs.cn/data2?';
         if(c){ url += 'country='+c}
         if(r){ url += '&region='+r}
         $.when($.getJSON(url+'&indicator='+x),$.getJSON(url+'&indicator='+y),$.getJSON(url+'&indicator='+z)).done(function (dx,dy,dz) {
